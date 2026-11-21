@@ -1,0 +1,563 @@
+{
+  "tasks": [
+    {
+      "id": "t-checkout",
+      "title": "Finalisasi desain halaman checkout",
+      "status": "done",
+      "projectId": "p-redesain",
+      "createdAt": "2026-11-19T01:00:00.000Z",
+      "updatedAt": "2026-11-21T16:30:27.917Z",
+      "doneAt": "2026-11-21T16:30:27.917Z",
+      "steps": [
+        {
+          "id": "s-t-checkout-1",
+          "text": "Rapikan jarak dan ukuran tombol bayar",
+          "done": true,
+          "doneAt": "2026-11-21T01:20:00.000Z"
+        },
+        {
+          "id": "s-t-checkout-2",
+          "text": "Tambahkan state error pada form alamat",
+          "done": true,
+          "doneAt": "2026-11-21T01:50:00.000Z"
+        },
+        {
+          "id": "s-t-checkout-3",
+          "text": "Cek kontras warna untuk teks kecil",
+          "done": true,
+          "doneAt": "2026-11-21T16:30:27.430Z"
+        },
+        {
+          "id": "s-t-checkout-4",
+          "text": "Kirim ke developer lewat handoff",
+          "done": true,
+          "doneAt": "2026-11-21T16:30:27.917Z"
+        }
+      ],
+      "noteId": null
+    },
+    {
+      "id": "t-laporan",
+      "title": "Kirim laporan mingguan ke atasan",
+      "status": "done",
+      "projectId": "p-laporan",
+      "createdAt": "2026-11-19T02:00:00.000Z",
+      "updatedAt": "2026-11-21T16:23:21.821Z",
+      "doneAt": "2026-11-21T16:23:21.821Z",
+      "steps": [
+        {
+          "id": "s-t-laporan-1",
+          "text": "Salin template laporan minggu lalu",
+          "done": true,
+          "doneAt": "2026-11-21T02:10:00.000Z"
+        },
+        {
+          "id": "s-t-laporan-2",
+          "text": "Tulis 3 pencapaian utama",
+          "done": true,
+          "doneAt": "2026-11-21T16:23:21.100Z"
+        },
+        {
+          "id": "s-t-laporan-3",
+          "text": "Tulis kendala dan rencana minggu depan",
+          "done": true,
+          "doneAt": "2026-11-21T16:23:21.821Z"
+        }
+      ],
+      "noteId": null
+    },
+    {
+      "id": "t-naskah",
+      "title": "Naskah video: tips fokus kerja",
+      "status": "done",
+      "projectId": "p-ig",
+      "createdAt": "2026-11-20T03:00:00.000Z",
+      "updatedAt": "2026-11-21T18:25:58.992Z",
+      "doneAt": "2026-11-21T18:25:58.992Z",
+      "steps": [
+        {
+          "id": "s-t-naskah-1",
+          "text": "Tentukan 3 poin utama",
+          "done": true,
+          "doneAt": "2026-11-21T18:25:56.199Z"
+        },
+        {
+          "id": "s-t-naskah-2",
+          "text": "Tulis pembuka yang menarik",
+          "done": true,
+          "doneAt": "2026-11-21T18:25:56.921Z"
+        },
+        {
+          "id": "s-t-naskah-3",
+          "text": "Latihan baca sekali dengan timer",
+          "done": true,
+          "doneAt": "2026-11-21T18:25:58.992Z"
+        }
+      ],
+      "noteId": "n-ide",
+      "todayAt": "2026-11-21T17:56:02.267Z",
+      "doneFrom": "today"
+    },
+    {
+      "id": "t-email",
+      "title": "Balas email klien",
+      "status": "done",
+      "projectId": "p-laporan",
+      "createdAt": "2026-11-20T04:00:00.000Z",
+      "updatedAt": "2026-11-21T01:15:00.000Z",
+      "doneAt": "2026-11-21T01:15:00.000Z",
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-listrik",
+      "title": "Bayar tagihan listrik",
+      "status": "done",
+      "projectId": "p-rumah",
+      "createdAt": "2026-11-20T05:00:00.000Z",
+      "updatedAt": "2026-11-21T01:40:00.000Z",
+      "doneAt": "2026-11-21T01:40:00.000Z",
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-in1",
+      "title": "Cek tagihan internet",
+      "status": "later",
+      "projectId": null,
+      "createdAt": "2026-11-21T01:25:00.000Z",
+      "updatedAt": "2026-11-21T17:19:07.171Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-in2",
+      "title": "Tanya desainer soal ikon baru",
+      "status": "later",
+      "projectId": "p-redesain",
+      "createdAt": "2026-11-21T01:45:00.000Z",
+      "updatedAt": "2026-11-21T17:19:07.171Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-in3",
+      "title": "Ide judul video: kenapa to-do list sering gagal",
+      "status": "later",
+      "projectId": "p-video",
+      "createdAt": "2026-11-21T02:05:00.000Z",
+      "updatedAt": "2026-11-21T17:19:07.171Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-riset",
+      "title": "Riset kompetitor untuk alur onboarding",
+      "status": "today",
+      "projectId": "p-redesain",
+      "createdAt": "2026-11-18T02:00:00.000Z",
+      "updatedAt": "2026-11-21T18:35:32.409Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null,
+      "todayAt": "2026-11-21T18:35:32.409Z"
+    },
+    {
+      "id": "t-komponen",
+      "title": "Rapikan komponen tombol di design system",
+      "status": "today",
+      "projectId": "p-redesain",
+      "createdAt": "2026-11-18T03:00:00.000Z",
+      "updatedAt": "2026-11-21T18:36:15.836Z",
+      "doneAt": null,
+      "steps": [
+        {
+          "id": "s-t-komponen-1",
+          "text": "Daftar semua varian tombol",
+          "done": false,
+          "doneAt": null
+        },
+        {
+          "id": "s-t-komponen-2",
+          "text": "Hapus varian yang tidak terpakai",
+          "done": false,
+          "doneAt": null
+        },
+        {
+          "id": "s-t-komponen-3",
+          "text": "Dokumentasikan penggunaan tiap varian",
+          "done": false,
+          "doneAt": null
+        }
+      ],
+      "noteId": null,
+      "todayAt": "2026-11-21T18:36:15.836Z"
+    },
+    {
+      "id": "t-uji",
+      "title": "Jadwalkan uji coba dengan 5 pengguna",
+      "status": "done",
+      "projectId": "p-redesain",
+      "createdAt": "2026-11-19T04:00:00.000Z",
+      "updatedAt": "2026-11-21T16:30:03.588Z",
+      "doneAt": "2026-11-21T16:30:03.588Z",
+      "steps": [],
+      "noteId": "n-sprint"
+    },
+    {
+      "id": "t-rapat",
+      "title": "Siapkan bahan rapat bulanan",
+      "status": "done",
+      "projectId": "p-laporan",
+      "createdAt": "2026-11-18T04:00:00.000Z",
+      "updatedAt": "2026-11-21T16:23:10.074Z",
+      "doneAt": "2026-11-21T16:23:10.074Z",
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-jadwal",
+      "title": "Susun jadwal posting Instagram minggu depan",
+      "status": "later",
+      "projectId": "p-ig",
+      "createdAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-carousel",
+      "title": "Edit foto carousel Instagram",
+      "status": "later",
+      "projectId": "p-ig",
+      "createdAt": "2026-11-19T06:00:00.000Z",
+      "updatedAt": "2026-11-19T06:00:00.000Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-vo",
+      "title": "Rekam voice over video",
+      "status": "later",
+      "projectId": "p-video",
+      "createdAt": "2026-11-20T02:00:00.000Z",
+      "updatedAt": "2026-11-20T02:00:00.000Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-domain",
+      "title": "Perpanjang langganan domain",
+      "status": "later",
+      "projectId": "p-rumah",
+      "createdAt": "2026-11-17T03:00:00.000Z",
+      "updatedAt": "2026-11-17T03:00:00.000Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-kursus",
+      "title": "Daftar kelas menulis UX",
+      "status": "later",
+      "projectId": "p-belajar",
+      "createdAt": "2026-11-17T04:00:00.000Z",
+      "updatedAt": "2026-11-17T04:00:00.000Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-motor",
+      "title": "Servis motor",
+      "status": "later",
+      "projectId": null,
+      "createdAt": "2026-11-16T03:00:00.000Z",
+      "updatedAt": "2026-11-16T03:00:00.000Z",
+      "doneAt": null,
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-d1",
+      "title": "Setor revisi proposal",
+      "status": "done",
+      "projectId": "p-laporan",
+      "createdAt": "2026-11-18T01:00:00.000Z",
+      "updatedAt": "2026-11-20T03:00:00.000Z",
+      "doneAt": "2026-11-20T03:00:00.000Z",
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-d2",
+      "title": "Review wireframe halaman profil",
+      "status": "done",
+      "projectId": "p-redesain",
+      "createdAt": "2026-11-17T02:00:00.000Z",
+      "updatedAt": "2026-11-20T05:00:00.000Z",
+      "doneAt": "2026-11-20T05:00:00.000Z",
+      "steps": [
+        {
+          "id": "s-t-d2-1",
+          "text": "Cek alur dari beranda ke profil",
+          "done": true,
+          "doneAt": "2026-11-20T04:00:00.000Z"
+        },
+        {
+          "id": "s-t-d2-2",
+          "text": "Tulis catatan perbaikan",
+          "done": true,
+          "doneAt": "2026-11-20T05:00:00.000Z"
+        }
+      ],
+      "noteId": null
+    },
+    {
+      "id": "t-d3",
+      "title": "Tulis caption peluncuran",
+      "status": "done",
+      "projectId": "p-ig",
+      "createdAt": "2026-11-18T05:00:00.000Z",
+      "updatedAt": "2026-11-20T06:00:00.000Z",
+      "doneAt": "2026-11-20T06:00:00.000Z",
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-d4",
+      "title": "Pasang template story Instagram",
+      "status": "done",
+      "projectId": "p-ig",
+      "createdAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-19T07:00:00.000Z",
+      "doneAt": "2026-11-19T07:00:00.000Z",
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-d5",
+      "title": "Booking dokter gigi",
+      "status": "done",
+      "projectId": "p-rumah",
+      "createdAt": "2026-11-17T06:00:00.000Z",
+      "updatedAt": "2026-11-18T08:00:00.000Z",
+      "doneAt": "2026-11-18T08:00:00.000Z",
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "t-d6",
+      "title": "Backup foto liburan",
+      "status": "done",
+      "projectId": null,
+      "createdAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-19T09:00:00.000Z",
+      "doneAt": "2026-11-19T09:00:00.000Z",
+      "steps": [],
+      "noteId": null
+    },
+    {
+      "id": "4955q6qb1l",
+      "title": "Apa yah",
+      "status": "later",
+      "projectId": "p-video",
+      "noteId": "n-ide",
+      "createdAt": "2026-11-21T16:13:57.993Z",
+      "updatedAt": "2026-11-21T16:13:57.993Z",
+      "doneAt": null,
+      "steps": []
+    },
+    {
+      "id": "mwrta95drk",
+      "title": "Test",
+      "status": "done",
+      "projectId": "p-belajar",
+      "noteId": "n-ide",
+      "createdAt": "2026-11-21T16:17:08.144Z",
+      "updatedAt": "2026-11-21T16:28:39.229Z",
+      "doneAt": "2026-11-21T16:28:39.229Z",
+      "steps": []
+    },
+    {
+      "id": "dvtn0ww6hg",
+      "title": "Test",
+      "status": "later",
+      "projectId": "p-rumah",
+      "noteId": "n-ide",
+      "createdAt": "2026-11-21T16:17:45.364Z",
+      "updatedAt": "2026-11-21T16:17:45.364Z",
+      "doneAt": null,
+      "steps": []
+    },
+    {
+      "id": "vfqhqc76q7",
+      "title": "Mantap",
+      "status": "inbox",
+      "projectId": null,
+      "noteId": null,
+      "createdAt": "2026-11-21T18:40:50.383Z",
+      "updatedAt": "2026-11-21T18:40:50.384Z",
+      "doneAt": null,
+      "steps": []
+    }
+  ],
+  "areas": [
+    {
+      "id": "a-kantor",
+      "name": "Kantor",
+      "archived": false
+    },
+    {
+      "id": "a-konten",
+      "name": "Konten",
+      "archived": false
+    },
+    {
+      "id": "a-pribadi",
+      "name": "Pribadi",
+      "archived": false
+    }
+  ],
+  "projects": [
+    {
+      "id": "p-redesain",
+      "areaId": "a-kantor",
+      "name": "Redesain Aplikasi Mobile",
+      "archived": false
+    },
+    {
+      "id": "p-laporan",
+      "areaId": "a-kantor",
+      "name": "Laporan & Rapat",
+      "archived": false
+    },
+    {
+      "id": "p-ig",
+      "areaId": "a-konten",
+      "name": "Konten Instagram",
+      "archived": false
+    },
+    {
+      "id": "p-video",
+      "areaId": "a-konten",
+      "name": "Video YouTube",
+      "archived": false
+    },
+    {
+      "id": "p-rumah",
+      "areaId": "a-pribadi",
+      "name": "Rumah & Keuangan",
+      "archived": false
+    },
+    {
+      "id": "p-belajar",
+      "areaId": "a-pribadi",
+      "name": "Belajar",
+      "archived": false
+    }
+  ],
+  "notes": [
+    {
+      "id": "n-ide",
+      "text": "Ide konten minggu ini\nNaskah video: tips fokus kerja\nKenapa to-do list sering gagal untuk otak ADHD\nBody doubling: kerja bareng lewat video call\nReview aplikasi catatan favoritku",
+      "projectId": "p-video",
+      "pinned": true,
+      "deleted": false,
+      "conv": {
+        "Naskah video: tips fokus kerja": "t-naskah"
+      },
+      "createdAt": "2026-11-20T06:00:00.000Z",
+      "updatedAt": "2026-11-21T16:17:45.364Z",
+      "title": ""
+    },
+    {
+      "id": "n-caption",
+      "text": "Draft caption promosi\nBukan malas. Otakku butuh langkah yang lebih kecil.\nMulai dari satu langkah saja, sisanya menyusul.\naklsdfklsadjf\nasdfksdfk",
+      "projectId": "p-ig",
+      "pinned": false,
+      "deleted": false,
+      "conv": {},
+      "createdAt": "2026-11-21T02:35:00.000Z",
+      "updatedAt": "2026-11-21T16:11:31.882Z",
+      "title": ""
+    },
+    {
+      "id": "n-sprint",
+      "text": "Catatan rapat sprint\nPrioritaskan halaman checkout dulu\nTanya tim backend soal API pembayaran\nJadwalkan uji coba dengan 5 pengguna\nSiapkan data performa sebelum dan sesudah",
+      "projectId": "p-redesain",
+      "pinned": false,
+      "deleted": false,
+      "conv": {
+        "Jadwalkan uji coba dengan 5 pengguna": "t-uji"
+      },
+      "createdAt": "2026-11-20T02:00:00.000Z",
+      "updatedAt": "2026-11-20T02:40:00.000Z",
+      "title": ""
+    },
+    {
+      "id": "n-belajar",
+      "text": "Rencana belajar\nModul 1: dasar-dasar UX writing\nModul 2: riset pengguna\nTarget selesai akhir bulan",
+      "projectId": "p-belajar",
+      "pinned": false,
+      "deleted": false,
+      "conv": {},
+      "createdAt": "2026-11-18T06:00:00.000Z",
+      "updatedAt": "2026-11-18T06:00:00.000Z",
+      "title": ""
+    },
+    {
+      "id": "n-belanja",
+      "text": "Belanja bulanan\nBeras dan minyak\nSabun cuci piring\nKopi\nBuah",
+      "projectId": null,
+      "pinned": false,
+      "deleted": false,
+      "conv": {},
+      "createdAt": "2026-11-19T08:00:00.000Z",
+      "updatedAt": "2026-11-19T08:00:00.000Z",
+      "title": ""
+    },
+    {
+      "id": "n-random",
+      "text": "Kepikiran bikin template jadwal harian\nCoba teknik time blocking minggu ini",
+      "projectId": null,
+      "pinned": false,
+      "deleted": false,
+      "conv": {},
+      "createdAt": "2026-11-21T01:10:00.000Z",
+      "updatedAt": "2026-11-21T01:10:00.000Z",
+      "title": ""
+    },
+    {
+      "id": "o0hjfxtkys",
+      "title": "",
+      "text": "Testing",
+      "projectId": null,
+      "pinned": false,
+      "deleted": false,
+      "createdAt": "2026-11-21T18:41:08.836Z",
+      "updatedAt": "2026-11-21T18:41:08.836Z"
+    }
+  ],
+  "tomb": {},
+  "sess": {
+    "t-riset": {
+      "id": "t-riset",
+      "start": 1795287135276,
+      "timerMin": 0,
+      "upd": "2026-11-21T18:52:15.276Z"
+    },
+    "t-komponen": {
+      "id": "t-komponen",
+      "end": true,
+      "start": 1795286177428,
+      "upd": "2026-11-21T18:36:36.304Z"
+    }
+  }
+}
