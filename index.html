@@ -1434,7 +1434,7 @@ function notifyClear(tag){
 function notifySession(s){
   if(!s||s.end)return; var t=byId(s.id); if(!t)return;
   NS[s.id]=alKey(s);
-  notifyShow('Sedang dikerjakan',{body:t.title+(s.timerMin?' · timer '+s.timerMin+' menit':''),tag:'langkah-sess-'+s.id,data:{id:s.id},silent:true,requireInteraction:true,icon:'icon-192.png',badge:'icon-192.png',
+  notifyShow('Sedang dikerjakan',{body:t.title+(s.timerMin?' · timer '+s.timerMin+' menit':''),tag:'langkah-sess-'+s.id,data:{id:s.id},renotify:false,requireInteraction:true,icon:'icon-192.png',badge:'icon-192.png',
     actions:[{action:'done',title:'Selesai'},{action:'end',title:'Akhiri sesi'}]});
 }
 function notifyAsk(){
