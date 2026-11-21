@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Langkah</title>
+<meta name="theme-color" content="#2B6B61">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{
   --bg:#F6F4EF; --surface:#FFFFFF; --line:#E4E0D6; --text:#23211E; --muted:#5C574E;
@@ -246,6 +250,22 @@ input.ntitle-in:focus{outline:3px solid rgba(43,107,97,.35);outline-offset:2px}
 .toast{display:flex;align-items:center;gap:14px}
 .toast button{background:transparent;border:1.5px solid rgba(255,255,255,.55);color:#fff;border-radius:10px;min-height:36px;padding:0 14px;font-size:14px;font-weight:600;cursor:pointer}
 .nav .mob{display:none}
+.addbtn{flex:0 0 auto;min-height:40px;padding:0 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.finput .addbtn{background:#8FD1BF;color:#12201C}
+.fbars{position:sticky;top:0;z-index:6;margin:0 auto 14px;max-width:1100px;max-height:46vh;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.fbars .fbar{position:static;margin:0;max-width:none}
+.fbar{position:sticky;top:0;z-index:6;margin:0 auto 14px;max-width:1100px;padding:10px 14px;border-radius:16px;background:#1E2926;color:#F2F0EA;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.fbar .fbt{flex:1 1 180px;min-width:0;display:flex;flex-direction:column;gap:2px;overflow-wrap:anywhere}
+.fbar .fbt span{font-size:12.5px;color:#B5C2BD}
+.fbar .fbc{font-variant-numeric:tabular-nums;font-size:24px;font-weight:700;letter-spacing:.02em}
+.fbar button{min-height:40px;padding:0 14px;border-radius:10px;border:1.5px solid #5B6F68;background:transparent;color:#E4EBE8;font-size:14px;font-weight:600;cursor:pointer}
+.fbar button.go{background:#8FD1BF;border-color:#8FD1BF;color:#12201C}
+.fbar.over{background:#7A3F0C}
+.fbar.over .fbt span{color:#FBE8D2}
+.fbar .dot{width:10px;height:10px;border-radius:50%;background:#8FD1BF;flex:0 0 auto;animation:pulse 2s ease-in-out infinite}
+.fbar.over .dot{background:#FFD9A8}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.nowtag{background:#DCEFE8;color:#1F5A4B}
 .syf{display:flex;flex-direction:column;gap:6px;max-width:560px}
 .syf label{font-size:14px;font-weight:600}
 .syf input{min-height:46px;border:1.5px solid var(--ctl);border-radius:12px;padding:0 14px;font-size:16px;font-family:inherit;background:#fff;color:inherit}
@@ -298,6 +318,7 @@ input.ntitle-in:focus{outline:3px solid rgba(43,107,97,.35);outline-offset:2px}
 <body>
 <div id="root"></div>
 <div id="toast-slot" role="status" aria-live="polite"></div>
+<form id="gform" autocomplete="off" onsubmit="return false"><button type="submit" hidden tabindex="-1" aria-hidden="true"></button></form>
 <input type="file" id="importfile" accept="application/json" hidden>
 
 <script>
@@ -327,7 +348,7 @@ function savePref(){try{localStorage.setItem(PREFKEY,JSON.stringify(PREF));}catc
 function canWide(){return window.innerWidth>=1500;}
 function W(){return canWide()&&!PREF.calm;}
 function wrapOpen(){return '<div class="wrap'+(W()?' wide':'')+'">';}
-var ui={view:'today',trailId:null,timerPick:false,overShown:false,exp:{},edit:null,dashOpen:{},dashAll:false,dashF:'open',noteProj:'',todayFilter:'all',doneFilter:'all',laterFilter:'all',capType:'task',noteQ:'',noteDraft:'',noteDraftTitle:'',noteFilter:'all',gq:'',saveErr:false,undo:null,trashConfirm:false,ntask:null,selText:'',fromNote:'',scrollTo:'',convert:null,capProject:'',toast:'',refocus:null};
+var ui={view:'today',cur:null,trailId:null,timerPick:false,overShown:false,exp:{},edit:null,dashOpen:{},dashAll:false,dashF:'open',noteProj:'',todayFilter:'all',doneFilter:'all',laterFilter:'all',capType:'task',noteQ:'',noteDraft:'',noteDraftTitle:'',noteFilter:'all',gq:'',saveErr:false,undo:null,trashConfirm:false,ntask:null,selText:'',fromNote:'',scrollTo:'',convert:null,capProject:'',toast:'',refocus:null};
 
 function load(){
   var r=null; try{r=JSON.parse(localStorage.getItem(KEY));}catch(e){}
@@ -335,7 +356,9 @@ function load(){
   r.areas=Array.isArray(r.areas)?r.areas:[];
   r.projects=Array.isArray(r.projects)?r.projects:[];
   r.notes=Array.isArray(r.notes)?r.notes:[];
-  r.focus=r.focus||null;
+  r.sess=(r.sess&&typeof r.sess==='object'&&!Array.isArray(r.sess))?r.sess:{};
+  if(r.focus&&r.focus.id&&!r.sess[r.focus.id]){r.sess[r.focus.id]={id:r.focus.id,start:r.focus.start,timerMin:r.focus.timerMin||0,upd:new Date().toISOString()};MIG=true;}
+  delete r.focus;
   r.tomb=(r.tomb&&typeof r.tomb==='object'&&!Array.isArray(r.tomb))?r.tomb:{};
   r.tasks.forEach(function(t){ if(!('projectId' in t))t.projectId=null; if(!('noteId' in t))t.noteId=null; if(!Array.isArray(t.steps))t.steps=[]; });
   var nowIso=new Date().toISOString();
@@ -524,7 +547,7 @@ function carryBox(){
 }
 
 /* ---------- Sinkron GitHub ---------- */
-var SY={cfg:null,state:'off',msg:'',last:null,sha:null,timer:null,busy:false,pending:false};
+var SY={cfg:null,state:'off',msg:'',last:null,sha:null,timer:null,busy:false,pending:false,etag:null,canon:null,authFail:false};
 try{SY.cfg=JSON.parse(localStorage.getItem('langkah.sync'))||null;}catch(e){}
 if(SY.cfg&&SY.cfg.repo&&SY.cfg.token)SY.state='idle'; else SY.cfg=null;
 function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
@@ -539,19 +562,24 @@ function syErr(status,body){
 }
 function syFetch(path,opt){
   var c=SY.cfg; opt=opt||{};
+  var ifn=opt.ifNone; delete opt.ifNone;
   opt.headers={'Authorization':'Bearer '+c.token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
+  if(ifn)opt.headers['If-None-Match']=ifn;
   opt.cache='no-store';
   return fetch('https://api.github.com/repos/'+c.repo+path,opt).catch(function(){var e=new Error('Tidak bisa menghubungi GitHub. Cek koneksi internet, atau jaringan kantor mungkin memblokir api.github.com.');e.net=true;throw e;});
 }
 function syFile(){return '/contents/'+encodeURIComponent((SY.cfg.path||'data.json'));}
-function syGetRemote(){
-  return syFetch(syFile()).then(function(r){
+function syGetRemote(cond){
+  var opt={}; if(cond&&SY.etag)opt.ifNone=SY.etag;
+  return syFetch(syFile(),opt).then(function(r){
+    if(r.status===304)return {notModified:true};
     if(r.status===404)return null;
     if(!r.ok)throw syErr(r.status);
+    var et=null; try{et=r.headers&&r.headers.get&&r.headers.get('etag');}catch(x){}
     return r.json().then(function(j){
       if(j.encoding!=='base64'||typeof j.content!=='string'){var e=new Error('File data di GitHub terlalu besar untuk dibaca (lebih dari 1 MB).');throw e;}
       var d; try{d=JSON.parse(b64dec(j.content));}catch(x){var e2=new Error('Isi file data di GitHub tidak bisa dibaca. Jangan diubah manual.');throw e2;}
-      return {data:d,sha:j.sha};
+      return {data:d,sha:j.sha,etag:et||null};
     });
   });
 }
@@ -572,14 +600,18 @@ function syMerge(L,R){
     (b||[]).forEach(function(x){var y=m[x.id]; if(!y){order.push(x.id);m[x.id]=x;} else if((x.updatedAt||'')>(y.updatedAt||''))m[x.id]=x;});
     return order.filter(function(id){return !tomb[id];}).map(function(id){return m[id];});
   }
-  return {tasks:mc(L.tasks,R&&R.tasks),areas:mc(L.areas,R&&R.areas),projects:mc(L.projects,R&&R.projects),notes:mc(L.notes,R&&R.notes),tomb:tomb};
+  var sess={}, scut=new Date(Date.now()-2*864e5).toISOString();
+  [L.sess||{},(R&&R.sess)||{}].forEach(function(m){Object.keys(m).forEach(function(k){var x=m[k]; if(!x)return; var y=sess[k]; if(!y||(x.upd||'')>(y.upd||''))sess[k]=x;});});
+  Object.keys(sess).forEach(function(k){if(sess[k].end&&(sess[k].upd||'')<scut)delete sess[k];});
+  return {tasks:mc(L.tasks,R&&R.tasks),areas:mc(L.areas,R&&R.areas),projects:mc(L.projects,R&&R.projects),notes:mc(L.notes,R&&R.notes),tomb:tomb,sess:sess};
 }
 function syCanon(d){
   function so(a){return (a||[]).slice().sort(function(x,y){return x.id<y.id?-1:1;});}
   var tk={}; Object.keys(d.tomb||{}).sort().forEach(function(k){tk[k]=d.tomb[k];});
-  return JSON.stringify({t:so(d.tasks),a:so(d.areas),p:so(d.projects),n:so(d.notes),k:tk});
+  var sk={}; Object.keys(d.sess||{}).sort().forEach(function(k){sk[k]=d.sess[k];});
+  return JSON.stringify({t:so(d.tasks),a:so(d.areas),p:so(d.projects),n:so(d.notes),k:tk,s:sk});
 }
-function syLocal(){return {tasks:S.tasks,areas:S.areas,projects:S.projects,notes:S.notes,tomb:S.tomb};}
+function syLocal(){return {tasks:S.tasks,areas:S.areas,projects:S.projects,notes:S.notes,tomb:S.tomb,sess:S.sess};}
 function softRender(){
   var ae=document.activeElement, busy=ui.edit||ui.ntask||(ae&&isField(ae)&&ae.value&&ae.id!=='capture');
   if(busy)return;
@@ -614,39 +646,44 @@ function syQueue(){ if(!SY.cfg||SY.applying)return; clearTimeout(SY.timer); SY.t
 /* hasil: Promise<true|Error> */
 function syncNow(reason){
   if(!SY.cfg)return Promise.resolve(false);
+  var auto=(reason!=='manual'&&reason!=='connect');
+  if(auto&&SY.authFail)return Promise.resolve(false);
+  if(auto&&reason!=='change'&&reason!=='start'&&reason!=='sess'&&SY.lastTs&&Date.now()-SY.lastTs<20000)return Promise.resolve(false);
   if(SY.busy){SY.pending=true;return Promise.resolve(false);}
   if(typeof navigator!=='undefined'&&navigator.onLine===false){SY.state='offline';paintSy();return Promise.resolve(false);}
   SY.busy=true; SY.state='busy'; paintSy();
   var attempts=0;
   function once(){
-    return syGetRemote().then(function(r){
+    var clean=SY.canon!==null&&syCanon(syLocal())===SY.canon&&auto&&attempts===0;
+    return syGetRemote(clean).then(function(r){
+      if(r&&r.notModified)return true;
       var L=syLocal(), M=syMerge(L,r&&r.data);
       var changedLocal=syCanon(M)!==syCanon(L);
       if(changedLocal){
         SY.applying=true;
-        S.tasks=M.tasks;S.areas=M.areas;S.projects=M.projects;S.notes=M.notes;S.tomb=M.tomb;
-        if(S.focus&&!byId(S.focus.id))S.focus=null;
+        S.tasks=M.tasks;S.areas=M.areas;S.projects=M.projects;S.notes=M.notes;S.tomb=M.tomb;S.sess=M.sess;
         snapHashes();
         try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
         SY.applying=false;
-        if(ui.view==='focus'&&!S.focus)ui.view='today';
+        if(ui.view==='focus'&&!F())ui.view='today';
         softRender();
       }
-      if(r&&syCanon(M)===syCanon(r.data)){SY.sha=r.sha;return true;}
-      var out={app:'langkah',v:1,savedAt:now(),tasks:M.tasks,areas:M.areas,projects:M.projects,notes:M.notes,tomb:M.tomb};
-      return syPut(out,r&&r.sha).then(function(sha){SY.sha=sha;return true;});
+      if(r&&syCanon(M)===syCanon(r.data)){SY.sha=r.sha;SY.etag=r.etag;SY.canon=syCanon(M);return true;}
+      var out={app:'langkah',v:1,savedAt:now(),tasks:M.tasks,areas:M.areas,projects:M.projects,notes:M.notes,tomb:M.tomb,sess:M.sess};
+      return syPut(out,r&&r.sha).then(function(sha){SY.sha=sha;SY.etag=null;SY.canon=syCanon(M);return true;});
     }).catch(function(e){
       if(e.conflict&&attempts<3){attempts++;return once();}
       throw e;
     });
   }
   return once().then(function(){
-    SY.busy=false; SY.state='idle'; SY.last=new Date(); SY.msg=''; PREF.lastBackup=now(); savePref(); paintSy();
+    SY.busy=false; SY.state='idle'; SY.last=new Date(); SY.lastTs=Date.now(); SY.msg=''; SY.authFail=false; PREF.lastBackup=now(); savePref(); paintSy();
     if(SY.pending){SY.pending=false;syQueue();}
     return true;
   },function(e){
     SY.busy=false; SY.pending=false;
     if(e.net){SY.state='offline';}else{SY.state='err';}
+    if(e.status===401||e.status===403)SY.authFail=true;
     SY.msg=e.conflict?'Data berubah terus di perangkat lain. Coba lagi sebentar.':e.message; paintSy(); return e;
   });
 }
@@ -798,7 +835,7 @@ function captureBox(){
     '<div class="input"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5C574E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>'+
     '<input id="capture" type="text" autocomplete="off" placeholder="'+(isNote?'Tulis catatan singkat, lalu Enter':'Ketik tugas, lalu Enter (Ctrl+Enter = catatan)')+'" data-enter="capture">'+
     (hasProj?'<select id="capproj" class="psel" data-change="capproj" aria-label="Projek (opsional)">'+projOptions(ui.capProject)+'</select>':'')+
-    '</div></div>';
+    '<button class="addbtn" type="button" data-act="enterbtn" data-key="capture">Tambah</button></div></div>';
 }
 
 function triageBox(){
@@ -852,7 +889,7 @@ function stepsPane(t,mode){
   }).join('');
   return '<div class="pane">'+head+'<div class="pane-body">'+
     (n?'<ul class="steps">'+rows+'</ul>':'<div class="small">Belum ada langkah. Tulis satu saja kalau sudah terlintas.</div>')+
-    '<div class="sin"><label class="sr" for="'+iid+'">Tambah langkah</label><input id="'+iid+'" type="text" autocomplete="off" placeholder="Tambah langkah, lalu Enter" data-enter="stepadd" data-id="'+t.id+'"><span class="hint">Enter</span></div></div></div>';
+    '<div class="sin"><label class="sr" for="'+iid+'">Tambah langkah</label><input id="'+iid+'" type="text" autocomplete="off" placeholder="Tambah langkah, lalu Enter" data-enter="stepadd" data-id="'+t.id+'"><button class="addbtn" type="button" data-act="enterbtn" data-key="'+iid+'">Tambah</button></div></div></div>';
 }
 
 function taskRow(t,ctx){
@@ -865,9 +902,9 @@ function taskRow(t,ctx){
     body='<div class="body"><div class="sin"><label class="sr" for="editt">Nama tugas</label><input id="editt" type="text" value="'+esc(t.title)+'" data-enter="savetask" data-id="'+t.id+'"></div></div>';
   }else{
     var nanti=(ctx==='dash'&&(t.status==='later'||t.status==='inbox'))?'<span class="plabel">Nanti</span>':'';
-    body='<div class="body"><button class="title-btn" type="button" data-act="edittask" data-id="'+t.id+'" title="Klik untuk mengubah nama">'+esc(t.title)+'</button><div class="meta">'+projChip(t)+noteChip(t)+nanti+
+    body='<div class="body"><button class="title-btn" type="button" data-act="edittask" data-id="'+t.id+'" title="Klik untuk mengubah nama">'+esc(t.title)+'</button><div class="meta">'+(isLive(t.id)?'<span class="plabel nowtag">Sedang dikerjakan</span>':'')+projChip(t)+noteChip(t)+nanti+
       '<button class="chip" type="button" data-act="togglesteps" data-key="'+t.id+'" data-def="0" aria-expanded="'+(open?'true':'false')+'">'+CHEV_S+(n?(dn+' dari '+n+' langkah'):'+ langkah')+'</button></div></div>';
-    if(ctx==='today'&&!done)actions='<div class="btns"><button class="btn-o btn-g" type="button" data-act="start" data-id="'+t.id+'">Mulai</button><button class="btn-o" type="button" data-act="postpone" data-id="'+t.id+'">Tunda</button><button class="ibtn tdel" type="button" data-act="trashtask" data-id="'+t.id+'" title="Buang" aria-label="Buang: '+esc(t.title)+'">'+XI+'</button></div>';
+    if(ctx==='today'&&!done)actions='<div class="btns"><button class="btn-o btn-g" type="button" data-act="start" data-id="'+t.id+'">'+(isLive(t.id)?'Lanjutkan':'Mulai')+'</button><button class="btn-o" type="button" data-act="postpone" data-id="'+t.id+'">Tunda</button><button class="ibtn tdel" type="button" data-act="trashtask" data-id="'+t.id+'" title="Buang" aria-label="Buang: '+esc(t.title)+'">'+XI+'</button></div>';
     else if(ctx==='later')actions='<div class="btns"><button class="btn-o btn-g" type="button" data-act="totoday" data-id="'+t.id+'">Ke Hari Ini</button><button class="btn-o" type="button" data-act="triage" data-to="trash" data-id="'+t.id+'">Buang</button></div>';
     else if(ctx==='dash'&&!done)actions='<div class="btns">'+(t.status==='today'?'':'<button class="btn-o btn-g" type="button" data-act="totoday" data-id="'+t.id+'">Ke Hari Ini</button>')+'<button class="btn-o" type="button" data-act="start" data-id="'+t.id+'">Mulai</button></div>';
   }
@@ -1153,7 +1190,7 @@ function viewNotes(){
 
 /* --- Dasbor --- */
 function addInput(id,kind,placeholder,idAttr){
-  return '<div class="addrow"><div class="sin"><label class="sr" for="'+idAttr+'">'+esc(placeholder)+'</label><input id="'+idAttr+'" type="text" autocomplete="off" placeholder="'+esc(placeholder)+'" data-enter="'+kind+'"'+(id?' data-id="'+id+'"':'')+'></div></div>';
+  return '<div class="addrow"><div class="sin"><label class="sr" for="'+idAttr+'">'+esc(placeholder)+'</label><input id="'+idAttr+'" type="text" autocomplete="off" placeholder="'+esc(placeholder)+'" data-enter="'+kind+'"'+(id?' data-id="'+id+'"':'')+'><button class="addbtn" type="button" data-act="enterbtn" data-key="'+idAttr+'">Tambah</button></div></div>';
 }
 function byDoneDesc(a,b){return (a.doneAt||'')<(b.doneAt||'')?1:-1;}
 function dashProjShow(c){return ui.dashF==='open'?(c.open>0||c.done===0):(ui.dashF==='done'?(c.done>0&&c.open===0):true);}
@@ -1236,8 +1273,8 @@ function viewDash(){
 }
 
 /* --- Fokus --- */
-function clockInfo(){
-  var f=S.focus; if(!f)return null;
+function clockInfo(f){
+  f=f||F(); if(!f)return null;
   var el=Math.floor((Date.now()-f.start)/1000);
   if(f.timerMin){var total=f.timerMin*60,left=Math.max(0,total-el);return {text:fmt(left),label:left>0?'tersisa':'waktu habis',frac:Math.max(left/total,0.004),over:left===0};}
   return {text:fmt(el),label:'sudah berjalan',frac:0.004,over:false};
@@ -1245,18 +1282,19 @@ function clockInfo(){
 function fmt(sec){var m=Math.floor(sec/60),s=sec%60;return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;}
 
 function viewFocus(){
-  var f=S.focus, t=f&&byId(f.id);
+  var f=F(), t=f&&byId(f.id);
   if(!t){ui.view='today';return viewToday();}
   var cs=curStep(t), ci=clockInfo(), pl=projLabel(t);
   var eyebrow=(pl?esc(pl)+' · ':'')+(cs?(esc(t.title)+' · langkah ke-'+(cs.index+1)):'Satu tugas, satu langkah');
   var big=cs?cs.step.text:t.title;
   var circ=2*Math.PI*104;
   var h='<div class="focus"><div class="ftop"><button class="back" type="button" data-act="leave">'+BACK+'Kembali ke Hari Ini</button>'+
-    '<div class="btns"><button class="fbtn" type="button" data-act="timerpick" aria-pressed="'+(f.timerMin?'true':'false')+'">'+(f.timerMin?('Timer '+f.timerMin+' menit'):'Pasang timer (opsional)')+'</button></div></div>';
+    '<div class="btns"><button class="fbtn" type="button" data-act="togglesound" aria-pressed="'+(PREF.mute?'false':'true')+'">Bunyi: '+(PREF.mute?'mati':'nyala')+'</button><button class="fbtn" type="button" data-act="timerpick" aria-pressed="'+(f.timerMin?'true':'false')+'">'+(f.timerMin?('Timer '+f.timerMin+' menit'):'Pasang timer (opsional)')+'</button></div></div>';
   if(ui.timerPick){
     h+='<div class="btns" style="justify-content:center;margin-top:14px">';
     [10,15,25].forEach(function(m){h+='<button class="fbtn" type="button" data-act="settimer" data-min="'+m+'" aria-pressed="'+(f.timerMin===m)+'">'+m+' menit</button>';});
-    h+='<button class="fbtn" type="button" data-act="settimer" data-min="0" aria-pressed="'+(!f.timerMin)+'">Tanpa timer</button></div>';
+    h+='<button class="fbtn" type="button" data-act="settimer" data-min="0" aria-pressed="'+(!f.timerMin)+'">Tanpa timer</button></div>'+
+      '<div class="finput" style="max-width:340px;margin:12px auto 0"><input id="tmin" type="number" inputmode="numeric" min="1" max="720" step="1" placeholder="Menit sendiri, mis. 40" aria-label="Lama timer dalam menit" data-enter="settimerc"><button class="addbtn" type="button" data-act="enterbtn" data-key="tmin">Pasang</button></div>';
   }
   h+='<div class="fgrid"><div class="fleft"><div><div class="eyebrow">'+eyebrow+'</div><h1 style="margin-top:10px">'+esc(big)+'</h1></div>'+
     '<div class="ring"><svg width="240" height="240" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="104" fill="none" stroke="#34443F" stroke-width="12"/>'+
@@ -1266,22 +1304,40 @@ function viewFocus(){
   h+='<div class="fact"><button class="fmain" type="button" data-act="'+(cs?'stepdone':'taskdone')+'">'+(cs?'Langkah ini selesai':'Tugas ini selesai')+'</button>'+
     '<button class="fsec" type="button" data-act="postponefocus">Nanti saja</button></div>'+
     '</div>'+
-    '<div class="fright"><div class="fpanel"><label for="terlintas">Ada yang terlintas saat mengerjakan?</label><div class="finput"><input id="terlintas" type="text" autocomplete="off" placeholder="Catat singkat, kembali lagi ke sini" data-enter="capture"><span class="hint">Enter</span></div></div>'+
+    '<div class="fright"><div class="fpanel"><label for="terlintas">Ada yang terlintas saat mengerjakan?</label><div class="finput"><input id="terlintas" type="text" autocomplete="off" placeholder="Catat singkat, kembali lagi ke sini" data-enter="capture"><button class="addbtn" type="button" data-act="enterbtn" data-key="terlintas">Catat</button></div></div>'+
     stepsPane(t,'focus')+'<p class="fnote" style="align-self:center;text-align:center">Tidak perlu tahu semua langkahnya. Cukup yang ada di depan mata.</p></div></div></div>';
   return h;
 }
 
 /* ---------- Render ---------- */
+var VKEY='langkah.view';
+function saveView(){
+  try{sessionStorage.setItem(VKEY,JSON.stringify({view:ui.view,trailId:ui.trailId,todayFilter:ui.todayFilter,doneFilter:ui.doneFilter,laterFilter:ui.laterFilter,dashF:ui.dashF,noteFilter:ui.noteFilter,noteProj:ui.noteProj,gq:ui.gq,capType:ui.capType,cur:ui.cur}));}catch(e){}
+}
+function restoreView(){
+  var v=null; try{v=JSON.parse(sessionStorage.getItem(VKEY));}catch(e){}
+  if(!v)return;
+  ['todayFilter','doneFilter','laterFilter','dashF','noteFilter','noteProj','gq','capType'].forEach(function(k){if(typeof v[k]==='string')ui[k]=v[k];});
+  var ok={today:1,later:1,notes:1,dash:1,done:1,search:1,trash:1,sync:1,more:1};
+  if(ok[v.view])ui.view=v.view;
+  else if(v.view==='focus'&&v.cur&&isLive(v.cur)&&byId(v.cur)){ui.cur=v.cur;ui.view='focus';}
+  else if(v.view==='trail'&&v.trailId&&byId(v.trailId)){ui.view='trail';ui.trailId=v.trailId;}
+}
 function render(){
+  sessCleanup();
+  if(ui.view==='focus'&&!F())ui.view='today';
   var root=document.getElementById('root'), body;
   if(ui.view==='focus')body=viewFocus();
   else{
     var main;
     if(ui.view==='later')main=viewLater(); else if(ui.view==='done')main=viewDone(); else if(ui.view==='trail')main=viewTrail(); else if(ui.view==='dash')main=viewDash(); else if(ui.view==='notes')main=viewNotes(); else if(ui.view==='search')main=viewSearch(); else if(ui.view==='sync')main=viewSync(); else if(ui.view==='more')main=viewMore(); else if(ui.view==='trash')main=viewTrash(); else main=W()?viewTodayWide():viewToday();
-    body='<div class="app">'+sidebar()+'<main class="main'+(W()?' wmain':'')+'">'+(ui.saveErr?'<div class="errbar" role="alert">Perubahan terakhir <b>gagal tersimpan</b> di browser. Klik <b>Cadangkan data (JSON)</b> sekarang supaya tidak hilang.</div>':'')+main+'</main></div>';
+    body='<div class="app">'+sidebar()+'<main class="main'+(W()?' wmain':'')+'">'+focusBar()+(ui.saveErr?'<div class="errbar" role="alert">Perubahan terakhir <b>gagal tersimpan</b> di browser. Klik <b>Cadangkan data (JSON)</b> sekarang supaya tidak hilang.</div>':'')+main+'</main></div>';
   }
   root.innerHTML=body;
   paintToast();
+  Array.prototype.forEach.call(root.querySelectorAll('input[data-enter]'),function(i){i.setAttribute('form','gform');i.setAttribute('enterkeyhint','done');});
+  document.title=sessList().some(function(x){return clockInfo(x).over;})?'\u23f0 Waktu habis \u00b7 Langkah':'Langkah';
+  saveView();
   if(ui.refocus){var el=document.getElementById(ui.refocus);if(el){el.focus();if(el.id==='nsearch'||el.id==='newnote'||el.id==='gsearch'){var L=el.value.length;try{el.setSelectionRange(L,L);}catch(x){}}else if(el.select&&el.tagName==='INPUT'&&el.value)el.select();}ui.refocus=null;}
   if(ui.scrollTo){var se2=document.getElementById(ui.scrollTo);if(se2){try{se2.scrollIntoView({block:'center'});}catch(x){}se2.classList.add('flash');}ui.scrollTo='';}
 }
@@ -1296,11 +1352,126 @@ function paintToast(){
 }
 
 /* ---------- Aksi ---------- */
-function startFocus(id){
-  S.focus={id:id,start:Date.now(),timerMin:0}; save();
-  ui.view='focus';ui.timerPick=false;ui.overShown=false;ui.edit=null;
+var NS={}, RING={}, AC=null;
+function isLive(id){var s=S.sess[id];return !!(s&&!s.end);}
+function sessList(){
+  var a=[]; Object.keys(S.sess).forEach(function(id){var s=S.sess[id]; if(s&&!s.end){var t=byId(id); if(t&&t.status!=='done'&&t.status!=='trash')a.push(s);}});
+  a.sort(function(x,y){return x.start-y.start;}); return a;
 }
-function endFocus(){S.focus=null;save();ui.view='today';ui.timerPick=false;}
+function F(){var s=ui.cur&&S.sess[ui.cur]; return (s&&!s.end&&byId(ui.cur))?s:null;}
+function sessSync(){ if(SY&&SY.cfg){clearTimeout(SY.timer);syncNow('sess');} }
+function alKey(s){return s.start+':'+s.timerMin;}
+function isAlerted(s){return !!(PREF.al&&PREF.al[s.id]===alKey(s));}
+function setAlerted(s){PREF.al=PREF.al||{};PREF.al[s.id]=alKey(s);savePref();}
+function clearAlerted(id){if(PREF.al&&PREF.al[id]){delete PREF.al[id];savePref();}}
+function audioUnlock(){try{var C=window.AudioContext||window.webkitAudioContext; if(!C)return; if(!AC)AC=new C(); if(AC.state==='suspended')AC.resume();}catch(e){}}
+['pointerdown','keydown','touchstart'].forEach(function(ev){document.addEventListener(ev,audioUnlock,{passive:true});});
+function beep(){
+  if(!PREF.mute){
+    try{
+      audioUnlock(); if(AC){var t0=AC.currentTime;
+        [[660,0],[880,0.22],[1100,0.44]].forEach(function(p){var o=AC.createOscillator(),g=AC.createGain(),st=t0+p[1];o.type='sine';o.frequency.value=p[0];g.gain.setValueAtTime(0.0001,st);g.gain.exponentialRampToValueAtTime(0.35,st+0.02);g.gain.exponentialRampToValueAtTime(0.0001,st+0.2);o.connect(g);g.connect(AC.destination);o.start(st);o.stop(st+0.22);});}
+    }catch(e){}
+  }
+  try{if(navigator.vibrate)navigator.vibrate([200,100,200]);}catch(e){}
+}
+function ringStart(id){RING[id]={n:0,next:0};}
+function ringStop(id){delete RING[id];}
+function ringTick(){
+  Object.keys(RING).forEach(function(id){
+    var s=S.sess[id],r=RING[id];
+    if(!s||s.end||!clockInfo(s).over){delete RING[id];return;}
+    if(Date.now()>=r.next){beep();r.n++;r.next=Date.now()+10000;if(r.n>=6)delete RING[id];}
+  });
+}
+function startFocus(id){
+  if(isLive(id)){ui.cur=id;ui.view='focus';ui.timerPick=false;ui.edit=null;return;}
+  S.sess[id]={id:id,start:Date.now(),timerMin:0,upd:now()};
+  ui.cur=id; save(); sessSync();
+  if(window.Notification&&Notification.permission==='granted')notifySession(S.sess[id]);else notifyAsk();
+  ui.view='focus';ui.timerPick=false;ui.edit=null;
+}
+function setTimer(f,m){
+  if(!f)return;
+  f.timerMin=m; f.start=Date.now(); f.upd=now();
+  clearAlerted(f.id); ringStop(f.id); notifyClear('langkah-over-'+f.id);
+  save(); sessSync(); notifySession(f);
+}
+function endFocus(id){
+  id=id||ui.cur; var s=id&&S.sess[id];
+  if(s&&!s.end)S.sess[id]={id:id,end:true,start:s.start,upd:now()};
+  if(id){ringStop(id);clearAlerted(id);notifyClear('langkah-sess-'+id);notifyClear('langkah-over-'+id);delete NS[id];}
+  save(); sessSync();
+  if(ui.cur===id){ui.cur=null;if(ui.view==='focus')ui.view='today';}
+  ui.timerPick=false;
+}
+function focusBar(){
+  if(ui.view==='focus')return '';
+  var L=sessList(); if(!L.length)return '';
+  var h='<div class="fbars" id="fbars">';
+  L.forEach(function(s){
+    var t=byId(s.id), ci=clockInfo(s), cs=curStep(t);
+    h+='<div class="fbar'+(ci.over?' over':'')+'" role="status"><span class="dot" aria-hidden="true"></span>'+
+      '<div class="fbt"><b>'+esc(t.title)+'</b><span>'+(ci.over?'Waktu habis. Lanjut atau akhiri sesi?':(s.timerMin?'Timer berjalan, tersisa':'Sedang dikerjakan, sudah berjalan')+(cs?' · langkah ke-'+(cs.index+1):''))+'</span></div>'+
+      '<span class="fbc" id="fbclock-'+s.id+'">'+ci.text+'</span>'+
+      '<button class="go" type="button" data-act="resume" data-id="'+s.id+'">Lanjutkan</button><button type="button" data-act="endsession" data-id="'+s.id+'">Akhiri</button></div>';
+  });
+  return h+'</div>';
+}
+function paintBar(){var b=document.getElementById('fbars');if(b)b.outerHTML=focusBar();}
+var SWREG=null;
+function notifyShow(title,opts){
+  try{
+    if(!window.Notification||Notification.permission!=='granted')return;
+    if(SWREG&&SWREG.showNotification){SWREG.showNotification(title,opts);return;}
+    var o2={}; Object.keys(opts).forEach(function(k){if(k!=='actions')o2[k]=opts[k];});
+    new Notification(title,o2);
+  }catch(e){}
+}
+function notifyClear(tag){
+  try{ if(SWREG&&SWREG.getNotifications)SWREG.getNotifications({tag:tag}).then(function(l){l.forEach(function(n){n.close();});}); }catch(e){}
+}
+function notifySession(s){
+  if(!s||s.end)return; var t=byId(s.id); if(!t)return;
+  NS[s.id]=alKey(s);
+  notifyShow('Sedang dikerjakan',{body:t.title+(s.timerMin?' · timer '+s.timerMin+' menit':''),tag:'langkah-sess-'+s.id,data:{id:s.id},silent:true,requireInteraction:true,icon:'icon-192.png',badge:'icon-192.png',
+    actions:[{action:'done',title:'Selesai'},{action:'end',title:'Akhiri sesi'}]});
+}
+function notifyAsk(){
+  try{ if(window.Notification&&Notification.permission==='default'){var r=Notification.requestPermission();if(r&&r.then)r.then(function(){sessList().forEach(notifySession);});} }catch(e){}
+}
+function notifyOver(t,s){
+  if(!s)return;
+  notifyClear('langkah-sess-'+s.id);
+  notifyShow('Waktu habis',{body:(t?t.title+'. ':'')+'Lanjut sebentar atau berhenti? Dua-duanya boleh.',tag:'langkah-over-'+s.id,data:{id:s.id},renotify:true,vibrate:[200,100,200],requireInteraction:true,icon:'icon-192.png',badge:'icon-192.png',
+    actions:[{action:'plus5',title:'+5 menit'},{action:'end',title:'Akhiri'}]});
+}
+function sessCleanup(){
+  var ch=false;
+  Object.keys(S.sess).forEach(function(id){
+    var s=S.sess[id]; if(!s||s.end)return; var t=byId(id);
+    if(!t||t.status==='done'||t.status==='trash'){S.sess[id]={id:id,end:true,start:s.start,upd:now()};ch=true;}
+  });
+  if(ch){save();sessSync();}
+  var live=sessList(), map={};
+  live.forEach(function(s){map[s.id]=1; if(NS[s.id]!==alKey(s))notifySession(s);});
+  Object.keys(NS).forEach(function(id){if(!map[id]){notifyClear('langkah-sess-'+id);notifyClear('langkah-over-'+id);delete NS[id];}});
+}
+function sessAction(a,id){
+  var s=S.sess[id], t=byId(id);
+  if(!s||s.end||!t){toast('Sesi itu sudah berakhir.');render();return;}
+  if(a==='end'){endFocus(id);toast('Sesi diakhiri.');}
+  else if(a==='plus5'){setTimer(s,5);toast('Timer 5 menit lagi.');}
+  else if(a==='done'){
+    if(pendingSteps(t)>0){toast('Masih ada langkah yang belum selesai.');ui.cur=id;ui.view='focus';}
+    else{setStatus(t,'done');save();endFocus(id);toast('Tugas beres. Kamu hebat.');}
+  }else{ui.cur=id;ui.view='focus';}
+  render();
+}
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+  navigator.serviceWorker.register('sw.js').then(function(r){SWREG=r;return navigator.serviceWorker.ready;}).then(function(r){SWREG=r;}).catch(function(){});
+  try{navigator.serviceWorker.addEventListener('message',function(e){var m=e.data||{}; if(m.type==='langkah-act'&&m.id)sessAction(m.action,m.id);});}catch(x){}
+}
 function afterStep(res){
   if(res==='done'){toast('Semua langkah beres. Tugas selesai!');if(ui.view==='focus')endFocus();}
   else if(res==='reopened'){toast('Tugas dibuka lagi.');}
@@ -1356,10 +1527,13 @@ function act(a,d){
     case 'postpone': if(t){setStatus(t,'later');save();toast('Dipindah ke Nanti.');} break;
     case 'totoday': if(t){setStatus(t,'today');save();toast('Masuk Hari Ini.');} break;
     case 'trail': if(t){ui.trailId=t.id;ui.view='trail';} break;
-    case 'leave': endFocus(); break;
+    case 'leave': ui.view='today'; ui.timerPick=false; break;
+    case 'resume': var rs=d.id?S.sess[d.id]:F(); if(rs&&!rs.end&&byId(rs.id)){ui.cur=rs.id;ui.view='focus';ui.timerPick=false;ringStop(rs.id);} break;
+    case 'endsession': endFocus(d.id||ui.cur); toast('Sesi diakhiri.'); break;
+    case 'togglesound': PREF.mute=!PREF.mute; savePref(); if(!PREF.mute){audioUnlock();beep();} break;
     case 'timerpick': ui.timerPick=!ui.timerPick; break;
     case 'settimer':
-      if(S.focus){S.focus.timerMin=parseInt(d.min,10)||0;S.focus.start=Date.now();save();ui.overShown=false;}
+      setTimer(F(),parseInt(d.min,10)||0); notifyAsk();
       ui.timerPick=false; break;
     case 'togglesteps':
       ui.exp[d.key]=!isOpen(d.key,d.def==='1');
@@ -1388,12 +1562,12 @@ function act(a,d){
     case 'notepin': var np=noteById(d.id); if(np){np.pinned=!np.pinned;save();} break;
     case 'notedel': var nd=noteById(d.id); if(nd)delNote(nd); break;
     case 'stepdone':
-      var ft=S.focus&&byId(S.focus.id); if(!ft)break;
+      var cf=F(), ft=cf&&byId(cf.id); if(!ft)break;
       var cs=curStep(ft);
       if(cs){cs.step.done=true;cs.step.doneAt=now();touch(ft);var r1=syncStatus(ft);save();if(r1)afterStep(r1);else toast('Satu langkah beres.');}
       break;
     case 'taskdone':
-      var tt=S.focus&&byId(S.focus.id); if(!tt)break;
+      var cf2=F(), tt=cf2&&byId(cf2.id); if(!tt)break;
       if(pendingSteps(tt)>0){toast('Masih ada langkah yang belum selesai.');break;}
       setStatus(tt,'done');save();endFocus();toast('Tugas beres. Kamu hebat.'); break;
     case 'steptoggle':
@@ -1427,8 +1601,9 @@ function act(a,d){
     case 'delproj':
       var pr=projById(d.id); if(pr){ui.edit=null;delProj(pr);} break;
     case 'postponefocus':
-      var pt=S.focus&&byId(S.focus.id); if(pt){setStatus(pt,'later');save();}
+      var cf3=F(), pt=cf3&&byId(cf3.id); if(pt){setStatus(pt,'later');save();}
       endFocus();toast('Dipindah ke Nanti. Tidak apa-apa.'); break;
+    case 'enterbtn': var eb=document.getElementById(d.key); if(eb&&eb.value.trim()){triggerEnter(eb);return;} if(eb)eb.focus(); return;
     case 'export': doExport(); return;
     case 'import': document.getElementById('importfile').click(); return;
   }
@@ -1482,11 +1657,16 @@ function saveEntity(){
 
 function onEnter(kind,inp,d,forceNote){
   var v=inp.value.trim();
+  if(kind==='settimerc'){
+    var mm=parseInt(v,10);
+    if(!(mm>=1&&mm<=720)){toast('Isi menit antara 1 sampai 720.');render();return;}
+    setTimer(F(),mm); notifyAsk(); ui.timerPick=false; render(); return;
+  }
   if(kind==='capture'){
     if(!v)return;
     var asNote=!!forceNote||ui.view==='focus'||ui.capType==='note';
     var pid=null;
-    if(ui.view==='focus'){var ft=S.focus&&byId(S.focus.id); pid=ft?ft.projectId:null;}
+    if(ui.view==='focus'){var cf4=F(), ft=cf4&&byId(cf4.id); pid=ft?ft.projectId:null;}
     else{var se=document.getElementById('capproj'); pid=se?(se.value||null):(ui.capProject||null);}
     if(asNote){addNote(v,pid);toast('Masuk Catatan.');}else{addTask(v,'inbox',pid);toast('Tertangkap.');}
     save();inp.value='';
@@ -1610,8 +1790,17 @@ document.addEventListener('keydown',function(e){
   }
   if(e.key!=='Enter'||e.isComposing)return;
   var el=e.target; if(!el||!el.getAttribute)return;
-  var kind=el.getAttribute('data-enter'); if(!kind)return;
-  e.preventDefault(); onEnter(kind,el,{id:el.getAttribute('data-id'),sid:el.getAttribute('data-sid')});
+  if(!el.getAttribute('data-enter'))return;
+  e.preventDefault(); triggerEnter(el);
+});
+function triggerEnter(el){
+  var kind=el&&el.getAttribute&&el.getAttribute('data-enter'); if(!kind)return;
+  onEnter(kind,el,{id:el.getAttribute('data-id'),sid:el.getAttribute('data-sid')});
+}
+/* tombol Enter/Go di keyboard HP: dikirim browser sebagai submit form, bukan keydown biasa */
+document.addEventListener('submit',function(e){
+  e.preventDefault();
+  var el=document.activeElement; if(el&&el.getAttribute&&el.getAttribute('data-enter'))triggerEnter(el);
 });
 document.getElementById('importfile').addEventListener('change',function(ev){
   var f=ev.target.files&&ev.target.files[0]; if(!f)return;
@@ -1626,7 +1815,7 @@ document.getElementById('importfile').addEventListener('change',function(ev){
       var tomb=(j.tomb&&typeof j.tomb==='object')?j.tomb:{};
       var newIds={}; [j.tasks,j.areas||[],j.projects||[],j.notes||[]].forEach(function(a){a.forEach(function(x){newIds[x.id]=1;});});
       if(SY.cfg){var tn2=now();Object.keys(oldIds).forEach(function(id){if(!newIds[id])tomb[id]=tn2;});}
-      localStorage.setItem(KEY,JSON.stringify({tasks:j.tasks,areas:j.areas||[],projects:j.projects||[],notes:j.notes||[],tomb:tomb,focus:null}));
+      localStorage.setItem(KEY,JSON.stringify({tasks:j.tasks,areas:j.areas||[],projects:j.projects||[],notes:j.notes||[],tomb:tomb,sess:{}}));
       S=load();snapHashes();save();ui.view='today';toast('Data dipulihkan.'+(backedUp?' Data lama sudah diunduh sebagai cadangan.':''));render();
     }catch(err){toast('File itu bukan cadangan Langkah.');render();}
   };
@@ -1641,11 +1830,27 @@ window.addEventListener('resize',function(){
 });
 /* jam fokus: hanya perbarui angka */
 setInterval(function(){
-  if(ui.view!=='focus'||!S.focus)return;
-  var ci=clockInfo(),c=document.getElementById('clock'),l=document.getElementById('clocklbl'),r=document.getElementById('ringp');
-  if(c)c.textContent=ci.text; if(l)l.textContent=ci.label;
-  if(r){var circ=2*Math.PI*104;r.setAttribute('stroke-dasharray',(ci.frac*circ).toFixed(1)+' '+circ.toFixed(1));}
-  if(ci.over&&!ui.overShown){ui.overShown=true;render();}
+  ringTick();
+  var L=sessList(); if(!L.length)return;
+  var cur=F(), anyOver=false, rerender=false;
+  L.forEach(function(x){
+    var ci=clockInfo(x), bc=document.getElementById('fbclock-'+x.id);
+    if(bc)bc.textContent=ci.text;
+    if(cur&&cur.id===x.id&&ui.view==='focus'){
+      var c=document.getElementById('clock'),l=document.getElementById('clocklbl'),r=document.getElementById('ringp');
+      if(c)c.textContent=ci.text; if(l)l.textContent=ci.label;
+      if(r){var circ=2*Math.PI*104;r.setAttribute('stroke-dasharray',(ci.frac*circ).toFixed(1)+' '+circ.toFixed(1));}
+    }
+    if(ci.over){
+      anyOver=true;
+      if(!isAlerted(x)){
+        setAlerted(x); var over=Math.floor((Date.now()-x.start)/1000)-x.timerMin*60;
+        notifyOver(byId(x.id),x); if(over<=120)ringStart(x.id); rerender=true;
+      }
+    }
+  });
+  if(anyOver)document.title='\u23f0 Waktu habis \u00b7 Langkah';
+  if(rerender){if(ui.view==='focus')render(); else paintBar();}
 },1000);
 
 /* sinkron antar-tab: tab lain menyimpan, tab ini ikut memuat ulang */
@@ -1653,7 +1858,7 @@ window.addEventListener('storage',function(e){
   if(e.key!==KEY&&e.key!==PREFKEY&&e.key!==null)return;
   if(e.key===PREFKEY||e.key===null){try{PREF=JSON.parse(localStorage.getItem(PREFKEY))||{};}catch(x){}}
   if(e.key===KEY||e.key===null){S=load();}
-  if(ui.view==='focus'&&!(S.focus&&byId(S.focus.id)))ui.view='today';
+  if(ui.view==='focus'&&!F())ui.view='today';
   if(e.key===KEY||e.key===null)snapHashes();
   softRender();
 });
@@ -1676,9 +1881,15 @@ fsInit();
 document.addEventListener('visibilitychange',function(){if(!document.hidden)syncNow('focus');});
 window.addEventListener('focus',function(){syncNow('focus');});
 window.addEventListener('online',function(){syncNow('online');});
-setInterval(function(){if(!document.hidden)syncNow('timer');},90000);
-(function(){var ft=S.focus&&byId(S.focus.id); if(ft&&ft.status!=='done'&&ft.status!=='trash'){ui.view='focus';}else{S.focus=null;}})();
+setInterval(function(){if(!document.hidden)syncNow('timer');},120000);
+restoreView();
 render();
+(function(){
+  try{
+    var q=new URLSearchParams(location.search), a=q.get('aksi'), id=q.get('id');
+    if(a&&id){history.replaceState(null,'',location.pathname);sessAction(a,id);}
+  }catch(e){}
+})();
 syncNow('start');
 })();
 </script>
