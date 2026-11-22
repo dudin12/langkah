@@ -1,0 +1,48 @@
+name: Laporan masalah
+description: Ada yang tidak berjalan sebagaimana mestinya.
+title: "[Masalah] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Maaf atas ketidaknyamanannya. Semakin jelas ceritanya, semakin cepat bisa diperbaiki.
+        Jangan menempelkan token GitHub atau data pribadi di sini.
+  - type: textarea
+    id: langkah
+    attributes:
+      label: Apa yang kamu lakukan?
+      description: Urutkan langkahnya. Misalnya, "1. Buka Catatan 2. Ketuk sebuah catatan 3. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: terjadi
+    attributes:
+      label: Apa yang terjadi, dan apa yang seharusnya terjadi?
+    validations:
+      required: true
+  - type: dropdown
+    id: perangkat
+    attributes:
+      label: Perangkat
+      options:
+        - HP Android (Chrome)
+        - HP Android (aplikasi terpasang)
+        - iPhone
+        - Laptop atau komputer (Chrome/Edge)
+        - Laptop atau komputer (browser lain)
+    validations:
+      required: true
+  - type: dropdown
+    id: sinkron
+    attributes:
+      label: Apakah sinkron antar perangkat aktif?
+      options:
+        - Tidak
+        - Ya
+        - Tidak tahu
+  - type: textarea
+    id: gambar
+    attributes:
+      label: Tangkapan layar
+      description: Seret gambar ke sini kalau ada.

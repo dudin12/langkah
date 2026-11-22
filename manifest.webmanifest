@@ -1,7 +1,7 @@
 {
   "name": "Langkah",
   "short_name": "Langkah",
-  "description": "Pelacak tugas yang ramah ADHD, satu langkah kecil dalam satu waktu.",
+  "description": "Tangkap pikiran, pilih yang penting hari ini, kerjakan satu per satu.",
   "lang": "id",
   "start_url": "./index.html",
   "scope": "./",

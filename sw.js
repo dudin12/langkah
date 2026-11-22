@@ -1,5 +1,6 @@
 /* Langkah service worker: cache untuk buka cepat/offline + klik notifikasi. */
-var CACHE = 'langkah-shell-v2';
+var CACHE = 'langkah-shell-v3';
+var STATE_CACHE = 'langkah-state', STATE_URL = './__langkah_state';
 var SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', function (e) {
@@ -7,7 +8,7 @@ self.addEventListener('install', function (e) {
 });
 self.addEventListener('activate', function (e) {
   e.waitUntil(caches.keys().then(function (ks) {
-    return Promise.all(ks.filter(function (k) { return k !== CACHE; }).map(function (k) { return caches.delete(k); }));
+    return Promise.all(ks.filter(function (k) { return k !== CACHE && k !== STATE_CACHE; }).map(function (k) { return caches.delete(k); }));
   }).then(function () { return self.clients.claim(); }));
 });
 /* Jaringan dulu supaya versi baru langsung terlihat; cache hanya cadangan saat offline.
@@ -35,5 +36,34 @@ self.addEventListener('notificationclick', function (e) {
     }
     var url = './index.html' + (id ? '?aksi=' + encodeURIComponent(act) + '&id=' + encodeURIComponent(id) : '');
     return self.clients.openWindow(url);
+  }));
+});
+
+/* Halaman mengirim daftar sesi yang masih berjalan. Disimpan di Cache supaya tetap ada
+   walau service worker dimatikan sementara oleh browser. */
+function readState() {
+  return caches.open(STATE_CACHE).then(function (c) { return c.match(STATE_URL); })
+    .then(function (r) { return r ? r.json() : { live: [], pin: true }; })
+    .catch(function () { return { live: [], pin: true }; });
+}
+self.addEventListener('message', function (e) {
+  var m = e.data || {};
+  if (m.type !== 'langkah-state') return;
+  var body = JSON.stringify({ live: m.live || [], pin: m.pin !== false });
+  e.waitUntil(caches.open(STATE_CACHE).then(function (c) {
+    return c.put(STATE_URL, new Response(body, { headers: { 'Content-Type': 'application/json' } }));
+  }));
+});
+/* Notifikasi tugas berjalan digeser pengguna: tampilkan lagi (tanpa bunyi)
+   selama sesinya masih berjalan dan pengaturan "selalu tampil" menyala. */
+self.addEventListener('notificationclose', function (e) {
+  var d = e.notification.data || {};
+  if (!d.id || !d.t || !d.o) return;
+  e.waitUntil(readState().then(function (st) {
+    if (!st.pin || st.live.indexOf(d.id) < 0) return;
+    var o = {};
+    Object.keys(d.o).forEach(function (k) { o[k] = d.o[k]; });
+    o.data = d; o.silent = true; o.renotify = false;
+    return self.registration.showNotification(d.t, o);
   }));
 });

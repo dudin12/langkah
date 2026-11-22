@@ -21,7 +21,7 @@ button{cursor:pointer}
 h1,h2{margin:0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .app{display:flex;min-height:100vh}
-.side{flex:0 0 240px;background:var(--side);padding:28px 16px;display:flex;flex-direction:column;gap:28px}
+.side{flex:0 0 240px;background:var(--side);padding:28px 16px;display:flex;flex-direction:column;gap:28px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;overscroll-behavior:contain}
 .brand{display:flex;align-items:center;gap:10px;padding:0 8px;font-weight:600;font-size:20px}
 .nav{display:flex;flex-direction:column;gap:4px}
 .nav button{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:12px;border:0;background:transparent;color:#4A453D;font-size:15px;text-align:left}
@@ -245,6 +245,73 @@ input.ntitle-in:focus{outline:3px solid rgba(43,107,97,.35);outline-offset:2px}
 .gcols,.areas{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:20px;align-items:start}
 .listgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:12px;align-items:start}
 .masonry{column-width:380px;column-gap:16px}
+.ntitle.open{cursor:pointer}
+.ntitle.open:hover span,.nprev:hover{color:var(--accent-d)}
+.nmore{align-self:flex-start;background:none;border:0;padding:4px 0;font-size:14px;font-weight:600;color:var(--accent);min-height:32px}
+.ndetail{padding:20px 22px;gap:10px}
+.ndtitle{font-size:28px;line-height:1.2;margin:2px 0 4px;overflow-wrap:anywhere}
+.ndetail .nbody{font-size:17px;line-height:1.7}
+.nsort{height:40px;flex:0 0 auto;min-width:236px}
+.setrow .ptext{flex:1;min-width:0;line-height:1.6}
+.setrow select{height:44px;border:1.5px solid var(--ctl);border-radius:12px;padding:0 10px;font-size:14px;background:#fff;max-width:100%}
+.himg{display:block;width:100%;max-width:560px;height:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.hquick .himg{margin-top:12px}
+.fsbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.fsbar .btns{display:inline-flex;gap:8px}
+.fsbar .btn,.fsbar .btn-o{min-height:38px;font-size:14px}
+.fnav{display:flex;flex-direction:column;gap:2px}
+.side-foot .fnav button{display:flex;align-items:center;justify-content:space-between;min-height:40px;padding:0 12px;border-radius:12px;border:0;background:transparent;color:#4A453D;font-size:14px;text-align:left}
+.side-foot .fnav button[aria-current="page"]{background:#fff;color:var(--accent-d);font-weight:600}
+.side-foot .fnav .count{font-size:12px;color:var(--muted)}
+.slabel{font-size:13px;font-weight:600;color:var(--muted);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.04em}
+.sres.srow{flex-direction:row;align-items:center;justify-content:space-between;gap:12px;cursor:default;flex-wrap:wrap}
+.sres.srow>div:first-child{display:flex;flex-direction:column;gap:3px}
+a.sres{text-decoration:none}
+.setrow.stack{flex-direction:column;align-items:stretch;gap:8px}
+.setrow.stack input,.setrow.stack textarea{width:100%}
+.setrow.stack input{height:46px;border:1.5px solid var(--ctl);border-radius:12px;padding:0 12px;font-size:15px;background:#fff}
+.fbform .nt-area{min-height:130px}
+.stars{display:flex;gap:2px}
+.star{width:44px;height:44px;border:0;background:none;font-size:30px;line-height:1;color:#D6D0C4;cursor:pointer;padding:0}
+.star[aria-pressed="true"]{color:#E0A100}
+.btn.danger{background:#A4401B;border-color:#A4401B}
+.setrow.confirm{background:#FBE8D2;border-radius:12px;padding:12px;flex-wrap:wrap}
+.welcome{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:16px 18px;background:var(--tint);border-color:#B7D3CA}
+.welcome .grow{flex:1 1 260px;display:flex;flex-direction:column;gap:4px}
+.hquick{padding:16px 20px;line-height:1.65;font-size:15px}
+.hquick ol{margin:8px 0 0;padding-left:22px}
+.hlist{display:flex;flex-direction:column;gap:10px}
+.hsec{background:#fff;border:1px solid var(--line);border-radius:16px}
+.hhead{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;background:none;border:0;padding:14px 16px;min-height:56px;color:inherit}
+.hhead>span{display:flex;flex-direction:column;gap:2px}
+.hhead b{font-size:16px}
+.hhead svg{flex:0 0 auto;margin-top:5px;transition:transform .15s}
+.hhead[aria-expanded="true"] svg{transform:rotate(90deg)}
+.hbody{padding:0 18px 18px 40px;font-size:15px;line-height:1.65;color:#3A362F;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.hbody p{margin:0}
+.hbody ol,.hbody ul{margin:0;padding-left:20px}
+.hbody li{margin:4px 0}
+.hbody a.btn-o{text-decoration:none}
+.htab{border-collapse:collapse}
+.htab td{padding:6px 14px 6px 0;vertical-align:top}
+kbd{font-family:inherit;font-size:13px;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;background:var(--bg)}
+.strows{display:flex;flex-direction:column;gap:8px;width:100%}
+.ptext .strows{margin-top:12px}
+.strow{display:flex;gap:10px;align-items:flex-start}
+.strow>div{display:flex;flex-direction:column;gap:1px}
+.sdot{width:10px;height:10px;border-radius:50%;margin-top:7px;flex:0 0 auto;background:#C9C3B6}
+.sdot.ok{background:var(--accent)}
+.sdot.na{background:transparent;border:1.5px solid #C9C3B6}
+.steps-h a{color:var(--accent-d);font-weight:600}
+.steps-h ul{margin:4px 0;padding-left:20px}
+.setc{padding:6px 18px;display:flex;flex-direction:column}
+.setrow{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.setrow:last-child{border-bottom:0}
+.setrow .grow{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+.okb{font-size:13px;font-weight:600;color:var(--accent-d);background:var(--tint);border-radius:999px;padding:6px 12px}
+.bad{color:#8A3A12;background:#F6E3BE}
+.tgl{min-width:84px}
+.tgl[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
 .masonry .note{break-inside:avoid;margin-bottom:16px}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#23211E;color:#fff;padding:12px 20px;border-radius:14px;font-size:15px;z-index:10;animation:rise .25s ease-out}
 .toast{display:flex;align-items:center;gap:14px}
@@ -299,7 +366,7 @@ input.ntitle-in:focus{outline:3px solid rgba(43,107,97,.35);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:760px){
   .app{flex-direction:column}
-  .side{position:fixed;bottom:0;left:0;right:0;z-index:5;flex:none;flex-direction:row;padding:6px 8px;gap:0;justify-content:space-around;border-top:1px solid var(--line)}
+  .side{position:fixed;top:auto;bottom:0;left:0;right:0;z-index:5;flex:none;flex-direction:row;padding:6px 8px;gap:0;justify-content:space-around;border-top:1px solid var(--line);height:auto;overflow:visible;align-self:auto}
   .brand,.side-foot{display:none}
   .nav .desk{display:none}
   .nav .mob{display:flex}
@@ -319,7 +386,7 @@ input.ntitle-in:focus{outline:3px solid rgba(43,107,97,.35);outline-offset:2px}
 <div id="root"></div>
 <div id="toast-slot" role="status" aria-live="polite"></div>
 <form id="gform" autocomplete="off" onsubmit="return false"><button type="submit" hidden tabindex="-1" aria-hidden="true"></button></form>
-<input type="file" id="importfile" accept="application/json" hidden>
+<input type="file" id="importfile" accept=".json,.txt,application/json,text/plain" hidden>
 
 <script>
 (function(){
@@ -348,7 +415,7 @@ function savePref(){try{localStorage.setItem(PREFKEY,JSON.stringify(PREF));}catc
 function canWide(){return window.innerWidth>=1500;}
 function W(){return canWide()&&!PREF.calm;}
 function wrapOpen(){return '<div class="wrap'+(W()?' wide':'')+'">';}
-var ui={view:'today',cur:null,trailId:null,timerPick:false,overShown:false,exp:{},edit:null,dashOpen:{},dashAll:false,dashF:'open',noteProj:'',todayFilter:'all',doneFilter:'all',laterFilter:'all',capType:'task',noteQ:'',noteDraft:'',noteDraftTitle:'',noteFilter:'all',gq:'',saveErr:false,undo:null,trashConfirm:false,ntask:null,selText:'',fromNote:'',scrollTo:'',convert:null,capProject:'',toast:'',refocus:null};
+var ui={view:'today',cur:null,noteId:null,noteSort:'upd',lastView:'',trailId:null,timerPick:false,overShown:false,exp:{},edit:null,dashOpen:{},dashAll:false,dashF:'open',noteProj:'',todayFilter:'all',doneFilter:'all',laterFilter:'all',capType:'task',noteQ:'',noteDraft:'',noteDraftTitle:'',noteFilter:'all',gq:'',saveErr:false,undo:null,trashConfirm:false,ntask:null,selText:'',fromNote:'',scrollTo:'',convert:null,capProject:'',toast:'',refocus:null};
 
 function load(){
   var r=null; try{r=JSON.parse(localStorage.getItem(KEY));}catch(e){}
@@ -620,12 +687,13 @@ function softRender(){
 }
 function syInfoHTML(){
   var c=SY.cfg, cls='bk', h='';
-  if(!c)return '<div id="syinfo" class="bk"><button type="button" data-act="nav" data-view="sync">Sinkron antar perangkat…</button></div>';
+  if(!c)return '<div id="syinfo" class="bk"><button type="button" data-act="nav" data-view="sync">Sinkron antar perangkat (opsional)…</button></div>';
   var tm=SY.last?SY.last.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}):'';
   if(SY.state==='busy'){h='<span class="bkt">Menyinkronkan…</span>';}
   else if(SY.state==='err'){cls+=' warn';h='<span class="bkt">Gagal sinkron: '+esc(SY.msg)+'</span>';}
   else if(SY.state==='offline'){cls+=' warn';h='<span class="bkt">Offline. Akan disinkron saat tersambung.</span>';}
-  else {cls+=' ok';h='<span class="bkt">Tersinkron GitHub'+(tm?' · '+tm:'')+'</span>';}
+  else if(syDirty()&&PREF.syManual){cls+=' warn';h='<span class="bkt">Ada perubahan yang belum terkirim.</span><button type="button" data-act="synow">Sinkron sekarang</button>';}
+  else {cls+=' ok';h='<span class="bkt">Tersinkron'+(tm?' · '+tm:'')+'</span>';}
   return '<div id="syinfo" class="'+cls+'">'+h+'<button type="button" data-act="nav" data-view="sync">Pengaturan sinkron</button></div>';
 }
 function syBoxHTML(){
@@ -635,14 +703,16 @@ function syBoxHTML(){
   if(SY.state==='busy'){cls+=' busy';t='Menyinkronkan…';}
   else if(SY.state==='err'){cls+=' err';t='<b>Gagal sinkron.</b> '+esc(SY.msg);}
   else if(SY.state==='offline'){cls+=' err';t='<b>Offline.</b> Perubahan tetap tersimpan di perangkat ini dan akan disinkron saat tersambung.';}
-  else{cls+=' ok';t='<b>Tersambung ke '+esc(c.repo)+'</b><br>Terakhir sinkron: '+tm;}
+  else{cls+=' ok';t='<b>Tersambung ke '+esc(c.repo)+'</b><br>Terakhir sinkron: '+tm+(syDirty()&&PREF.syManual?'<br><b>Ada perubahan yang belum terkirim.</b> Tekan Sinkron sekarang, atau tunggu jadwal cek berikutnya.':'');}
   return '<div id="sybox" class="'+cls+'">'+t+'</div>';
 }
 function paintSy(){
-  var a=document.getElementById('syinfo'); if(a)a.outerHTML=syInfoHTML();
+  paintStatus();
   var b=document.getElementById('sybox'); if(b)b.outerHTML=syBoxHTML();
 }
-function syQueue(){ if(!SY.cfg||SY.applying)return; clearTimeout(SY.timer); SY.timer=setTimeout(function(){syncNow('change');},2500); }
+function syQueue(){ if(!SY.cfg||SY.applying||PREF.syManual)return; clearTimeout(SY.timer); SY.timer=setTimeout(function(){SY.timer=null;syncNow('change');},2500); }
+function syEvery(){var m=PREF.syEvery;return (typeof m==='number'&&m>=0)?m:2;}
+function syDirty(){try{return !!SY.cfg&&SY.canon!==null&&syCanon(syLocal())!==SY.canon;}catch(e){return false;}}
 /* hasil: Promise<true|Error> */
 function syncNow(reason){
   if(!SY.cfg)return Promise.resolve(false);
@@ -651,13 +721,14 @@ function syncNow(reason){
   if(auto&&reason!=='change'&&reason!=='start'&&reason!=='sess'&&SY.lastTs&&Date.now()-SY.lastTs<20000)return Promise.resolve(false);
   if(SY.busy){SY.pending=true;return Promise.resolve(false);}
   if(typeof navigator!=='undefined'&&navigator.onLine===false){SY.state='offline';paintSy();return Promise.resolve(false);}
-  SY.busy=true; SY.state='busy'; paintSy();
+  SY.busy=true; SY.state='busy'; SY.lastTry=Date.now(); paintSy();
   var attempts=0;
   function once(){
     var clean=SY.canon!==null&&syCanon(syLocal())===SY.canon&&auto&&attempts===0;
     return syGetRemote(clean).then(function(r){
       if(r&&r.notModified)return true;
-      var L=syLocal(), M=syMerge(L,r&&r.data);
+      var force=SY.forceUntil&&Date.now()<SY.forceUntil;
+      var L=syLocal(), M=force?L:syMerge(L,r&&r.data);
       var changedLocal=syCanon(M)!==syCanon(L);
       if(changedLocal){
         SY.applying=true;
@@ -665,6 +736,7 @@ function syncNow(reason){
         snapHashes();
         try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
         SY.applying=false;
+        if(typeof fsQueue==='function')fsQueue();
         if(ui.view==='focus'&&!F())ui.view='today';
         softRender();
       }
@@ -677,7 +749,7 @@ function syncNow(reason){
     });
   }
   return once().then(function(){
-    SY.busy=false; SY.state='idle'; SY.last=new Date(); SY.lastTs=Date.now(); SY.msg=''; SY.authFail=false; PREF.lastBackup=now(); savePref(); paintSy();
+    SY.forceUntil=0; SY.busy=false; SY.state='idle'; SY.last=new Date(); SY.lastTs=Date.now(); SY.msg=''; SY.authFail=false; PREF.lastBackup=now(); savePref(); paintSy();
     if(SY.pending){SY.pending=false;syQueue();}
     return true;
   },function(e){
@@ -691,7 +763,7 @@ function syConnect(){
   var repo=val('syrepo').replace(/^https?:\/\/github\.com\//,'').replace(/\.git$/,'').replace(/\/+$/,''), token=val('sytoken');
   var el=document.getElementById('syerr');
   function fail(m){if(el){el.textContent=m;el.style.display='block';}}
-  if(!/^[\w.-]+\/[\w.-]+$/.test(repo)){fail('Tulis nama repo seperti dudin12/langkah-data.');return;}
+  if(!/^[\w.-]+\/[\w.-]+$/.test(repo)){fail('Tulis nama repo seperti nama-akun/langkah-data.');return;}
   if(!token){fail('Tempel token GitHub dulu.');return;}
   var prev=SY.cfg; SY.cfg={repo:repo,token:token,path:'data.json'};
   fetch('https://api.github.com/repos/'+repo,{headers:{'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json'},cache:'no-store'}).then(function(r){
@@ -715,82 +787,545 @@ function syDisconnect(){
 }
 function viewSync(){
   var c=SY.cfg;
-  var h=wrapOpen()+'<header><h1>Sinkron GitHub</h1><p class="sub">Satu data yang sama di laptop rumah, laptop kantor, dan HP.</p></header>';
+  var h=wrapOpen()+'<header><h1>Sinkron antar perangkat</h1><p class="sub">Opsional. Hanya perlu kalau kamu mau memakai data yang sama di beberapa perangkat, misalnya laptop dan HP. Kalau hanya memakai satu perangkat, lewati saja.</p></header>';
   if(c){
-    h+=syBoxHTML()+'<div class="btns" style="margin-top:14px"><button class="btn" type="button" data-act="synow">Sinkron sekarang</button><button class="btn-o" type="button" data-act="sydisc">Putuskan di perangkat ini</button></div>'+
-      '<p class="steps-h" style="margin-top:18px">Sinkron berjalan otomatis: saat aplikasi dibuka, saat kamu kembali ke tab ini, dan beberapa detik setelah setiap perubahan. Memutuskan hanya menghapus token dari perangkat ini. Data di GitHub dan di perangkat lain tidak disentuh.</p>';
+    var ev=syEvery(), opts=[[1,'Tiap 1 menit'],[2,'Tiap 2 menit (bawaan)'],[5,'Tiap 5 menit'],[15,'Tiap 15 menit'],[30,'Tiap 30 menit'],[0,'Tidak berkala']];
+    h+=syBoxHTML()+'<div class="btns" style="margin-top:14px"><button class="btn" type="button" data-act="synow">Sinkron sekarang</button><button class="btn-o" type="button" data-act="sydisc">Putuskan di perangkat ini</button></div>';
+    h+='<section class="card setc" style="margin-top:18px;max-width:720px">'+
+      '<div class="setrow"><div class="grow"><b>Kirim otomatis setelah ada perubahan</b><span class="small">Setiap perubahan, termasuk Mulai dan Akhiri sesi fokus, dikirim beberapa detik kemudian. Kalau dimatikan, perubahan dikirim saat jadwal cek berikutnya atau saat kamu menekan Sinkron sekarang.</span></div>'+
+      '<button class="btn-o tgl" type="button" data-act="syauto" aria-pressed="'+(!PREF.syManual)+'">'+(PREF.syManual?'Mati':'Nyala')+'</button></div>'+
+      '<div class="setrow"><div class="grow"><b>Cek perubahan dari perangkat lain</b><span class="small">Hanya berjalan saat aplikasi terbuka dan terlihat. Cek yang tidak menemukan perubahan sangat ringan dan tidak menghabiskan kuota GitHub.</span></div>'+
+      '<label class="sr" for="syint">Jadwal cek</label><select id="syint" data-change="syint">'+opts.map(function(o){return '<option value="'+o[0]+'"'+(o[0]===ev?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select></div>'+
+      '<div class="setrow"><div class="ptext small">Selain itu, data <b>selalu</b> disamakan saat aplikasi dibuka dan saat kamu kembali ke aplikasi. Pengaturan ini berlaku untuk perangkat ini saja.</div></div></section>';
+    h+=histHTML();
+    h+='<p class="steps-h" style="margin-top:18px">Memutuskan hanya menghapus token dari perangkat ini. Data di perangkat ini, di GitHub, dan di perangkat lain tidak disentuh.</p>';
     return h+'</div>';
   }
-  h+='<div class="steps-h"><b>Persiapan (sekali saja):</b><ol><li>Buat repo <b>privat</b> di GitHub, misalnya <code>langkah-data</code>, dengan README.</li><li>Buat <b>fine-grained token</b> yang hanya boleh mengakses repo itu, izin <b>Contents: Read and write</b>.</li><li>Isi di bawah. Di setiap perangkat lain, ulangi langkah isi ini dengan token yang sama.</li></ol></div>'+
-    '<div class="syf" style="margin-top:18px"><label for="syrepo">Repo data</label><input id="syrepo" type="text" autocomplete="off" placeholder="dudin12/langkah-data" value="dudin12/langkah-data" data-enter="syconnect">'+
+  h+='<div class="steps-h"><p style="margin:0 0 10px"><b>Cara kerjanya.</b> Langkah tidak punya server. Satu salinan datamu dititipkan di <b>repositori privat di akun GitHub milikmu</b> (gratis, hanya kamu yang bisa membukanya). Setiap perangkat tetap menyimpan datanya sendiri, lalu menyamakannya dengan salinan itu. Perubahan dari semua perangkat digabung per item, tidak saling menimpa.</p>'+
+    '<b>Persiapan, sekali saja (sekitar 5 menit):</b><ol>'+
+    '<li>Daftar di <a href="https://github.com/signup" target="_blank" rel="noopener">github.com</a> kalau belum punya akun.</li>'+
+    '<li>Buat <a href="https://github.com/new" target="_blank" rel="noopener">repositori baru</a>: beri nama <code>langkah-data</code>, pilih <b>Private</b>, centang <b>Add a README file</b>, lalu <b>Create repository</b>.</li>'+
+    '<li>Buat <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">token akses</a> (semacam kunci khusus untuk Langkah):<ul>'+
+      '<li><b>Expiration</b>: pilih masa berlaku, misalnya 1 tahun.</li>'+
+      '<li><b>Repository access</b>: <b>Only select repositories</b>, lalu pilih <code>langkah-data</code>.</li>'+
+      '<li><b>Permissions</b>: tambahkan <b>Contents</b>, lalu pilih <b>Read and write</b>.</li>'+
+      '<li>Tekan <b>Generate token</b>, lalu salin tokennya (diawali <code>github_pat_</code>). Token hanya ditampilkan sekali, simpan di tempat aman.</li></ul></li>'+
+    '<li>Isi formulir di bawah dengan <code>nama-akun/langkah-data</code> dan token tadi, lalu tekan <b>Hubungkan dan sinkron</b>.</li>'+
+    '<li>Di perangkat lain, buka Langkah dan ulangi langkah 4 dengan nama repo dan token yang sama.</li></ol></div>'+
+    '<div class="syf" style="margin-top:18px"><label for="syrepo">Repo data</label><input id="syrepo" type="text" autocomplete="off" placeholder="nama-akun/langkah-data" value="" data-enter="syconnect">'+
     '<label for="sytoken" style="margin-top:8px">Token GitHub</label><input id="sytoken" type="password" autocomplete="off" placeholder="github_pat_…" data-enter="syconnect">'+
     '<div id="syerr" class="sybox err" role="alert" style="display:none"></div>'+
     '<div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="syconnect">Hubungkan dan sinkron</button></div>'+
     '<p class="small" style="line-height:1.5">Token disimpan hanya di browser perangkat ini, tidak ikut dalam file cadangan. Jangan dipakai di komputer umum. Data di perangkat ini akan <b>digabung</b> dengan yang ada di GitHub, bukan ditimpa.</p></div>';
   return h+'</div>';
 }
-function viewMore(){
-  var tc=trashCount(); function row(t,sub,act,v){return '<button type="button" class="sres" data-act="'+act+'"'+(v?' data-view="'+v+'"':'')+'><b>'+t+'</b>'+(sub?'<span class="small">'+sub+'</span>':'')+'</button>';}
-  var sy=SY.cfg?(SY.state==='err'?'Gagal: '+esc(SY.msg):(SY.state==='offline'?'Offline':'Tersambung'+(SY.last?' · '+SY.last.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}):''))):'Belum tersambung';
-  return wrapOpen()+'<header><h1>Lainnya</h1></header><div class="list">'+
-    row('Cari','Tugas, langkah, catatan','nav','search')+row('Sampah'+(tc?' ('+tc+')':''),'Pulihkan yang terhapus','nav','trash')+
-    row('Sinkron GitHub',sy,'nav','sync')+row('Cadangkan data (JSON)','Unduh satu file cadangan','export')+row('Pulihkan dari JSON','Impor file cadangan','import')+'</div></div>';
+function viewMore(){return viewSettings();}
+
+/* ---------- Status ringkas di menu samping ---------- */
+var APP_VER='2026.11.22';
+function isMob(){try{return window.matchMedia?window.matchMedia('(max-width:760px)').matches:false;}catch(e){return false;}}
+function bkDays(){var lb=PREF.lastBackup;if(!lb)return null;var t0=new Date();t0.setHours(0,0,0,0);var x=new Date(lb);x.setHours(0,0,0,0);return Math.round((t0-x)/864e5);}
+function needBackup(){var has=S.tasks.length||S.notes.length;if(!has||SY.cfg||FS.state==='on')return false;var d=bkDays();return d===null||d>=7;}
+function hm2(d){return d?d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}):'';}
+/* [kelas, teks, tombol aksi] status terpenting saat ini */
+function statusInfo(){
+  if(FS.state==='need')return ['warn','File data '+esc(FS.name)+' perlu izin lagi.','<button type="button" data-act="fsresume">Buka file data</button>'];
+  if(FS.state==='err')return ['warn','Ada masalah dengan file data.','<button type="button" data-act="nav" data-view="storage">Lihat</button>'];
+  if(SY.cfg&&SY.state==='err')return ['warn','Gagal sinkron: '+esc(SY.msg),'<button type="button" data-act="nav" data-view="sync">Lihat</button>'];
+  if(SY.cfg&&SY.state==='offline')return ['warn','Offline. Disinkron saat tersambung lagi.',''];
+  if(SY.cfg&&syDirty()&&PREF.syManual)return ['warn','Ada perubahan yang belum terkirim.','<button type="button" data-act="synow">Sinkron sekarang</button>'];
+  if(needBackup()){var d=bkDays();return ['warn',d===null?'Belum pernah dicadangkan. Data hanya ada di browser ini.':'Terakhir dicadangkan '+ago(PREF.lastBackup)+'.','<button type="button" data-act="'+(canShareFiles()?'sharebk':'export')+'">Cadangkan sekarang</button>'];}
+  if(SY.cfg&&SY.state==='busy')return ['','Menyinkronkan…',''];
+  if(FS.state==='on')return ['ok','Tersimpan di file '+esc(FS.name)+(FS.last?' · '+hm2(FS.last):''),''];
+  if(SY.cfg)return ['ok','Tersinkron'+(SY.last?' · '+hm2(SY.last):''),''];
+  return ['','Tersimpan di browser ini'+(PREF.lastBackup?' · dicadangkan '+ago(PREF.lastBackup):''),''];
+}
+function sideStatus(){var s=statusInfo();return '<div id="sidestat" class="bk'+(s[0]?' '+s[0]:'')+'" role="status"><span class="bkt">'+s[1]+'</span>'+s[2]+'</div>';}
+function paintStatus(){var b=document.getElementById('sidestat');if(b)b.outerHTML=sideStatus();}
+
+/* ---------- Pengaturan (laptop) = Lainnya (HP) ---------- */
+function viewSettings(){
+  var mob=isMob(), tc=trashCount();
+  function row(t,sub,act,v,extra){return '<button type="button" class="sres" data-act="'+act+'"'+(v?' data-view="'+v+'"':'')+(extra||'')+'><b>'+t+'</b>'+(sub?'<span class="small">'+sub+'</span>':'')+'</button>';}
+  var sy=SY.cfg?(SY.state==='err'?'Gagal: '+esc(SY.msg):(SY.state==='offline'?'Offline':'Tersambung'+(SY.last?' · '+hm2(SY.last):''))):'Belum tersambung. Opsional.';
+  var h=wrapOpen()+'<header><h1>'+(mob?'Lainnya':'Pengaturan')+'</h1></header>';
+  var s=statusInfo();
+  if(mob&&s[0]==='warn')h+='<section class="card welcome"><div class="grow"><b>'+s[1]+'</b></div>'+(s[2]?'<div class="btns">'+s[2].replace('<button ','<button class="btn" ')+'</div>':'')+'</section>';
+  if(mob)h+='<div class="slabel">Menu</div><div class="list">'+row('Cari','Tugas, langkah, catatan','nav','search')+row('Sampah'+(tc?' ('+tc+')':''),'Pulihkan yang terhapus','nav','trash')+row('Panduan','Cara memakai Langkah, fitur per fitur','nav','help')+'</div>';
+  h+='<div class="slabel">Pengaturan</div><div class="list">';
+  if(canWide())h+='<div class="sres srow"><div><b>Tampilan</b><span class="small">Tenang: satu kolom. Luas: lebih banyak kolom di layar lebar.</span></div><div class="seg" role="group" aria-label="Tampilan"><button type="button" data-act="density" data-key="calm" aria-pressed="'+(!!PREF.calm)+'">Tenang</button><button type="button" data-act="density" data-key="wide" aria-pressed="'+(!PREF.calm)+'">Luas</button></div></div>';
+  h+=row('Penyimpanan & cadangan',esc(storageSummary()),'nav','storage')+row('Sinkron antar perangkat',sy,'nav','sync')+row('Notifikasi & bunyi',notifSummary(),'nav','notif')+'</div>';
+  h+='<div class="slabel">Bantuan & masukan</div><div class="list">'+(mob?'':row('Panduan','Cara memakai Langkah, fitur per fitur','nav','help'))+
+    row('Kirim saran atau beri nilai','Ceritakan idemu atau beri bintang. Tanpa perlu akun.','nav','feedback')+
+    '<a class="sres" href="'+ISSUES+'" target="_blank" rel="noopener"><b>Untuk developer: GitHub Issues ↗</b><span class="small">Laporan teknis dan diskusi kode.</span></a></div>';
+  h+='<p class="small" style="margin-top:18px">Langkah versi '+APP_VER+'</p>';
+  return h+'</div>';
 }
 
-/* ---------- Simpan otomatis ke file (Chrome/Edge) ---------- */
-var FS={supported:typeof window.showSaveFilePicker==='function',handle:null,state:'off',name:'',last:null,timer:null};
+/* ---------- Pemulihan yang aman ---------- */
+var UNDO_KEY='langkah.undo';
+function countData(d){var a=0,dn=0;(d.tasks||[]).forEach(function(t){if(t.status==='done')dn++;else if(t.status!=='trash')a++;});return {aktif:a,selesai:dn,catatan:(d.notes||[]).filter(function(n){return !n.deleted;}).length,projek:(d.projects||[]).filter(function(p){return !p.archived;}).length};}
+function cntText(c){return c.aktif+' tugas belum selesai, '+c.selesai+' selesai, '+c.catatan+' catatan, '+c.projek+' projek';}
+function applyData(d){
+  try{localStorage.setItem(KEY,JSON.stringify({tasks:d.tasks,areas:d.areas||[],projects:d.projects||[],notes:d.notes||[],tomb:d.tomb||{},sess:d.sess||{}}));}catch(e){}
+  S=load(); snapHashes(); save();
+}
+function doReplace(d){
+  var oldIds={}; COLS.forEach(function(c){S[c].forEach(function(x){oldIds[x.id]=1;});});
+  var tomb={}; Object.keys(d.tomb||{}).forEach(function(k){tomb[k]=d.tomb[k];});
+  var newIds={}; [d.tasks||[],d.areas||[],d.projects||[],d.notes||[]].forEach(function(a){a.forEach(function(x){newIds[x.id]=1;delete tomb[x.id];});});
+  if(SY.cfg||FS.handle){var tn=now();Object.keys(oldIds).forEach(function(id){if(!newIds[id])tomb[id]=tn;});}
+  applyData({tasks:d.tasks||[],areas:d.areas||[],projects:d.projects||[],notes:d.notes||[],tomb:tomb,sess:{}});
+  if(FS.state==='on'){clearTimeout(FS.timer);fsWrite();}
+  if(SY.cfg){SY.forceUntil=Date.now()+600000;clearTimeout(SY.timer);SY.timer=null;syncNow('manual');}
+}
+function undoSnap(){try{var u=JSON.parse(localStorage.getItem(UNDO_KEY)||'null');if(u&&u.data&&Date.now()-new Date(u.at).getTime()<7*864e5)return u;}catch(e){}return null;}
+function restoreFrom(data,label,src){ui.pending={data:fsData(data),label:label,src:src||'file',confirm:false};ui.view='restore';}
+function viewRestore(){
+  var p=ui.pending; if(!p){ui.view='storage';return viewStorage();}
+  var c=countData(p.data), cur=countData(S), noun=p.src==='github'?'versi itu':(p.src==='undo'?'data sebelum pemulihan':'file cadangan');
+  var h=wrapOpen()+'<header><h1>Pulihkan data</h1><p class="sub">Dari: <b>'+esc(p.label)+'</b><br>Isinya: '+cntText(c)+'.<br>Data sekarang: '+cntText(cur)+'.</p></header>';
+  h+='<section class="card setc"><div class="setrow"><div class="grow"><b>Gabungkan dengan data sekarang (disarankan)</b><span class="small">Tugas dan catatan dari '+noun+' ditambahkan. Kalau ada yang sama, versi yang terakhir diubah yang dipakai. Tidak ada yang dihapus.</span></div><button class="btn" type="button" data-act="restmerge">Gabungkan</button></div></section>';
+  var where=['<li>Perangkat ini</li>'];
+  if(FS.handle)where.push('<li>File data <b>'+esc(FS.name)+'</b></li>');
+  if(SY.cfg)where.push('<li>GitHub (<b>'+esc(SY.cfg.repo)+'</b>), lalu laptop dan HP lain yang tersambung saat sinkron berikutnya</li>');
+  h+='<section class="card setc"><div class="setrow"><div class="ptext"><b>Ganti semuanya</b><span class="small" style="display:block;margin-top:3px">Semua data dibuat persis seperti '+noun+'. Tugas, catatan, dan projek yang tidak ada di sana akan hilang dari:</span><ul class="small" style="margin:6px 0 0;padding-left:20px">'+where.join('')+'</ul>'+
+    '<span class="small" style="display:block;margin-top:6px">Data yang sekarang disimpan dulu, jadi bisa dibatalkan dengan <b>Urungkan</b> sampai 7 hari.</span></div></div>';
+  if(!p.confirm)h+='<div class="setrow"><button class="btn-o" type="button" data-act="restreplace">Ganti semuanya…</button></div>';
+  else h+='<div class="setrow confirm"><div class="ptext small"><b>Yakin?</b> '+(SY.cfg||FS.handle?'Perubahan ini ikut ke '+(SY.cfg?'GitHub dan perangkat lain':'file data')+'.':'Data di perangkat ini akan diganti.')+'</div><div class="btns"><button class="btn danger" type="button" data-act="restreplace2">Ya, ganti semuanya</button><button class="btn-o" type="button" data-act="restcancel2">Tidak jadi</button></div></div>';
+  h+='</section><div class="btns" style="margin-top:14px"><button class="btn-o" type="button" data-act="restcancel">Batal</button></div>';
+  return h+'</div>';
+}
+function restMerge(){
+  var p=ui.pending; if(!p)return;
+  var L=syLocal(), M=syMerge(L,p.data), ids={};
+  COLS.forEach(function(c){(L[c]||[]).forEach(function(x){ids[x.id]=1;});});
+  var added=0; COLS.forEach(function(c){(M[c]||[]).forEach(function(x){if(!ids[x.id])added++;});});
+  applyData(M); ui.pending=null; ui.view='today';
+  toast(added?'Digabungkan: '+added+' item baru ditambahkan.':'Digabungkan. Semua isinya sudah ada di sini.');
+}
+function restReplace(){
+  var p=ui.pending; if(!p)return;
+  try{localStorage.setItem(UNDO_KEY,JSON.stringify({at:now(),label:p.label,data:syLocal()}));}catch(e){}
+  doReplace(p.data); ui.pending=null; ui.view='today';
+  toast('Semua data diganti.',function(){var u=undoSnap();if(u){doReplace(u.data);try{localStorage.removeItem(UNDO_KEY);}catch(e){}}});
+}
+
+/* ---------- Riwayat versi di GitHub ---------- */
+function histLoad(){
+  if(!SY.cfg)return;
+  ui.hist={state:'loading',list:[]}; render();
+  syFetch('/commits?path='+encodeURIComponent(SY.cfg.path||'data.json')+'&per_page=100').then(function(r){
+    if(!r.ok)throw syErr(r.status);
+    return r.json();
+  }).then(function(arr){
+    var all=(arr||[]).map(function(c){return {sha:c.sha,date:new Date(c.commit&&c.commit.author&&c.commit.author.date||c.commit&&c.commit.committer&&c.commit.committer.date)};}).filter(function(x){return !isNaN(x.date);});
+    var out=all.slice(0,5), seen={};
+    out.forEach(function(x){seen[x.date.toDateString()]=1;});
+    all.slice(5).forEach(function(x){var k=x.date.toDateString();if(!seen[k]){seen[k]=1;out.push(x);}});
+    ui.hist={state:'ok',list:out.slice(0,20)}; render();
+  }).catch(function(e){ui.hist={state:'err',msg:e.message||'Riwayat tidak bisa dimuat.'};render();});
+}
+function histPick(sha){
+  var it=(ui.hist&&ui.hist.list||[]).filter(function(x){return x.sha===sha;})[0]; if(!it)return;
+  toast('Mengambil versi itu…');
+  syFetch(syFile()+'?ref='+encodeURIComponent(sha)).then(function(r){if(!r.ok)throw syErr(r.status);return r.json();}).then(function(j){
+    var d=JSON.parse(b64dec(j.content||''));
+    if(!d||!Array.isArray(d.tasks))throw new Error('Isi versi itu tidak bisa dibaca.');
+    restoreFrom(d,'Versi GitHub '+it.date.toLocaleString('id-ID',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),'github'); render();
+  }).catch(function(e){toast(e.message||'Versi itu tidak bisa diambil.');});
+}
+function histHTML(){
+  var h='<section class="card setc" style="margin-top:18px;max-width:720px"><div class="setrow"><div class="grow"><b>Riwayat versi</b><span class="small">Setiap sinkron tersimpan sebagai versi di GitHub. Kalau ada yang terhapus atau tertimpa tanpa sengaja, kembalikan dari versi sebelumnya.</span></div>'+
+    (ui.hist&&ui.hist.state!=='err'?'':'<button class="btn-o" type="button" data-act="histload">Lihat riwayat</button>')+'</div>';
+  if(ui.hist){
+    if(ui.hist.state==='loading')h+='<div class="setrow"><span class="small">Memuat riwayat…</span></div>';
+    else if(ui.hist.state==='err')h+='<div class="setrow"><span class="small">'+esc(ui.hist.msg)+'</span></div>';
+    else if(!ui.hist.list.length)h+='<div class="setrow"><span class="small">Belum ada riwayat.</span></div>';
+    else ui.hist.list.forEach(function(x,i){
+      h+='<div class="setrow"><div class="grow"><b style="font-weight:600">'+esc(x.date.toLocaleString('id-ID',{weekday:'long',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}))+'</b>'+(i===0?'<span class="small">Versi terbaru</span>':'')+'</div><button class="btn-o nmini" type="button" data-act="histpick" data-id="'+x.sha+'">Pulihkan versi ini…</button></div>';
+    });
+  }
+  return h+'</section>';
+}
+
+/* ---------- Perlindungan data & kirim cadangan ---------- */
+var PERSIST=null, PERSIST_TRY=false;
+function tryPersist(){
+  try{
+    if(!navigator.storage||!navigator.storage.persisted)return;
+    navigator.storage.persisted().then(function(p){
+      PERSIST=p; if(p||PERSIST_TRY)return;
+      if(!(S.tasks.length||S.notes.length))return;
+      if(PREF.persistAt&&Date.now()-new Date(PREF.persistAt).getTime()<7*864e5)return;
+      PERSIST_TRY=true; PREF.persistAt=now(); savePref();
+      if(navigator.storage.persist)navigator.storage.persist().then(function(r){PERSIST=r;if(ui.view==='storage')softRender();},function(){});
+    },function(){});
+  }catch(e){}
+}
+function bkFile(){var d=new Date().toISOString().slice(0,10);try{return new File([JSON.stringify(S,null,2)],'langkah-cadangan-'+d+'.txt',{type:'text/plain'});}catch(e){return null;}}
+function canShareFiles(){
+  try{if(!navigator.share||!navigator.canShare)return false;var f=new File(['{}'],'cek.txt',{type:'text/plain'});return navigator.canShare({files:[f]});}catch(e){return false;}
+}
+function shareBackup(){
+  var f=bkFile(); if(!f||!canShareFiles()){doExport();return;}
+  navigator.share({files:[f],title:'Cadangan Langkah',text:'Cadangan data Langkah. Simpan di tempat aman. Untuk memakainya: Pulihkan data, lalu pilih file ini.'}).then(function(){
+    PREF.lastBackup=now();PREF.bkSnooze=null;savePref();toast('Cadangan terkirim.');render();
+  },function(e){if(e&&e.name==='AbortError')return;doExport();});
+}
+function bkCard(){
+  if(!isMob()||!needBackup())return '';
+  if(PREF.bkSnooze&&Date.now()-new Date(PREF.bkSnooze).getTime()<3*864e5)return '';
+  var d=bkDays();
+  return '<section class="card welcome"><div class="grow"><b>'+(d===null?'Datamu belum pernah dicadangkan':'Sudah '+d+' hari belum dicadangkan')+'</b><span class="small">Saat ini data hanya ada di HP ini. Kirim cadangannya ke Google Drive, email, atau WhatsApp supaya aman.</span></div>'+
+    '<div class="btns"><button class="btn" type="button" data-act="sharebk">Kirim cadangan</button><button class="btn-o" type="button" data-act="bksnooze">Nanti</button></div></section>';
+}
+
+/* ---------- Saran & nilai (Google Form) ---------- */
+/* Formulir Google penampung masukan. Untuk fork: ganti dengan formulirmu sendiri (lihat README), atau kosongkan action. */
+var FB={action:'https://docs.google.com/forms/d/e/1FAIpQLScXoaRdqito59IHb85DLz49HZ2y8PPh7fEC6mHCI4UBvlSt7Q/formResponse',
+  jenis:'entry.924562300',nilai:'entry.1322069903',pesan:'entry.1608469717',email:'entry.682392892',info:'entry.16429734'};
+function fbOn(){return !!(FB.action&&FB.pesan);}
+function devInfo(){
+  var u=navigator.userAgent||'', os=/Android/.test(u)?'Android':(/iPhone|iPad|iPod/.test(u)?'iOS':(/Windows/.test(u)?'Windows':(/Mac OS X/.test(u)?'macOS':(/Linux/.test(u)?'Linux':'Lainnya'))));
+  var br=/Edg\//.test(u)?'Edge':(/OPR\//.test(u)?'Opera':(/Firefox\//.test(u)?'Firefox':(/Chrome\//.test(u)?'Chrome':(/Safari\//.test(u)?'Safari':'Lainnya'))));
+  var st=false; try{st=window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches;}catch(e){}
+  var site=location.protocol==='file:'?'file lokal':(location.hostname||'tanpa situs');
+  return 'Langkah '+APP_VER+' · situs '+site+' · '+os+' · '+br+' · '+(st?'aplikasi terpasang':'browser')+' · lebar '+(window.innerWidth||0);
+}
+function rateCard(){
+  if(!fbOn()||PREF.rateAsked||!PREF.firstUse)return '';
+  if(Date.now()-new Date(PREF.firstUse).getTime()<14*864e5)return '';
+  var done=S.tasks.filter(function(t){return t.status==='done';}).length; if(done<5)return '';
+  return '<section class="card welcome"><div class="grow"><b>Langkah membantu?</b><span class="small">Beri nilai atau ceritakan sarannya. Cukup 10 detik, dan ini hanya ditanyakan sekali.</span></div>'+
+    '<div class="btns"><button class="btn" type="button" data-act="nav" data-view="feedback">Beri nilai</button><button class="btn-o" type="button" data-act="rateclose">Tutup</button></div></section>';
+}
+function viewFeedback(){
+  if(!PREF.rateAsked){PREF.rateAsked=true;savePref();}
+  var f=ui.fb||(ui.fb={nilai:0,jenis:'Saran fitur',sent:false});
+  var h=wrapOpen()+'<header><h1>Saran & nilai</h1><p class="sub">Masukanmu dibaca langsung oleh pembuat Langkah. Tidak perlu akun apa pun.</p></header>';
+  var pq=fbQueue();
+  if(pq.length)h+='<section class="card welcome" style="margin-bottom:14px"><div class="grow"><b>'+pq.length+' masukan menunggu dikirim</b><span class="small">Disimpan di perangkat ini saat offline. Langkah mengirimnya otomatis begitu tersambung ke internet.</span></div><div class="btns"><button class="btn" type="button" data-act="fbflush">Kirim sekarang</button><button class="btn-o" type="button" data-act="fbdrop">Batalkan</button></div></section>';
+  if(f.sent){
+    h+='<section class="card setc"><div class="setrow"><div class="grow"><b>Terima kasih!</b><span class="small">'+(f.queued?'Kamu sedang offline, jadi masukanmu disimpan dulu di perangkat ini. Langkah mengirimnya otomatis begitu tersambung ke internet.':'Masukanmu sudah terkirim.')+'</span></div><button class="btn-o" type="button" data-act="fbagain">Kirim lagi</button></div></section>';
+  }else if(!fbOn()){
+    h+='<section class="card setc"><div class="setrow"><div class="ptext small">Formulir masukan belum diatur di versi ini. Kamu tetap bisa mengirim saran lewat GitHub Issues.</div></div></section>';
+  }else{
+    var stars=''; for(var i=1;i<=5;i++)stars+='<button type="button" class="star" data-act="fbstar" data-key="'+i+'" aria-pressed="'+(i<=f.nilai)+'" aria-label="'+i+' bintang">★</button>';
+    var types=['Saran fitur','Laporan masalah','Pujian','Lainnya'];
+    h+='<section class="card setc fbform">'+
+      '<div class="setrow"><div class="grow"><b>Seberapa membantu Langkah untukmu?</b><span class="small">Opsional.</span></div><div class="stars" role="group" aria-label="Nilai">'+stars+'</div></div>'+
+      '<div class="setrow stack"><b>Jenis masukan</b><div class="seg" role="group" aria-label="Jenis masukan">'+types.map(function(t){return '<button type="button" data-act="fbtype" data-key="'+t+'" aria-pressed="'+(f.jenis===t)+'">'+t+'</button>';}).join('')+'</div></div>'+
+      '<div class="setrow stack"><label for="fbmsg"><b>Ceritakan</b></label><textarea id="fbmsg" class="nt-area" maxlength="2000" placeholder="'+(f.jenis==='Laporan masalah'?'Apa yang kamu lakukan, dan apa yang terjadi?':'Apa yang ingin kamu sampaikan?')+'">'+esc(f.pesan||'')+'</textarea></div>'+
+      '<div class="setrow stack"><label for="fbmail"><b>Email</b> <span class="small">(opsional, kalau mau dibalas)</span></label><input id="fbmail" type="email" autocomplete="email" value="'+esc(f.email||'')+'" placeholder="nama@contoh.com"></div>'+
+      '<div class="setrow stack"><span class="small">Yang terkirim: isian di atas, versi aplikasi, alamat situs Langkah yang kamu pakai, serta jenis perangkat dan browser. Tugas dan catatanmu tidak ikut.</span><div class="btns"><button class="btn" type="button" data-act="fbsend">Kirim</button></div></div></section>';
+  }
+  h+='<p class="small" style="margin-top:16px">Developer? Laporan teknis lebih cocok lewat <a href="'+ISSUES+'" target="_blank" rel="noopener">GitHub Issues ↗</a>.</p>';
+  return h+'</div>';
+}
+function fbKeep(){var f=ui.fb;if(!f)return;var m=document.getElementById('fbmsg'),e=document.getElementById('fbmail');if(m)f.pesan=m.value;if(e)f.email=e.value;}
+var FBQ_KEY='langkah.fbq', FBQ_BUSY=false;
+function fbQueue(){try{var q=JSON.parse(localStorage.getItem(FBQ_KEY)||'[]');return Array.isArray(q)?q:[];}catch(e){return [];}}
+function fbSaveQ(q){try{if(q.length)localStorage.setItem(FBQ_KEY,JSON.stringify(q));else localStorage.removeItem(FBQ_KEY);}catch(e){}}
+function fbPost(fields){var body=new URLSearchParams();fields.forEach(function(x){body.append(x[0],x[1]);});return fetch(FB.action,{method:'POST',mode:'no-cors',body:body});}
+/* kirim masukan yang tertunda (offline) satu per satu */
+function fbFlush(){
+  if(!fbOn()||FBQ_BUSY||navigator.onLine===false)return;
+  var q=fbQueue(); if(!q.length)return;
+  var it=q[0], age=Date.now()-new Date(it.at).getTime();
+  if(age>30*864e5||(it.tries||0)>=40){fbSaveQ(q.slice(1));fbFlush();return;}
+  FBQ_BUSY=true;
+  var f=it.f.map(function(x){return x[0]===FB.info?[x[0],x[1]+' · ditulis '+new Date(it.at).toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' (tertunda)']:x;});
+  fbPost(f).then(function(){
+    FBQ_BUSY=false; fbSaveQ(fbQueue().filter(function(x){return x.id!==it.id;}));
+    if(!fbQueue().length)toast('Masukan yang tertunda sudah terkirim. Terima kasih!');
+    if(ui.view==='feedback')render(); fbFlush();
+  },function(){
+    FBQ_BUSY=false; var q2=fbQueue(); q2.forEach(function(x){if(x.id===it.id)x.tries=(x.tries||0)+1;}); fbSaveQ(q2);
+  });
+}
+function fbQueued(fields){
+  var q=fbQueue(); q.push({id:uid(),at:now(),f:fields,tries:0}); fbSaveQ(q.slice(-10));
+  PREF.fbLast=now(); PREF.rateAsked=true; savePref();
+  ui.fb={nilai:0,jenis:'Saran fitur',sent:true,queued:true}; toast('Tersimpan. Akan dikirim otomatis saat tersambung.'); render();
+}
+function fbSend(){
+  fbKeep(); var f=ui.fb; if(!f||!fbOn()||f.busy)return;
+  var msg=(f.pesan||'').trim(), mail=(f.email||'').trim();
+  if(!msg&&!f.nilai){toast('Pilih bintang atau tulis sesuatu dulu.');return;}
+  if(mail&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){toast('Alamat email sepertinya belum benar.');return;}
+  if(PREF.fbLast&&Date.now()-new Date(PREF.fbLast).getTime()<30000){toast('Tunggu sebentar sebelum mengirim lagi.');return;}
+  var fields=[];
+  if(FB.jenis)fields.push([FB.jenis,f.jenis]);
+  if(FB.nilai&&f.nilai)fields.push([FB.nilai,String(f.nilai)]);
+  fields.push([FB.pesan,msg||'(tanpa pesan)']);
+  if(FB.email&&mail)fields.push([FB.email,mail]);
+  if(FB.info)fields.push([FB.info,devInfo()]);
+  if(navigator.onLine===false){fbQueued(fields);return;}
+  f.busy=true; toast('Mengirim…');
+  fbPost(fields).then(function(){
+    PREF.fbLast=now(); PREF.rateAsked=true; savePref();
+    ui.fb={nilai:0,jenis:'Saran fitur',sent:true}; toast('Terima kasih! Masukanmu terkirim.'); render(); fbFlush();
+  },function(){f.busy=false;fbQueued(fields);});
+}
+
+/* ---------- Panduan ---------- */
+var ISSUES='https://github.com/dudin12/langkah/issues/new/choose';
+function storageRows(){
+  var r=[], tm=function(d){return d?d.toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';};
+  r.push(['ok','Browser perangkat ini','Selalu aktif. Setiap perubahan langsung tersimpan di sini, juga tanpa internet.']);
+  if(navigator.storage&&navigator.storage.persisted)r.push([PERSIST?'ok':'off','Perlindungan dari pembersihan otomatis',PERSIST?'Aktif. Browser tidak akan menghapus data ini sendiri saat memori hampir penuh.':'Belum diberikan browser. Biasanya diberikan setelah Langkah dipasang sebagai aplikasi atau notifikasi diizinkan.']);
+  if(!FS.supported)r.push(['na','File di komputer','Tidak tersedia di browser ini. Hanya bisa di Chrome atau Edge di komputer.']);
+  else if(FS.state==='on')r.push(['ok','File di komputer','Aktif: '+esc(FS.name)+'. Dibaca dan disimpan terus'+(FS.last?', terakhir '+tm(FS.last):'')+'.']);
+  else if(FS.state==='need')r.push(['off','File di komputer',esc(FS.name)+' perlu izin lagi. Tekan \u201cBuka file data\u201d.']);
+  else if(FS.state==='err')r.push(['off','File di komputer',esc(FS.msg||'Ada masalah dengan file data.')]);
+  else r.push(['off','File di komputer','Belum dipakai. Bisa diatur di Penyimpanan data.']);
+  if(SY.cfg)r.push(['ok','Sinkron antar perangkat','Aktif ke '+esc(SY.cfg.repo)+(SY.last?' · terakhir '+tm(SY.last):'')+'.']);
+  else r.push(['off','Sinkron antar perangkat','Belum aktif. Opsional, hanya perlu kalau mau memakai beberapa perangkat.']);
+  r.push([PREF.lastBackup?'ok':'off','Cadangan terakhir',PREF.lastBackup?ago(PREF.lastBackup)+'.':'Belum pernah. Tekan “Cadangkan data” sesekali.']);
+  return '<div class="strows">'+r.map(function(x){return '<div class="strow"><span class="sdot '+x[0]+'" aria-hidden="true"></span><div><b>'+x[1]+'</b><span class="small">'+x[2]+'</span></div></div>';}).join('')+'</div>';
+}
+function welcomeBox(){
+  if(PREF.helpSeen||S.tasks.length||S.notes.length)return '';
+  return '<section class="card welcome"><div class="grow"><b>Baru pertama kali di Langkah?</b><span class="small">Panduan singkatnya cukup dibaca 2 menit. Atau langsung saja: ketik apa yang ada di kepalamu di kolom di atas.</span></div>'+
+    '<div class="btns"><button class="btn" type="button" data-act="nav" data-view="help">Buka panduan</button><button class="btn-o" type="button" data-act="helpclose">Tutup</button></div></section>';
+}
+function himg(f,alt){return '<img class="himg" src="docs/panduan/'+f+'" alt="Contoh tampilan: '+esc(alt)+'" loading="lazy" onerror="this.remove()">';}
+function viewHelp(){
+  if(!PREF.helpSeen){PREF.helpSeen=true;savePref();}
+  function steps(a){return '<ol>'+a.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ol>';}
+  function list(a){return '<ul>'+a.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';}
+  function go(v,l){return '<button class="btn-o nmini" type="button" data-act="nav" data-view="'+v+'">'+l+' →</button>';}
+  var S_=[
+    ['tangkap','Tangkap dan pilah','Menulis apa saja yang terlintas, lalu memutuskannya belakangan.',
+      steps(['Di <b>Hari Ini</b>, ketik di kolom <b>Tangkap pikiran</b>, lalu tekan <b>Enter</b> atau <b>Tambah</b>.',
+        'Pilih <b>Tugas</b> atau <b>Catatan</b> di atas kolom itu. Di komputer, <b>Ctrl+Enter</b> langsung menyimpannya sebagai catatan.',
+        'Tangkapan baru muncul satu per satu di kartu <b>Baru ditangkap</b>. Pilih <b>Hari ini</b>, <b>Nanti</b>, atau <b>Buang</b>.',
+        'Tidak sempat memilah? Tidak apa-apa. Besok pagi semuanya pindah sendiri ke Nanti.'])+go('today','Ke Hari Ini'),'tangkap.webp'],
+    ['hariini','Hari Ini','Hanya yang kamu pilih untuk dikerjakan hari ini.',
+      list(['Ketuk lingkaran di kiri tugas untuk menandainya selesai. Ketuk nama tugas untuk mengganti namanya.',
+        '<b>Mulai</b> membuka Mode Fokus. <b>Tunda</b> memindahkannya ke Nanti. <b>✕</b> membuangnya ke Sampah.',
+        'Filter di atas daftar menampilkan tugas per kerjaan, atau hanya yang berasal dari satu catatan.',
+        'Bingung mulai dari mana? Tekan <b>Pilihkan satu</b>.',
+        'Tugas yang belum selesai kemarin muncul di kartu <b>Dari hari sebelumnya</b>. Pilih <b>Tetap</b> atau <b>Nanti</b>, tanpa label terlambat.',
+        'Setiap aksi bisa dibatalkan lewat tombol <b>Urungkan</b> yang muncul sebentar di bawah layar.']),'hari-ini.webp'],
+    ['langkah','Memecah tugas jadi langkah kecil','Tugas besar terasa ringan kalau dipecah.',
+      steps(['Ketuk tombol <b>+ langkah</b> (atau “1 dari 3 langkah”) di bawah nama tugas.',
+        'Ketik langkahnya satu per satu, tekan <b>Enter</b> atau <b>Tambah</b> setiap kali.',
+        'Centang langkah yang sudah beres. Panah atas dan bawah mengubah urutannya.',
+        'Kalau semua langkah sudah dicentang, tugasnya otomatis selesai.']),'langkah.webp'],
+    ['fokus','Mode Fokus dan timer','Satu langkah di layar, sisanya disembunyikan.',
+      steps(['Tekan <b>Mulai</b> pada tugas. Layar hanya menampilkan langkah yang sedang dikerjakan.',
+        'Mau pakai timer? Tekan <b>Pasang timer</b>, lalu pilih 10, 15, atau 25 menit, atau ketik menit sendiri dan tekan <b>Pasang</b>.',
+        'Selesai satu langkah? Tekan <b>Langkah ini selesai</b>. Langkah berikutnya langsung muncul.',
+        'Ada hal lain yang tiba-tiba teringat? Tulis di kolom <b>Ada yang terlintas</b>. Itu disimpan sebagai catatan, dan kamu tetap di Mode Fokus.',
+        'Belum bisa lanjut? <b>Nanti saja</b> memindahkan tugasnya ke Nanti, tanpa rasa bersalah.']),'fokus.webp'],
+    ['multi','Beberapa tugas berjalan bersamaan','Untuk kerja yang menunggu, misalnya render, masak, atau cucian.',
+      list(['<b>Kembali ke Hari Ini</b> tidak menghentikan tugas. Jamnya tetap berjalan, dan tugas itu muncul sebagai bar gelap di atas setiap halaman.',
+        'Tekan <b>Mulai</b> pada tugas lain untuk menjalankannya juga. Setiap tugas punya jam dan timernya sendiri.',
+        '<b>Lanjutkan</b> membuka Mode Fokus tugas itu. <b>Akhiri</b> menghentikan sesinya saja, tugasnya tidak hilang.',
+        'Saat timer habis, bar berubah oranye, nada berbunyi, dan notifikasi muncul.']),'multi-sesi.webp'],
+    ['notif','Notifikasi dan bunyi','Pengingat saat waktu habis, walau aplikasi tidak sedang dilihat.',
+      steps(['Buka <b>Notifikasi & bunyi</b> lalu tekan <b>Izinkan</b>. Browser akan bertanya, pilih Izinkan.',
+        'Tekan <b>Tes 10 detik lagi</b>, lalu kunci layar atau ke Home. Kalau notifikasi muncul, semuanya sudah siap.',
+        'Notifikasi tugas yang berjalan punya tombol <b>Selesai</b> dan <b>Akhiri sesi</b>. Notifikasi waktu habis punya <b>+5 menit</b> dan <b>Akhiri</b>.',
+        'Di HP, supaya tidak dibekukan Android, atur baterai untuk Langkah atau Chrome ke <b>Tidak dibatasi</b>.'])+go('notif','Buka Notifikasi & bunyi'),'notifikasi.webp'],
+    ['nanti','Nanti','Tempat aman untuk yang belum perlu dipikirkan.',
+      list(['Semua yang belum untuk hari ini ada di sini. Pilih filter kerjaan untuk melihatnya per projek.',
+        '<b>Ke Hari Ini</b> memindahkannya saat kamu siap. <b>Buang</b> memindahkannya ke Sampah.',
+        'Filter per kerjaan dan per catatan juga ada di sini.'])+go('later','Ke Nanti'),'nanti.webp'],
+    ['catatan','Catatan','Untuk tulisan panjang: notulen rapat, ide, rencana.',
+      steps(['Di <b>Catatan</b>, tulis judul (boleh kosong) dan isinya, lalu tekan <b>Simpan catatan</b>.',
+        'Ketuk sebuah catatan untuk membuka halaman detailnya.',
+        'Mau menjadikan sebagian isinya tugas? <b>Blok</b> kalimatnya, lalu tekan <b>+ Tugas dari catatan ini</b>. Judul tugas terisi otomatis. Pilih projek, lalu <b>Ke Hari Ini</b> atau <b>Ke Nanti</b>.',
+        'Satu catatan boleh punya banyak tugas. Statusnya berubah sendiri: <b>Berjalan</b> selama ada tugas yang belum selesai, <b>Tuntas</b> kalau semuanya selesai.',
+        'Gunakan filter, pencarian, dan pilihan <b>Urutkan</b> untuk menemukan catatan lama. <b>Sematkan</b> menaruh catatan penting di atas.'])+go('notes','Ke Catatan'),'catatan.webp'],
+    ['projek','Kerjaan, projek, dan Dasbor','Mengelompokkan tugas supaya progresnya terlihat.',
+      steps(['Buka <b>Dasbor</b>. Tambahkan <b>kerjaan</b>, misalnya “Kantor” atau “Kuliah”.',
+        'Di dalam kerjaan, tambahkan <b>projek</b>, misalnya “Laporan bulanan”.',
+        'Saat menambah tugas, pilih projeknya dari pilihan di sebelah kolom. Projek tugas yang sudah ada bisa diganti dari label di bawah namanya.',
+        'Dasbor menampilkan progres setiap projek. Filter <b>Berjalan</b>, <b>Selesai</b>, dan <b>Semua</b> ada di atasnya. Ketuk nama untuk mengubahnya.'])+go('dash','Ke Dasbor'),'dasbor.webp'],
+    ['selesai','Selesai, Cari, dan Sampah','Melihat yang sudah beres dan menemukan kembali yang hilang.',
+      list(['<b>Selesai</b> berisi riwayat tugas yang beres: hari ini, kemarin, 7 hari terakhir, dan lebih lama. Tugas bisa dibuka lagi kalau ternyata belum beres.',
+        '<b>Cari</b> menelusuri tugas, langkah, dan catatan sekaligus. Di komputer tekan <b>Ctrl+K</b>.',
+        '<b>Sampah</b> menyimpan yang dihapus selama 30 hari. Tekan <b>Pulihkan</b> untuk mengembalikannya.'])+go('trash','Ke Sampah'),'selesai.webp'],
+    ['data','Di mana data saya disimpan?','Penting dibaca, terutama kalau datamu berharga.',
+      '<p>Langkah tidak punya server dan tidak butuh akun. Semua yang kamu tulis disimpan <b>di browser perangkat ini</b>, langsung setiap ada perubahan, bahkan tanpa internet.</p>'+
+      '<p>Artinya, data di laptop tidak otomatis ada di HP. Membersihkan data situs, atau memakai mode penyamaran, bisa menghapusnya. Untuk menjaganya ada tiga pilihan, boleh dipakai bersamaan:</p>'+
+      steps(['<b>Cadangkan data</b>: membuat satu file cadangan. Di HP, tombol <b>Kirim cadangan</b> langsung membuka menu Bagikan, jadi bisa disimpan ke Google Drive, email, atau WhatsApp. Lakukan sesekali, misalnya seminggu sekali. File ini berformat <b>JSON</b>, yaitu file teks biasa (berakhiran <code>.json</code>) yang berisi semua tugas, catatan, dan projekmu. Tidak perlu dibuka, cukup disimpan di tempat aman.',
+        '<b>Simpan data di file</b> (Chrome atau Edge di komputer): pilih satu file sebagai tempat data. Langkah membaca dan menyimpan ke file itu terus-menerus. Taruh file itu di folder OneDrive atau Google Drive kalau ingin datanya ikut ke komputer lain.',
+        '<b>Sinkron antar perangkat</b>: data disamakan dengan salinan di akun GitHub milikmu, jadi bisa dipakai di laptop dan HP sekaligus.'])+
+      '<p style="margin-bottom:6px"><b>Di perangkat ini sekarang:</b></p>'+storageRows()+go('storage','Buka Penyimpanan data'),'penyimpanan.webp'],
+    ['pindah','Memulihkan atau pindah perangkat','Kalau data hilang, atau ganti HP dan laptop.',
+      list(['<b>Dengan sinkron:</b> buka Langkah di perangkat baru, buka <b>Sinkron antar perangkat</b>, lalu isi nama repo dan token yang sama. Datanya muncul sendiri.',
+        '<b>Dengan file data:</b> di komputer lain, buka <b>Penyimpanan data</b> \u2192 <b>Pakai file data yang sudah ada</b>, lalu pilih file yang sama, misalnya dari folder OneDrive.',
+        '<b>Dengan file cadangan:</b> di perangkat lama tekan <b>Cadangkan data</b>. Kirim filenya ke perangkat baru, lalu tekan <b>Pulihkan data</b> dan pilih file itu.',
+        'Saat memulihkan, kamu memilih: <b>Gabungkan</b> (aman, tidak ada yang dihapus) atau <b>Ganti semuanya</b>. Ganti semuanya bisa dibatalkan dengan <b>Urungkan</b> sampai 7 hari.',
+        'Kalau sinkron aktif, <b>Riwayat versi</b> di halaman sinkron bisa mengembalikan data seperti kemarin atau beberapa hari lalu.'])+go('storage','Buka Penyimpanan data'),'cadangan.webp'],
+    ['sinkron','Pakai di beberapa perangkat (opsional)','Satu data di laptop rumah, laptop kantor, dan HP.',
+      '<p>Langkah menitipkan satu salinan datamu di <b>repositori privat di akun GitHub milikmu sendiri</b>. GitHub gratis, dan hanya kamu yang bisa membuka repositori privat itu. Tidak ada server Langkah di tengahnya.</p>'+
+      list(['Setiap perangkat tetap menyimpan datanya sendiri, lalu <b>menyamakannya</b> dengan salinan di GitHub: saat aplikasi dibuka, saat kamu kembali ke aplikasi, setelah ada perubahan, dan secara berkala.',
+        'Saat disamakan, perubahan dari semua perangkat <b>digabung per item</b>. Yang paling baru diubah yang dipakai. Tidak ada yang tertimpa seluruhnya.',
+        'Seberapa sering mengecek dan apakah setiap perubahan langsung dikirim bisa diatur di halaman sinkron.',
+        'Setiap sinkron tersimpan sebagai versi. Lewat <b>Riwayat versi</b>, data bisa dikembalikan ke keadaan sebelumnya.',
+        'Persiapannya sekali saja, sekitar 5 menit. Langkah-langkahnya ada di halaman sinkron.'])+go('sync','Buka Sinkron antar perangkat'),'sinkron.webp'],
+    ['pasang','Pasang sebagai aplikasi','Supaya ada ikonnya di layar HP atau laptop.',
+      list(['<b>Android:</b> buka Langkah di Chrome, ketuk menu ⋮, lalu <b>Pasang aplikasi</b> atau <b>Tambahkan ke layar utama</b>.',
+        '<b>iPhone:</b> buka di Safari, ketuk Bagikan, lalu <b>Tambahkan ke Layar Utama</b>.',
+        '<b>Laptop:</b> di Chrome atau Edge, klik ikon pasang di ujung kolom alamat.',
+        'Aplikasi yang dipasang memakai data yang sama dengan browser tempat memasangnya.'])],
+    ['pintasan','Pintasan keyboard','Untuk komputer.',
+      '<table class="htab"><tr><td><kbd>/</kbd></td><td>Tangkap cepat dari halaman mana saja</td></tr><tr><td><kbd>Ctrl</kbd>+<kbd>K</kbd></td><td>Cari</td></tr><tr><td><kbd>Enter</kbd></td><td>Simpan sebagai tugas</td></tr><tr><td><kbd>Ctrl</kbd>+<kbd>Enter</kbd></td><td>Simpan sebagai catatan, atau simpan perubahan catatan</td></tr><tr><td><kbd>Esc</kbd></td><td>Batalkan pengeditan</td></tr></table>'],
+    ['saran','Saran fitur dan nilai','Langkah terbuka untuk masukan.',
+      '<p>Punya ide fitur, menemukan sesuatu yang tidak jalan, atau ingin memberi bintang? Buka <b>Pengaturan \u2192 Kirim saran atau beri nilai</b>. Tidak perlu akun apa pun, dan tugas serta catatanmu tidak ikut terkirim.</p>'+
+      go('feedback','Kirim saran atau beri nilai')+
+      '<p class="small">Developer bisa melapor lewat <a href="'+ISSUES+'" target="_blank" rel="noopener">GitHub Issues \u2197</a>.</p>']
+  ];
+  var h=wrapOpen()+'<header><h1>Panduan</h1><p class="sub">Cara memakai Langkah, fitur per fitur. Ketuk judul untuk membuka penjelasannya.</p></header>';
+  h+='<section class="card hquick"><b style="font-size:17px">Mulai dalam satu menit</b>'+steps([
+    'Ketik apa saja yang ada di kepalamu di kolom <b>Tangkap pikiran</b> di Hari Ini.',
+    'Pilah satu per satu: <b>Hari ini</b> kalau mau dikerjakan sekarang, <b>Nanti</b> kalau belum, <b>Buang</b> kalau tidak perlu.',
+    'Tekan <b>Mulai</b> pada satu tugas, lalu kerjakan langkah demi langkah.',
+    'Yang tidak sempat? Biarkan. Besok tinggal pilih lagi.'])+himg('mulai.webp','Halaman Hari Ini')+'</section>';
+  h+='<div class="hlist">'+S_.map(function(x){
+    var k='help:'+x[0], op=isOpen(k,false);
+    return '<section class="hsec" id="help-'+x[0]+'"><button type="button" class="hhead" data-act="helptoggle" data-key="'+k+'" aria-expanded="'+op+'">'+CHEV_S+'<span><b>'+x[1]+'</b><span class="small">'+x[2]+'</span></span></button>'+
+      (op?'<div class="hbody">'+(x[4]?himg(x[4],x[1]):'')+x[3]+'</div>':'')+'</section>';
+  }).join('')+'</div>';
+  return h+'</div>';
+}
+
+/* ---------- Simpan data di file (Chrome/Edge di komputer) ----------
+   File yang dipilih jadi tempat data: dibaca saat aplikasi dibuka, saat kembali ke aplikasi,
+   dan berkala; ditulis setiap ada perubahan. Isinya digabung per item dengan data di browser. */
+var FS={supported:typeof window.showSaveFilePicker==='function',handle:null,state:'off',name:'',last:null,timer:null,lastMod:0,holdUntil:0,busy:false,msg:''};
 function idb(fn){try{if(!window.indexedDB)return;var rq=indexedDB.open('langkah-fs',1);rq.onupgradeneeded=function(){rq.result.createObjectStore('h');};rq.onsuccess=function(){fn(rq.result);};}catch(e){}}
 function idbPut(h){idb(function(db){try{var st=db.transaction('h','readwrite').objectStore('h');if(h)st.put(h,'data');else st.delete('data');}catch(e){}});}
 function idbGet(cb){idb(function(db){try{var rq=db.transaction('h').objectStore('h').get('data');rq.onsuccess=function(){cb(rq.result||null);};}catch(e){}});}
+function fsPaint(){paintBk(); if(ui.view==='storage'||ui.view==='help')softRender(); else{var b=document.getElementById('fsbanner');var nb=fsBanner();if(b)b.outerHTML=nb||'<div id="fsbanner" hidden></div>';}}
 function fsInit(){
   if(!FS.supported)return;
   idbGet(function(h){
     if(!h)return; FS.handle=h; FS.name=h.name||'file data';
     var q; try{q=h.queryPermission({mode:'readwrite'});}catch(e){q='prompt';}
-    Promise.resolve(q).then(function(pm){FS.state=pm==='granted'?'on':'need'; if(FS.state==='on')fsWrite(); paintBk();},function(){FS.state='need';paintBk();});
+    Promise.resolve(q).then(function(pm){
+      if(pm==='granted'){FS.state='on';fsLoad(true);} else FS.state='need';
+      fsPaint();
+    },function(){FS.state='need';fsPaint();});
   });
+}
+function fsData(j){return {tasks:j.tasks||[],areas:j.areas||[],projects:j.projects||[],notes:j.notes||[],tomb:(j.tomb&&typeof j.tomb==='object')?j.tomb:{},sess:(j.sess&&typeof j.sess==='object')?j.sess:{}};}
+/* baca file -> gabung ke data browser -> tulis balik kalau berbeda */
+function fsLoad(force,first){
+  if(!FS.handle||FS.state!=='on'||FS.busy||Date.now()<FS.holdUntil)return Promise.resolve(false);
+  FS.busy=true;
+  return Promise.resolve(FS.handle.getFile()).then(function(f){
+    if(!force&&FS.lastMod&&f.lastModified===FS.lastMod){FS.busy=false;return false;}
+    return f.text().then(function(txt){
+      FS.busy=false; FS.lastMod=f.lastModified;
+      var j=null;
+      if(txt.trim()){
+        try{j=JSON.parse(txt);}catch(e){j=undefined;}
+        if(!j||!Array.isArray(j.tasks)){
+          if(first){FS.handle=null;FS.state='off';FS.name='';idbPut(null);toast('File itu bukan data Langkah. Pilih file lain.');fsPaint();return false;}
+          FS.state='err';FS.msg='File data tidak bisa dibaca. Langkah berhenti menulis ke file supaya isinya tidak tertimpa.';fsPaint();return false;
+        }
+      }
+      var L=syLocal(), R=j?fsData(j):null, M=R?syMerge(L,R):L;
+      var changed=syCanon(M)!==syCanon(L);
+      if(changed){
+        try{localStorage.setItem(KEY,JSON.stringify({tasks:M.tasks,areas:M.areas,projects:M.projects,notes:M.notes,tomb:M.tomb,sess:M.sess}));}catch(e){}
+        S=load(); snapHashes();
+        if(ui.view==='focus'&&!F())ui.view='today';
+        softRender(); if(typeof syQueue==='function')syQueue();
+      }
+      if(!R||syCanon(R)!==syCanon(M))fsWrite();
+      else{FS.last=new Date();fsPaint();}
+      if(first)toast(R?'File data terhubung. Isinya digabung dengan data di sini.':'File data dibuat. Data tersimpan di '+FS.name+'.');
+      return changed;
+    });
+  }).catch(function(){FS.busy=false;FS.state='need';fsPaint();return false;});
+}
+function fsAttach(h){
+  FS.handle=h; FS.name=h.name; FS.state='on'; FS.lastMod=0; FS.msg=''; idbPut(h); fsLoad(true,true);
 }
 function fsConnect(){
   if(!FS.supported)return;
-  window.showSaveFilePicker({suggestedName:'langkah-data.json',types:[{description:'Data Langkah',accept:{'application/json':['.json']}}]}).then(function(h){
-    FS.handle=h; FS.name=h.name; FS.state='on'; idbPut(h); fsWrite(true);
-  },function(e){ if(e&&e.name==='AbortError')return; toast('Tidak bisa memakai file itu.'); });
+  window.showSaveFilePicker({suggestedName:'langkah-data.json',types:[{description:'Data Langkah',accept:{'application/json':['.json']}}]}).then(fsAttach,
+    function(e){ if(e&&e.name==='AbortError')return; toast('Tidak bisa memakai file itu.'); });
+}
+function fsOpen(){
+  if(!window.showOpenFilePicker){fsConnect();return;}
+  window.showOpenFilePicker({types:[{description:'Data Langkah',accept:{'application/json':['.json']}}]}).then(function(l){
+    var h=l[0];
+    return Promise.resolve(h.requestPermission({mode:'readwrite'})).then(function(pm){
+      if(pm==='granted')fsAttach(h); else toast('Izin menyimpan ke file itu belum diberikan.');
+    });
+  },function(e){ if(e&&e.name==='AbortError')return; toast('Tidak bisa membuka file itu.'); });
 }
 function fsResume(){
   if(!FS.handle)return;
   Promise.resolve(FS.handle.requestPermission({mode:'readwrite'})).then(function(pm){
-    if(pm==='granted'){FS.state='on';fsWrite(true);} else toast('Izin belum diberikan. Simpan otomatis belum aktif.');
+    if(pm==='granted'){FS.state='on';FS.msg='';fsLoad(true);fsPaint();} else toast('Izin belum diberikan. Data dari file belum dibaca.');
   },function(){toast('Izin belum diberikan.');});
 }
-function fsOff(){FS.handle=null;FS.state='off';FS.name='';idbPut(null);paintBk();toast('Simpan otomatis dimatikan.');}
-function fsQueue(){ if(FS.state!=='on')return; clearTimeout(FS.timer); FS.timer=setTimeout(function(){fsWrite();},800); }
+function fsOff(){FS.handle=null;FS.state='off';FS.name='';FS.msg='';idbPut(null);fsPaint();toast('File dilepas. Datamu tetap ada di browser ini dan di file itu.');}
+function fsQueue(){ if(PERSIST===null&&!PERSIST_TRY&&(S.tasks.length||S.notes.length))tryPersist(); if(FS.state!=='on')return; clearTimeout(FS.timer); FS.timer=setTimeout(function(){fsWrite();},800); }
 function fsWrite(announce){
   if(!FS.handle||FS.state!=='on')return;
-  var data=JSON.stringify(S,null,2);
-  Promise.resolve(FS.handle.createWritable()).then(function(w){return Promise.resolve(w.write(data)).then(function(){return w.close();});}).then(function(){
-    FS.last=new Date(); PREF.lastBackup=now(); savePref(); paintBk();
-    if(announce)toast('Simpan otomatis aktif. Setiap perubahan ikut tersimpan ke '+FS.name+'.');
-  },function(){FS.state='err'; paintBk(); toast('Gagal menulis ke file. Simpan otomatis berhenti.');});
+  var data=JSON.stringify({app:'langkah',v:1,savedAt:now(),tasks:S.tasks,areas:S.areas,projects:S.projects,notes:S.notes,tomb:S.tomb,sess:S.sess},null,2);
+  var h=FS.handle; FS.busy=true;
+  Promise.resolve(h.createWritable()).then(function(w){return Promise.resolve(w.write(data)).then(function(){return w.close();});})
+  .then(function(){return Promise.resolve(h.getFile()).then(function(f){FS.lastMod=f.lastModified;},function(){});})
+  .then(function(){
+    FS.busy=false; FS.holdUntil=0; FS.last=new Date(); PREF.lastBackup=now(); savePref(); fsPaint();
+    if(announce)toast('Data tersimpan di '+FS.name+'.');
+  },function(){FS.busy=false; FS.state='err'; FS.msg='File tidak bisa ditulis. Mungkin dipindah, dihapus, atau sedang dipakai program lain.'; fsPaint(); toast('Gagal menyimpan ke file.');});
+}
+function fsBanner(){
+  if(FS.state==='need')return '<div id="fsbanner" class="errbar fsbar" role="status">Data Langkah disimpan di file <b>'+esc(FS.name)+'</b>. Izinkan browser membukanya supaya data terbaru terbaca. <span class="btns"><button class="btn" type="button" data-act="fsresume">Buka file data</button><button class="btn-o" type="button" data-act="nav" data-view="storage">Pengaturan</button></span></div>';
+  if(FS.state==='err')return '<div id="fsbanner" class="errbar fsbar" role="alert">'+esc(FS.msg||'Ada masalah dengan file data.')+' <span class="btns"><button class="btn-o" type="button" data-act="nav" data-view="storage">Lihat pengaturan</button></span></div>';
+  return '';
 }
 function backupInfo(){
   var has=S.tasks.length||S.notes.length, h='', cls='bk';
-  if(FS.state==='on'){
-    cls+=' ok'; h+='<span class="bkt">Tersimpan otomatis ke <b>'+esc(FS.name)+'</b>'+(FS.last?' \u00b7 '+FS.last.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}):'')+'</span>';
-    h+='<button type="button" data-act="fsoff">Matikan simpan otomatis</button>';
-  }else{
-    var lb=PREF.lastBackup, days=null;
-    if(lb){var t0=new Date();t0.setHours(0,0,0,0);var x=new Date(lb);x.setHours(0,0,0,0);days=Math.round((t0-x)/864e5);}
-    if(FS.state==='need'){cls+=' warn';h+='<span class="bkt">Simpan otomatis ke <b>'+esc(FS.name)+'</b> perlu izin lagi.</span><button type="button" data-act="fsresume">Lanjutkan simpan otomatis</button>';}
-    else if(FS.state==='err'){cls+=' warn';h+='<span class="bkt">Simpan otomatis berhenti karena file tidak bisa ditulis.</span><button type="button" data-act="fsconnect">Pilih file lagi</button>';}
-    else{
-      if(has&&!lb){cls+=' warn';h+='<span class="bkt">Belum pernah dicadangkan. Data hanya ada di browser ini.</span>';}
-      else if(lb){if(days>=7)cls+=' warn';h+='<span class="bkt">Terakhir dicadangkan '+ago(lb)+'.</span>';}
-      if(FS.supported)h+='<button type="button" data-act="fsconnect">Simpan otomatis ke file\u2026</button>';
-    }
-  }
+  var lb=PREF.lastBackup, days=null;
+  if(lb){var t0=new Date();t0.setHours(0,0,0,0);var x=new Date(lb);x.setHours(0,0,0,0);days=Math.round((t0-x)/864e5);}
+  if(FS.state==='on'){cls+=' ok'; h+='<span class="bkt">Data di file <b>'+esc(FS.name)+'</b>'+(FS.last?' · '+FS.last.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}):'')+'</span>';}
+  else if(FS.state==='need'){cls+=' warn';h+='<span class="bkt">File <b>'+esc(FS.name)+'</b> perlu izin lagi.</span><button type="button" data-act="fsresume">Buka file data</button>';}
+  else if(FS.state==='err'){cls+=' warn';h+='<span class="bkt">Ada masalah dengan file data.</span>';}
+  else if(has&&!lb&&!SY.cfg){cls+=' warn';h+='<span class="bkt">Belum pernah dicadangkan. Data hanya ada di browser ini.</span>';}
+  else if(lb){if(days>=7&&!SY.cfg)cls+=' warn';h+='<span class="bkt">Terakhir dicadangkan '+ago(lb)+'.</span>';}
+  h+='<button type="button" data-act="nav" data-view="storage">Penyimpanan data…</button>';
   return '<div id="bkinfo" class="'+cls+'">'+h+'</div>';
 }
-function paintBk(){var b=document.getElementById('bkinfo');if(b)b.outerHTML=backupInfo();}
+function paintBk(){paintStatus();}
+function storageSummary(){return FS.state==='on'?'Di file '+FS.name:(SY.cfg?'Di browser, tersinkron':'Di browser perangkat ini');}
+function viewStorage(){
+  var h=wrapOpen()+'<header><h1>Penyimpanan data</h1><p class="sub">Di mana tugas dan catatanmu disimpan, dan cara menjaganya supaya tidak hilang.</p></header>';
+  h+='<section class="card setc"><div class="setrow"><div class="ptext"><b>Di perangkat ini sekarang</b>'+storageRows()+'</div></div></section>';
+  h+='<section class="card setc">'+
+    (canShareFiles()?'<div class="setrow"><div class="grow"><b>Cadangkan data</b><span class="small">Kirim satu file cadangan ke Google Drive, email, atau WhatsApp, atau unduh ke perangkat ini.</span></div><div class="btns"><button class="btn" type="button" data-act="sharebk">Kirim cadangan</button><button class="btn-o" type="button" data-act="export">Unduh</button></div></div>'
+      :'<div class="setrow"><div class="grow"><b>Cadangkan data</b><span class="small">Mengunduh satu file cadangan berisi semua tugas, catatan, dan projek.</span></div><button class="btn" type="button" data-act="export">Cadangkan</button></div>')+
+    '<div class="setrow"><div class="grow"><b>Pulihkan data</b><span class="small">Pilih file cadangan, lalu pilih: gabungkan dengan data sekarang, atau ganti semuanya.</span></div><button class="btn-o" type="button" data-act="import">Pulihkan</button></div>'+
+    (function(){var u=undoSnap();return u?'<div class="setrow"><div class="grow"><b>Batalkan pemulihan terakhir</b><span class="small">Kembalikan data seperti sebelum '+esc(u.label||'pemulihan')+' dipulihkan ('+ago(u.at)+').</span></div><button class="btn-o" type="button" data-act="undorest">Lihat</button></div>':'';})()+
+    '<div class="setrow"><div class="ptext small">File cadangan berformat <b>JSON</b> (namanya berakhiran <code>.json</code>, atau <code>.txt</code> kalau dikirim lewat menu Bagikan). JSON adalah file teks biasa yang menyimpan semua datamu dalam bentuk yang bisa dibaca aplikasi. Tidak perlu dibuka atau diubah. Cukup simpan di tempat aman, misalnya Google Drive, email, atau flashdisk.</div></div></section>';
+  h+='<section class="card setc">';
+  if(!FS.supported){
+    h+='<div class="setrow"><div class="grow"><b>Simpan data di file</b><span class="small">Hanya tersedia di Chrome atau Edge di komputer. Di HP, pakai Cadangkan data atau sinkron antar perangkat.</span></div></div>';
+  }else if(FS.state==='on'){
+    h+='<div class="setrow"><div class="grow"><b>Data disimpan di file '+esc(FS.name)+'</b><span class="small">Langkah membaca file ini saat dibuka, saat kamu kembali ke aplikasi, dan setiap 30 detik, lalu menyimpan ke sana setiap ada perubahan.'+(FS.last?' Terakhir disimpan '+FS.last.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+'.':'')+'</span></div><button class="btn-o" type="button" data-act="fsoff">Lepas file</button></div>';
+  }else if(FS.state==='need'){
+    h+='<div class="setrow"><div class="grow"><b>File '+esc(FS.name)+' perlu izin lagi</b><span class="small">Browser meminta izin setiap kali dibuka ulang. Kalau ditawarkan pilihan <b>Izinkan di setiap kunjungan</b>, pilih itu supaya tidak ditanya lagi.</span></div><div class="btns"><button class="btn" type="button" data-act="fsresume">Buka file data</button><button class="btn-o" type="button" data-act="fsoff">Lepas</button></div></div>';
+  }else{
+    if(FS.state==='err')h+='<div class="setrow"><div class="ptext small"><b>'+esc(FS.msg||'Ada masalah dengan file data.')+'</b> Pilih file lagi di bawah, atau lepas file itu.</div><button class="btn-o" type="button" data-act="fsoff">Lepas</button></div>';
+    h+='<div class="setrow"><div class="grow"><b>Simpan data di file</b><span class="small">Pilih satu file di komputermu sebagai tempat data. Langkah akan membaca dan menyimpan ke file itu terus-menerus. Cocok kalau kamu ingin datamu ada di folder sendiri, misalnya folder OneDrive atau Google Drive yang tersinkron ke komputer lain.</span></div></div>'+
+      '<div class="setrow"><div class="btns"><button class="btn" type="button" data-act="fsconnect">Buat file data baru</button><button class="btn-o" type="button" data-act="fsopen">Pakai file data yang sudah ada</button></div></div>';
+  }
+  h+='<div class="setrow"><div class="ptext small">Data di browser tetap disimpan sebagai salinan kerja, supaya aplikasi tetap jalan cepat dan tidak kehilangan perubahan saat file belum bisa dibuka. Isi file dan browser digabung per item, jadi tidak saling menimpa.</div></div></section>';
+  h+='<section class="card setc"><div class="setrow"><div class="grow"><b>Sinkron antar perangkat</b><span class="small">'+(SY.cfg?'Aktif ke '+esc(SY.cfg.repo)+'.':'Opsional. Untuk memakai data yang sama di laptop dan HP sekaligus.')+'</span></div><button class="btn-o" type="button" data-act="nav" data-view="sync">Buka</button></div></section>';
+  return h+'</div>';
+}
 
 /* ---------- Selectors ---------- */
 function byCreated(a,b){return a.createdAt<b.createdAt?-1:1;}
@@ -819,13 +1354,15 @@ var LOGO='<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><ci
 function sidebar(){
   function item(v,label,cls){
     var n=''; if(v==='later'){var c=laterList().length; if(c)n='<span class="count">'+c+'</span>';}
-    return '<button type="button" data-act="nav" data-view="'+v+'"'+(cls?' class="'+cls+'"':'')+(ui.view===v?' aria-current="page"':'')+'>'+label+n+'</button>';
+    return '<button type="button" data-act="nav" data-view="'+v+'"'+(cls?' class="'+cls+'"':'')+(ui.view===v||(v==='notes'&&ui.view==='note')||(v==='more'&&{settings:1,storage:1,sync:1,notif:1,feedback:1,restore:1,help:1,trash:1}[ui.view])?' aria-current="page"':'')+'>'+label+n+'</button>';
   }
   return '<aside class="side"><div class="brand">'+LOGO+'<span>Langkah</span></div>'+
     '<nav class="nav" aria-label="Navigasi utama">'+item('today','Hari Ini')+item('later','Nanti')+item('notes','Catatan')+item('dash','Dasbor')+item('done','Selesai')+item('search','Cari','desk')+item('more','Lainnya','mob')+'</nav>'+
-    '<div class="side-foot">'+(canWide()?'<div class="small" style="padding:0 4px">Tampilan</div><div class="seg" role="group" aria-label="Tampilan" style="align-self:flex-start"><button type="button" data-act="density" data-key="calm" aria-pressed="'+(!!PREF.calm)+'">Tenang</button><button type="button" data-act="density" data-key="wide" aria-pressed="'+(!PREF.calm)+'">Luas</button></div>':'')+(function(){var tc=trashCount();return '<button type="button" data-act="nav" data-view="trash"'+(ui.view==='trash'?' style="background:#fff;font-weight:600"':'')+'>Sampah'+(tc?' ('+tc+')':'')+'</button>';})()+
-    syInfoHTML()+backupInfo()+'<button type="button" data-act="export">Cadangkan data (JSON)</button><button type="button" data-act="import">Pulihkan dari JSON</button>'+
-    '<div class="hint">Tekan <b>/</b> untuk tangkap cepat, <b>Ctrl+K</b> untuk mencari.</div></div></aside>';
+    '<div class="side-foot">'+sideStatus()+'<div class="fnav">'+(function(){
+      var tc=trashCount(), set={settings:1,storage:1,sync:1,notif:1,feedback:1,restore:1};
+      function fi(v,l){var on=ui.view===v||(v==='settings'&&set[ui.view]);return '<button type="button" data-act="nav" data-view="'+v+'"'+(on?' aria-current="page"':'')+'>'+l+'</button>';}
+      return fi('help','Panduan')+fi('settings','Pengaturan')+fi('trash','Sampah'+(tc?' <span class="count">'+tc+'</span>':''));
+    })()+'</div></div></aside>';
 }
 
 function captureBox(){
@@ -952,10 +1489,10 @@ function viewToday(){
   var tl=todayList(), open=tl.filter(function(t){return t.status!=='done';}), doneN=tl.length-open.length, total=tl.length;
   var openF=open.filter(inFilter);
   var d=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'});
-  var title=total<=3?'Hari ini, tiga hal saja.':'Hari ini, mulai dari satu.';
+  var title=total<=3?'Hari ini, satu langkah untuk langkah besar.':'Hari ini, mulai dari satu.';
   var segs=''; for(var i=0;i<Math.max(3,total);i++){segs+='<i class="'+(i<doneN?'on':'')+'"></i>';}
   var h=wrapOpen()+'<header><div class="date">'+esc(d.charAt(0).toUpperCase()+d.slice(1))+'</div><h1>'+title+'</h1>'+
-    '<p class="sub">Sisanya aman di Nanti. Kamu tidak perlu memikirkannya sekarang.</p></header>'+captureBox()+carryBox()+triageBox();
+    '<p class="sub">Sisanya aman di Nanti. Kamu tidak perlu memikirkannya sekarang.</p></header>'+captureBox()+welcomeBox()+bkCard()+rateCard()+carryBox()+triageBox();
   if(openF.length){
     h+='<section class="suggest" aria-label="Saran memulai"><div class="t"><span>Bingung mulai dari mana?</span><b>Biar aplikasi yang memilihkan satu untukmu.</b></div><button class="btn" type="button" data-act="pick">Pilihkan satu</button></section>';
   }
@@ -1013,9 +1550,9 @@ function viewTodayWide(){
   var f=ui.todayFilter; if(f!=='all'&&f!=='none'&&!areaById(f)){ui.todayFilter=f='all';}
   var tl=todayList(), open=tl.filter(function(t){return t.status!=='done';}), doneN=tl.length-open.length, total=tl.length;
   var d=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'});
-  var title=total<=3?'Hari ini, tiga hal saja.':'Hari ini, mulai dari satu.';
+  var title=total<=3?'Hari ini, satu langkah untuk langkah besar.':'Hari ini, mulai dari satu.';
   var segs=''; for(var i=0;i<Math.max(3,total);i++){segs+='<i class="'+(i<doneN?'on':'')+'"></i>';}
-  var head='<header><div class="date">'+esc(d.charAt(0).toUpperCase()+d.slice(1))+'</div><h1>'+title+'</h1><p class="sub">Sisanya aman di Nanti. Kamu tidak perlu memikirkannya sekarang.</p></header>'+captureBox();
+  var head='<header><div class="date">'+esc(d.charAt(0).toUpperCase()+d.slice(1))+'</div><h1>'+title+'</h1><p class="sub">Sisanya aman di Nanti. Kamu tidak perlu memikirkannya sekarang.</p></header>'+captureBox()+welcomeBox()+bkCard()+rateCard();
   var right=carryBox()+triageBox();
   if(open.filter(inFilter).length)right+='<section class="suggest" aria-label="Saran memulai"><div class="t"><span>Bingung mulai dari mana?</span><b>Biar aplikasi yang memilihkan satu untukmu.</b></div><button class="btn" type="button" data-act="pick">Pilihkan satu</button></section>';
   if(open.length>3)right+='<div class="soft">Ada '+open.length+' tugas di Hari Ini. Tidak apa-apa, tapi cukup pilih satu untuk dimulai.</div>';
@@ -1124,43 +1661,57 @@ function noteTaskForm(n){
     '<button class="btn-o" type="button" data-act="ntaskgo" data-to="later" style="min-height:40px">Ke Nanti</button>'+
     '<button class="btn-o" type="button" data-act="ntaskcancel" style="min-height:40px">Batal</button></div>';
 }
+function fmtDT(iso){return new Date(iso).toLocaleString('id-ID',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});}
+function noteWhen(n){return ui.noteSort==='upd'?'Diubah '+fmtDT(n.updatedAt):'Dibuat '+fmtDT(n.createdAt||n.updatedAt);}
 function noteRow(n){
-  var editing=ui.edit&&ui.edit.type==='note'&&ui.edit.id===n.id;
-  var open=isOpen('note:'+n.id,0)||editing;
   var st=noteState(n), title=noteTitle(n), body=noteBody(n);
-  var when=new Date(n.updatedAt).toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
-  var head='<div class="nhead"><span class="small">'+esc(when)+'</span>'+noteProjChip(n)+'<span class="grow"></span>'+
+  var head='<div class="nhead"><span class="small">'+esc(noteWhen(n))+'</span>'+noteProjChip(n)+'<span class="grow"></span>'+
     '<button class="btn-o nmini" type="button" data-act="notepin" data-id="'+n.id+'" aria-pressed="'+(!!n.pinned)+'">'+(n.pinned?'Lepas sematan':'Sematkan')+'</button>'+
     '<button class="btn-o nmini" type="button" data-act="notedel" data-id="'+n.id+'">Hapus</button></div>';
-  var cls='note'+(n.pinned?' pin':'');
+  var h='<article class="note'+(n.pinned?' pin':'')+'" id="note-'+n.id+'">'+head+
+    '<button type="button" class="ntitle open" data-act="opennote" data-id="'+n.id+'"><span>'+esc(title)+'</span></button>'+noteBadge(st);
+  if(body)h+='<div class="nprev" data-act="opennote" data-id="'+n.id+'">'+esc(body)+'</div>';
+  return h+'<button type="button" class="nmore" data-act="opennote" data-id="'+n.id+'">Lihat detail →</button></article>';
+}
+function viewNote(){
+  var n=noteById(ui.noteId); if(!n||n.deleted){ui.view='notes';return viewNotes();}
+  var editing=ui.edit&&ui.edit.type==='note'&&ui.edit.id===n.id;
+  var st=noteState(n), title=noteTitle(n), body=noteBody(n);
+  var h=wrapOpen()+'<button class="back" type="button" data-act="nav" data-view="notes">'+BACK+'Semua catatan</button>';
+  var meta='<div class="small">Dibuat '+esc(fmtDT(n.createdAt||n.updatedAt))+' · Diubah '+esc(fmtDT(n.updatedAt))+'</div>';
   if(editing){
-    return '<article class="'+cls+' nedit" id="note-'+n.id+'">'+head+
+    h+='<article class="note ndetail nedit" id="note-'+n.id+'">'+meta+
       '<label class="sr" for="editnt">Judul catatan</label><input id="editnt" class="ntitle-in" type="text" autocomplete="off" value="'+esc(n.title||'')+'" placeholder="'+esc(title)+'" data-ctrl="savenote" data-enter="notetitle" data-id="'+n.id+'">'+
-      '<textarea id="editn" class="nt-area" data-ctrl="savenote" data-id="'+n.id+'" aria-label="Isi catatan" style="min-height:200px">'+esc(n.text)+'</textarea>'+
+      '<textarea id="editn" class="nt-area" data-ctrl="savenote" data-id="'+n.id+'" aria-label="Isi catatan" style="min-height:45vh">'+esc(n.text)+'</textarea>'+
       '<div class="small">Ctrl+Enter atau klik di luar untuk menyimpan. Esc untuk batal.</div></article>';
+  }else{
+    h+='<article class="note ndetail'+(n.pinned?' pin':'')+'" id="note-'+n.id+'">'+meta+'<h1 class="ndtitle">'+esc(title)+'</h1>'+
+      '<div class="nhead">'+noteBadge(st)+noteProjChip(n)+'<span class="grow"></span>'+
+      '<button class="btn-o nmini" type="button" data-act="editnote" data-id="'+n.id+'">Ubah</button>'+
+      '<button class="btn-o nmini" type="button" data-act="notepin" data-id="'+n.id+'" aria-pressed="'+(!!n.pinned)+'">'+(n.pinned?'Lepas sematan':'Sematkan')+'</button>'+
+      '<button class="btn-o nmini" type="button" data-act="notedel" data-id="'+n.id+'">Hapus</button></div>'+
+      (body?'<div class="nbody" data-nid="'+n.id+'">'+esc(body)+'</div>':'<div class="small">Catatan ini belum punya isi.</div>')+'</article>';
   }
-  var h='<article class="'+cls+'" id="note-'+n.id+'">'+head+
-    '<button type="button" class="ntitle" data-act="togglenote" data-id="'+n.id+'" aria-expanded="'+(open?'true':'false')+'">'+CHEV_S+'<span>'+esc(title)+'</span></button>'+noteBadge(st);
-  if(!open){
-    if(body)h+='<div class="nprev" data-act="togglenote" data-id="'+n.id+'">'+esc(body)+'</div>';
-    return h+'</article>';
-  }
-  h+=(body?'<div class="nbody" data-nid="'+n.id+'">'+esc(body)+'</div>':'')+
-    '<div><button class="btn-o nmini" type="button" data-act="editnote" data-id="'+n.id+'">Ubah catatan</button></div>';
   var tks=noteTasks(n);
-  h+='<div class="ntasks"><div class="small" style="font-weight:600">Tugas dari catatan ini'+(tks.length?' ('+st.d+' dari '+st.n+' selesai)':'')+'</div>';
+  h+='<section class="note ntasks"><div style="font-weight:700;font-size:16px">Tugas dari catatan ini'+(tks.length?' <span class="small" style="font-weight:500">('+st.d+' dari '+st.n+' selesai)</span>':'')+'</div>';
   tks.forEach(function(t){
     var where=t.status==='done'?'Selesai':(t.status==='today'?'Hari Ini':'Nanti');
     h+='<div class="ntrow'+(t.status==='done'?' d':'')+'"><span class="dot" aria-hidden="true"></span><button type="button" data-act="gototask" data-id="'+t.id+'" title="Buka tugas">'+esc(t.title)+'</button><span class="st pj">'+esc(projShort(t))+'</span><span class="st">'+where+'</span></div>';
   });
   if(!tks.length)h+='<div class="small">Belum ada. Blok sebagian tulisan di atas, lalu tekan tombol di bawah, supaya judul tugasnya terisi otomatis.</div>';
-  h+=noteTaskForm(n)+'</div>';
-  return h+'</article>';
+  h+=noteTaskForm(n)+'</section>';
+  return h+'</div>';
 }
 function viewNotes(){
   var all=S.notes.filter(function(n){return !n.deleted;});
   var cP=all.filter(function(n){return noteState(n).k==='plain';}).length, cJ=all.filter(function(n){return noteState(n).k==='jalan';}).length, cT=all.filter(function(n){return noteState(n).k==='tuntas';}).length;
-  var list=all.filter(noteMatches).sort(function(a,b){ if(!!a.pinned!==!!b.pinned)return a.pinned?-1:1; return a.updatedAt<b.updatedAt?1:-1; });
+  var sk=ui.noteSort;
+  var list=all.filter(noteMatches).sort(function(a,b){
+    if(!!a.pinned!==!!b.pinned)return a.pinned?-1:1;
+    if(sk==='upd')return a.updatedAt<b.updatedAt?1:-1;
+    var x=a.createdAt||a.updatedAt, y=b.createdAt||b.updatedAt;
+    return sk==='old'?(x<y?-1:1):(x<y?1:-1);
+  });
   var hasProj=S.projects.some(function(p){return !p.archived;});
   var h=wrapOpen()+'<header><h1>Catatan</h1><p class="sub">Tempat menulis bebas, sepanjang apa pun. Kalau ada yang mau dikerjakan, buat tugasnya dari dalam catatan.</p></header>'+
     '<div class="compose"><label class="sr" for="newnotetitle">Judul catatan (opsional)</label>'+
@@ -1180,7 +1731,9 @@ function viewNotes(){
     });
     h+='<div class="filters" role="group" aria-label="Filter status catatan">'+chip('all','Semua')+chip('plain','Catatan saja ('+cP+')')+chip('jalan','Berjalan ('+cJ+')')+chip('tuntas','Tuntas ('+cT+')')+
       (Object.keys(pset).length?'<label class="sr" for="noteprojf">Filter projek</label><select id="noteprojf" class="psel" data-change="noteprojf" style="height:40px">'+pOpts+'</select>':'')+'</div>';
-    h+='<div class="sin"><label class="sr" for="nsearch">Cari catatan</label><input id="nsearch" type="search" autocomplete="off" placeholder="Cari catatan\u2026" value="'+esc(ui.noteQ)+'" data-input="nsearch"></div>';
+    h+='<div class="filters"><div class="sin" style="flex:1 1 260px"><label class="sr" for="nsearch">Cari catatan</label><input id="nsearch" type="search" autocomplete="off" placeholder="Cari catatan\u2026" value="'+esc(ui.noteQ)+'" data-input="nsearch"></div>'+
+      '<label class="sr" for="nsort">Urutkan catatan</label><select id="nsort" class="psel nsort" data-change="nsort">'+
+      [['upd','Urutkan: terakhir diubah'],['new','Urutkan: terbaru dibuat'],['old','Urutkan: terlama dibuat']].map(function(o){return '<option value="'+o[0]+'"'+(ui.noteSort===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select></div>';
   }
   if(!all.length)h+='<div class="empty">Belum ada catatan. Tulis apa saja di atas.</div>';
   else if(!list.length)h+='<div class="empty">'+(ui.noteFilter==='plain'?'Semua catatan sudah punya tugas.':ui.noteFilter==='jalan'?'Belum ada catatan yang sedang berjalan.':ui.noteFilter==='tuntas'?'Belum ada catatan yang tuntas.':'Tidak ada catatan yang cocok.')+'</div>';
@@ -1289,7 +1842,7 @@ function viewFocus(){
   var big=cs?cs.step.text:t.title;
   var circ=2*Math.PI*104;
   var h='<div class="focus"><div class="ftop"><button class="back" type="button" data-act="leave">'+BACK+'Kembali ke Hari Ini</button>'+
-    '<div class="btns"><button class="fbtn" type="button" data-act="togglesound" aria-pressed="'+(PREF.mute?'false':'true')+'">Bunyi: '+(PREF.mute?'mati':'nyala')+'</button><button class="fbtn" type="button" data-act="timerpick" aria-pressed="'+(f.timerMin?'true':'false')+'">'+(f.timerMin?('Timer '+f.timerMin+' menit'):'Pasang timer (opsional)')+'</button></div></div>';
+    '<div class="btns">'+(permState()!=='granted'?'<button class="fbtn" type="button" data-act="nav" data-view="notif">Notifikasi belum aktif</button>':'')+'<button class="fbtn" type="button" data-act="togglesound" aria-pressed="'+(PREF.mute?'false':'true')+'">Bunyi: '+(PREF.mute?'mati':'nyala')+'</button><button class="fbtn" type="button" data-act="timerpick" aria-pressed="'+(f.timerMin?'true':'false')+'">'+(f.timerMin?('Timer '+f.timerMin+' menit'):'Pasang timer (opsional)')+'</button></div></div>';
   if(ui.timerPick){
     h+='<div class="btns" style="justify-content:center;margin-top:14px">';
     [10,15,25].forEach(function(m){h+='<button class="fbtn" type="button" data-act="settimer" data-min="'+m+'" aria-pressed="'+(f.timerMin===m)+'">'+m+' menit</button>';});
@@ -1312,16 +1865,17 @@ function viewFocus(){
 /* ---------- Render ---------- */
 var VKEY='langkah.view';
 function saveView(){
-  try{sessionStorage.setItem(VKEY,JSON.stringify({view:ui.view,trailId:ui.trailId,todayFilter:ui.todayFilter,doneFilter:ui.doneFilter,laterFilter:ui.laterFilter,dashF:ui.dashF,noteFilter:ui.noteFilter,noteProj:ui.noteProj,gq:ui.gq,capType:ui.capType,cur:ui.cur}));}catch(e){}
+  try{sessionStorage.setItem(VKEY,JSON.stringify({view:ui.view,trailId:ui.trailId,todayFilter:ui.todayFilter,doneFilter:ui.doneFilter,laterFilter:ui.laterFilter,dashF:ui.dashF,noteFilter:ui.noteFilter,noteProj:ui.noteProj,gq:ui.gq,capType:ui.capType,cur:ui.cur,noteId:ui.noteId}));}catch(e){}
 }
 function restoreView(){
   var v=null; try{v=JSON.parse(sessionStorage.getItem(VKEY));}catch(e){}
   if(!v)return;
   ['todayFilter','doneFilter','laterFilter','dashF','noteFilter','noteProj','gq','capType'].forEach(function(k){if(typeof v[k]==='string')ui[k]=v[k];});
-  var ok={today:1,later:1,notes:1,dash:1,done:1,search:1,trash:1,sync:1,more:1};
+  var ok={today:1,later:1,notes:1,dash:1,done:1,search:1,trash:1,sync:1,more:1,notif:1,help:1,storage:1,settings:1,feedback:1};
   if(ok[v.view])ui.view=v.view;
   else if(v.view==='focus'&&v.cur&&isLive(v.cur)&&byId(v.cur)){ui.cur=v.cur;ui.view='focus';}
   else if(v.view==='trail'&&v.trailId&&byId(v.trailId)){ui.view='trail';ui.trailId=v.trailId;}
+  else if(v.view==='note'&&v.noteId&&noteById(v.noteId)&&!noteById(v.noteId).deleted){ui.view='note';ui.noteId=v.noteId;}
 }
 function render(){
   sessCleanup();
@@ -1330,10 +1884,11 @@ function render(){
   if(ui.view==='focus')body=viewFocus();
   else{
     var main;
-    if(ui.view==='later')main=viewLater(); else if(ui.view==='done')main=viewDone(); else if(ui.view==='trail')main=viewTrail(); else if(ui.view==='dash')main=viewDash(); else if(ui.view==='notes')main=viewNotes(); else if(ui.view==='search')main=viewSearch(); else if(ui.view==='sync')main=viewSync(); else if(ui.view==='more')main=viewMore(); else if(ui.view==='trash')main=viewTrash(); else main=W()?viewTodayWide():viewToday();
-    body='<div class="app">'+sidebar()+'<main class="main'+(W()?' wmain':'')+'">'+focusBar()+(ui.saveErr?'<div class="errbar" role="alert">Perubahan terakhir <b>gagal tersimpan</b> di browser. Klik <b>Cadangkan data (JSON)</b> sekarang supaya tidak hilang.</div>':'')+main+'</main></div>';
+    if(ui.view==='later')main=viewLater(); else if(ui.view==='done')main=viewDone(); else if(ui.view==='trail')main=viewTrail(); else if(ui.view==='dash')main=viewDash(); else if(ui.view==='notes')main=viewNotes(); else if(ui.view==='note')main=viewNote(); else if(ui.view==='notif')main=viewNotif(); else if(ui.view==='help')main=viewHelp(); else if(ui.view==='storage')main=viewStorage(); else if(ui.view==='settings')main=viewSettings(); else if(ui.view==='restore')main=viewRestore(); else if(ui.view==='feedback')main=viewFeedback(); else if(ui.view==='search')main=viewSearch(); else if(ui.view==='sync')main=viewSync(); else if(ui.view==='more')main=viewMore(); else if(ui.view==='trash')main=viewTrash(); else main=W()?viewTodayWide():viewToday();
+    body='<div class="app">'+sidebar()+'<main class="main'+(W()?' wmain':'')+'">'+focusBar()+(fsBanner()||'<div id="fsbanner" hidden></div>')+(ui.saveErr?'<div class="errbar" role="alert">Perubahan terakhir <b>gagal tersimpan</b> di browser. Klik <b>Cadangkan data</b> sekarang supaya tidak hilang.</div>':'')+main+'</main></div>';
   }
   root.innerHTML=body;
+  if(ui.view!==ui.lastView){if(ui.lastView){document.documentElement.scrollTop=0;if(document.body)document.body.scrollTop=0;}ui.lastView=ui.view;}
   paintToast();
   Array.prototype.forEach.call(root.querySelectorAll('input[data-enter]'),function(i){i.setAttribute('form','gform');i.setAttribute('enterkeyhint','done');});
   document.title=sessList().some(function(x){return clockInfo(x).over;})?'\u23f0 Waktu habis \u00b7 Langkah':'Langkah';
@@ -1359,15 +1914,15 @@ function sessList(){
   a.sort(function(x,y){return x.start-y.start;}); return a;
 }
 function F(){var s=ui.cur&&S.sess[ui.cur]; return (s&&!s.end&&byId(ui.cur))?s:null;}
-function sessSync(){ if(SY&&SY.cfg){clearTimeout(SY.timer);syncNow('sess');} }
+function sessSync(){ if(SY&&SY.cfg&&!PREF.syManual){clearTimeout(SY.timer);SY.timer=null;syncNow('sess');} }
 function alKey(s){return s.start+':'+s.timerMin;}
 function isAlerted(s){return !!(PREF.al&&PREF.al[s.id]===alKey(s));}
 function setAlerted(s){PREF.al=PREF.al||{};PREF.al[s.id]=alKey(s);savePref();}
 function clearAlerted(id){if(PREF.al&&PREF.al[id]){delete PREF.al[id];savePref();}}
 function audioUnlock(){try{var C=window.AudioContext||window.webkitAudioContext; if(!C)return; if(!AC)AC=new C(); if(AC.state==='suspended')AC.resume();}catch(e){}}
 ['pointerdown','keydown','touchstart'].forEach(function(ev){document.addEventListener(ev,audioUnlock,{passive:true});});
-function beep(){
-  if(!PREF.mute){
+function beep(force){
+  if(!PREF.mute||force){
     try{
       audioUnlock(); if(AC){var t0=AC.currentTime;
         [[660,0],[880,0.22],[1100,0.44]].forEach(function(p){var o=AC.createOscillator(),g=AC.createGain(),st=t0+p[1];o.type='sine';o.frequency.value=p[0];g.gain.setValueAtTime(0.0001,st);g.gain.exponentialRampToValueAtTime(0.35,st+0.02);g.gain.exponentialRampToValueAtTime(0.0001,st+0.2);o.connect(g);g.connect(AC.destination);o.start(st);o.stop(st+0.22);});}
@@ -1387,7 +1942,7 @@ function ringTick(){
 function startFocus(id){
   if(isLive(id)){ui.cur=id;ui.view='focus';ui.timerPick=false;ui.edit=null;return;}
   S.sess[id]={id:id,start:Date.now(),timerMin:0,upd:now()};
-  ui.cur=id; save(); sessSync();
+  ui.cur=id; save(); sessSync(); swState();
   if(window.Notification&&Notification.permission==='granted')notifySession(S.sess[id]);else notifyAsk();
   ui.view='focus';ui.timerPick=false;ui.edit=null;
 }
@@ -1400,6 +1955,7 @@ function setTimer(f,m){
 function endFocus(id){
   id=id||ui.cur; var s=id&&S.sess[id];
   if(s&&!s.end)S.sess[id]={id:id,end:true,start:s.start,upd:now()};
+  swState();
   if(id){ringStop(id);clearAlerted(id);notifyClear('langkah-sess-'+id);notifyClear('langkah-over-'+id);delete NS[id];}
   save(); sessSync();
   if(ui.cur===id){ui.cur=null;if(ui.view==='focus')ui.view='today';}
@@ -1431,11 +1987,68 @@ function notifyShow(title,opts){
 function notifyClear(tag){
   try{ if(SWREG&&SWREG.getNotifications)SWREG.getNotifications({tag:tag}).then(function(l){l.forEach(function(n){n.close();});}); }catch(e){}
 }
-function notifySession(s){
+function hm(ms){return new Date(ms).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});}
+function nOpts(title,o,id){o.data={id:id,t:title,o:{body:o.body,tag:o.tag,icon:o.icon,badge:o.badge,actions:o.actions,requireInteraction:true}};return o;}
+function notifySession(s,quiet){
   if(!s||s.end)return; var t=byId(s.id); if(!t)return;
   NS[s.id]=alKey(s);
-  notifyShow('Sedang dikerjakan',{body:t.title+(s.timerMin?' · timer '+s.timerMin+' menit':''),tag:'langkah-sess-'+s.id,data:{id:s.id},renotify:false,requireInteraction:true,icon:'icon-192.png',badge:'icon-192.png',
-    actions:[{action:'done',title:'Selesai'},{action:'end',title:'Akhiri sesi'}]});
+  var body=t.title+(s.timerMin?' · selesai sekitar '+hm(s.start+s.timerMin*60000):' · mulai '+hm(s.start));
+  notifyShow('Sedang dikerjakan',nOpts('Sedang dikerjakan',{body:body,tag:'langkah-sess-'+s.id,renotify:false,silent:!!quiet,requireInteraction:true,icon:'icon-192.png',badge:'icon-192.png',
+    actions:[{action:'done',title:'Selesai'},{action:'end',title:'Akhiri sesi'}]},s.id));
+}
+var SWLAST='';
+function swState(force){
+  try{
+    var m={type:'langkah-state',live:sessList().map(function(x){return x.id;}),pin:!PREF.nopin};
+    var k=JSON.stringify(m); if(!force&&k===SWLAST)return;
+    var tg=(navigator.serviceWorker&&navigator.serviceWorker.controller)||(SWREG&&SWREG.active);
+    if(!tg)return; SWLAST=k; tg.postMessage(m);
+  }catch(e){}
+}
+var PERMQ='';
+function permState(){try{if(!('Notification' in window))return 'na';var p=Notification.permission;return (p!=='granted'&&PERMQ==='granted')?'granted':p;}catch(e){return 'na';}}
+var APP_URL='https://farhanimaduddin.me/langkah/';
+try{ if(navigator.permissions&&navigator.permissions.query)navigator.permissions.query({name:'notifications'}).then(function(st){
+  PERMQ=st.state; st.onchange=function(){PERMQ=st.state; if(permState()==='granted')sessList().forEach(function(x){notifySession(x,true);}); if(ui.view==='notif'||ui.view==='focus')render();};
+},function(){}); }catch(e){}
+function fileNote(){
+  if(location.protocol!=='file:')return '';
+  return '<section class="card setc"><div class="setrow"><div class="ptext small"><b style="font-size:15px;color:var(--text)">Kamu membuka Langkah sebagai file di komputer</b><br>'+
+    'Alamatnya diawali <code>file://</code> atau <code>C:/</code>. Di mode ini browser membatasi beberapa fitur: izin notifikasi bisa tidak terbaca dengan benar, tombol di notifikasi dan notifikasi yang muncul lagi tidak tersedia, dan aplikasi tidak bisa dipasang. '+
+    'Supaya semuanya jalan, buka Langkah lewat alamat web'+(APP_URL?': <a href="'+APP_URL+'" target="_blank" rel="noopener">'+APP_URL+'</a>':'')+'.<br>'+
+    'Data di versi file dan versi web tersimpan terpisah. Pakai sinkron antar perangkat, atau Cadangkan lalu Pulihkan data, untuk memindahkannya.</div></div></section>';
+}
+function notifSummary(){var p=permState();return p==='granted'?'Notifikasi aktif'+(PREF.mute?', bunyi mati':''):(p==='denied'?'Diblokir. Buka untuk cara menyalakan':(p==='na'?'Tidak didukung browser ini':'Belum diizinkan'));}
+function notifTest(){
+  var p=permState();
+  if(p==='default'){try{var r=Notification.requestPermission();if(r&&r.then)r.then(function(res){if(res==='granted'){PERMQ='granted';notifTest();}else toast('Izin notifikasi belum diberikan.');render();});}catch(e){} return;}
+  if(p!=='granted'){toast(p==='denied'?'Notifikasi diblokir. Ikuti petunjuk di halaman ini untuk menyalakannya.':'Browser ini tidak mendukung notifikasi.');render();return;}
+  notifyShow('Tes notifikasi',{body:'Kalau ini terlihat, notifikasi Langkah sudah jalan.',tag:'langkah-test',vibrate:[200,100,200],icon:'icon-192.png',badge:'icon-192.png'});
+  beep(true);
+}
+function viewNotif(){
+  var p=permState();
+  var stTxt={granted:'Diizinkan di perangkat ini.',default:'Belum diizinkan di perangkat ini.',denied:'Diblokir di perangkat ini.',na:'Browser ini tidak mendukung notifikasi.'}[p];
+  var h=wrapOpen()+'<header><h1>Notifikasi & bunyi</h1><p class="sub">Pengingat saat timer habis, dan penanda tugas yang sedang dikerjakan. Pengaturan ini berlaku per perangkat.</p></header>'+fileNote();
+  h+='<section class="card setc"><div class="setrow"><div class="grow"><b>Izin notifikasi</b><span class="small">'+stTxt+'</span></div>'+
+    (p==='default'?'<button class="btn" type="button" data-act="notifallow">Izinkan</button>':(p==='granted'?'<span class="okb">Aktif</span>':'<span class="okb bad">'+(p==='denied'?'Diblokir':'Tidak ada')+'</span>'))+'</div>';
+  if(p==='denied')h+='<div class="setrow"><div class="ptext small">Izin pernah ditolak, jadi aplikasi tidak bisa memintanya lagi. Nyalakan sendiri:<br>'+
+    '<b>Aplikasi terpasang di Android:</b> tekan lama ikon Langkah → Info aplikasi → Notifikasi → izinkan.<br>'+
+    '<b>Di Chrome:</b> ketuk ikon di kiri alamat situs → Izin → Notifikasi → Izinkan.<br>Setelah itu tutup dan buka lagi aplikasinya.</div></div>';
+  if(p==='na')h+='<div class="setrow"><div class="ptext small">Di iPhone, notifikasi baru bisa setelah Langkah ditambahkan ke Layar Utama (iOS 16.4 ke atas) lalu dibuka dari ikonnya.</div></div>';
+  h+='</section>';
+  function tg(act,on,title,sub){return '<div class="setrow"><div class="grow"><b>'+title+'</b><span class="small">'+sub+'</span></div><button class="btn-o tgl" type="button" data-act="'+act+'" aria-pressed="'+on+'">'+(on?'Nyala':'Mati')+'</button></div>';}
+  h+='<section class="card setc">'+
+    tg('togglesound',!PREF.mute,'Bunyi saat waktu habis','Nada pendek di aplikasi, berulang tiap 10 detik sampai 1 menit. Berbunyi selama aplikasi terbuka.')+
+    tg('togglepin',!PREF.nopin,'Notifikasi tugas berjalan selalu tampil','Kalau digeser, notifikasinya muncul lagi sampai sesi diakhiri atau tugasnya selesai.')+'</section>';
+  h+='<section class="card setc"><div class="setrow"><div class="grow"><b>Coba notifikasi</b><span class="small">Pakai “10 detik lagi”, lalu kunci layar atau ke Home untuk melihat apakah notifikasi muncul di luar aplikasi.</span></div></div>'+
+    '<div class="setrow"><div class="btns"><button class="btn" type="button" data-act="notiftest">Tes sekarang</button><button class="btn-o" type="button" data-act="notiftest" data-key="later">Tes 10 detik lagi</button></div></div></section>';
+  h+='<section class="card setc"><div class="setrow"><div class="ptext small"><b style="font-size:15px;color:var(--text)">Kalau notifikasi tidak bersuara atau tidak muncul</b><br>'+
+    '• Buka Info aplikasi Langkah (atau Chrome) → Notifikasi, pastikan kategorinya tidak <b>Senyap</b>.<br>'+
+    '• Pengaturan baterai → Langkah atau Chrome → <b>Tidak dibatasi</b>, supaya tidak dibekukan Android.<br>'+
+    '• Mode Jangan Ganggu ikut membisukan notifikasi.<br>'+
+    '• Saat aplikasi dibekukan Android, notifikasi “Waktu habis” bisa terlambat sampai aplikasi dibuka lagi. Jamnya tetap benar.</div></div></section>';
+  return h+'</div>';
 }
 function notifyAsk(){
   try{ if(window.Notification&&Notification.permission==='default'){var r=Notification.requestPermission();if(r&&r.then)r.then(function(){sessList().forEach(notifySession);});} }catch(e){}
@@ -1443,8 +2056,8 @@ function notifyAsk(){
 function notifyOver(t,s){
   if(!s)return;
   notifyClear('langkah-sess-'+s.id);
-  notifyShow('Waktu habis',{body:(t?t.title+'. ':'')+'Lanjut sebentar atau berhenti? Dua-duanya boleh.',tag:'langkah-over-'+s.id,data:{id:s.id},renotify:true,vibrate:[200,100,200],requireInteraction:true,icon:'icon-192.png',badge:'icon-192.png',
-    actions:[{action:'plus5',title:'+5 menit'},{action:'end',title:'Akhiri'}]});
+  notifyShow('Waktu habis',nOpts('Waktu habis',{body:(t?t.title+'. ':'')+'Lanjut sebentar atau berhenti? Dua-duanya boleh.',tag:'langkah-over-'+s.id,renotify:true,vibrate:[200,100,200],requireInteraction:true,icon:'icon-192.png',badge:'icon-192.png',
+    actions:[{action:'plus5',title:'+5 menit'},{action:'end',title:'Akhiri'}]},s.id));
 }
 function sessCleanup(){
   var ch=false;
@@ -1454,7 +2067,8 @@ function sessCleanup(){
   });
   if(ch){save();sessSync();}
   var live=sessList(), map={};
-  live.forEach(function(s){map[s.id]=1; if(NS[s.id]!==alKey(s))notifySession(s);});
+  swState();
+  live.forEach(function(s){map[s.id]=1; if(NS[s.id]!==alKey(s)&&!(clockInfo(s).over&&isAlerted(s)))notifySession(s,Date.now()-s.start>60000);});
   Object.keys(NS).forEach(function(id){if(!map[id]){notifyClear('langkah-sess-'+id);notifyClear('langkah-over-'+id);delete NS[id];}});
 }
 function sessAction(a,id){
@@ -1463,13 +2077,13 @@ function sessAction(a,id){
   if(a==='end'){endFocus(id);toast('Sesi diakhiri.');}
   else if(a==='plus5'){setTimer(s,5);toast('Timer 5 menit lagi.');}
   else if(a==='done'){
-    if(pendingSteps(t)>0){toast('Masih ada langkah yang belum selesai.');ui.cur=id;ui.view='focus';}
+    if(pendingSteps(t)>0){toast('Masih ada langkah yang belum selesai.');ui.cur=id;ui.view='focus';if(!clockInfo(s).over)notifySession(s,true);}
     else{setStatus(t,'done');save();endFocus(id);toast('Tugas beres. Kamu hebat.');}
-  }else{ui.cur=id;ui.view='focus';}
+  }else{ui.cur=id;ui.view='focus';if(!clockInfo(s).over)notifySession(s,true);}
   render();
 }
 if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
-  navigator.serviceWorker.register('sw.js').then(function(r){SWREG=r;return navigator.serviceWorker.ready;}).then(function(r){SWREG=r;}).catch(function(){});
+  navigator.serviceWorker.register('sw.js').then(function(r){SWREG=r;return navigator.serviceWorker.ready;}).then(function(r){SWREG=r;swState(true);}).catch(function(){});
   try{navigator.serviceWorker.addEventListener('message',function(e){var m=e.data||{}; if(m.type==='langkah-act'&&m.id)sessAction(m.action,m.id);});}catch(x){}
 }
 function afterStep(res){
@@ -1507,6 +2121,7 @@ function act(a,d){
     case 'fsconnect': fsConnect(); return;
     case 'fsresume': fsResume(); return;
     case 'fsoff': fsOff(); return;
+    case 'fsopen': fsOpen(); return;
     case 'toggle':
       if(!t)break;
       if(t.status==='done'){
@@ -1531,6 +2146,34 @@ function act(a,d){
     case 'resume': var rs=d.id?S.sess[d.id]:F(); if(rs&&!rs.end&&byId(rs.id)){ui.cur=rs.id;ui.view='focus';ui.timerPick=false;ringStop(rs.id);} break;
     case 'endsession': endFocus(d.id||ui.cur); toast('Sesi diakhiri.'); break;
     case 'togglesound': PREF.mute=!PREF.mute; savePref(); if(!PREF.mute){audioUnlock();beep();} break;
+    case 'helptoggle': ui.exp[d.key]=!isOpen(d.key,false); break;
+    case 'restmerge': restMerge(); break;
+    case 'restreplace': if(ui.pending)ui.pending.confirm=true; break;
+    case 'restreplace2': restReplace(); break;
+    case 'restcancel2': if(ui.pending)ui.pending.confirm=false; break;
+    case 'restcancel': ui.pending=null; ui.view='storage'; break;
+    case 'undorest': var us=undoSnap(); if(us){restoreFrom(us.data,'Data sebelum pemulihan '+new Date(us.at).toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),'undo');} break;
+    case 'histload': histLoad(); return;
+    case 'histpick': histPick(d.id); return;
+    case 'sharebk': shareBackup(); return;
+    case 'bksnooze': PREF.bkSnooze=now(); savePref(); break;
+    case 'rateclose': PREF.rateAsked=true; savePref(); break;
+    case 'fbstar': fbKeep(); if(ui.fb)ui.fb.nilai=(ui.fb.nilai===+d.key?0:+d.key); break;
+    case 'fbtype': fbKeep(); if(ui.fb)ui.fb.jenis=d.key; break;
+    case 'fbsend': fbSend(); return;
+    case 'fbagain': ui.fb=null; break;
+    case 'fbflush': if(navigator.onLine===false){toast('Masih offline. Akan dikirim otomatis saat tersambung.');break;} fbFlush(); break;
+    case 'fbdrop': fbSaveQ([]); toast('Masukan yang tertunda dibatalkan.'); break;
+    case 'helpclose': PREF.helpSeen=true; savePref(); break;
+    case 'syauto': PREF.syManual=!PREF.syManual; savePref(); if(PREF.syManual){clearTimeout(SY.timer);SY.timer=null;}else if(syDirty())syQueue(); break;
+    case 'togglepin': PREF.nopin=!PREF.nopin; savePref(); swState(true); break;
+    case 'notifallow':
+      try{var pr=Notification.requestPermission(); if(pr&&pr.then)pr.then(function(res){if(res==='granted')PERMQ='granted';sessList().forEach(function(x){notifySession(x,true);});swState(true);render();toast(res==='granted'?'Notifikasi diizinkan.':'Izin notifikasi belum diberikan.');});}catch(x){}
+      break;
+    case 'notiftest':
+      if(d.key==='later'){if(permState()!=='granted'){notifTest();break;} audioUnlock(); setTimeout(notifTest,10000); toast('Notifikasi tes muncul 10 detik lagi.');}
+      else notifTest();
+      break;
     case 'timerpick': ui.timerPick=!ui.timerPick; break;
     case 'settimer':
       setTimer(F(),parseInt(d.min,10)||0); notifyAsk();
@@ -1549,18 +2192,18 @@ function act(a,d){
     case 'density': PREF.calm=(d.key==='calm'); savePref(); break;
     case 'captype': ui.capType=d.key; ui.refocus='capture'; break;
     case 'notesave': saveNewNote(); return;
-    case 'editnote': ui.edit={type:'note',id:d.id}; ui.ntask=null; ui.exp['note:'+d.id]=true; ui.refocus='editn'; break;
+    case 'editnote': ui.edit={type:'note',id:d.id}; ui.ntask=null; ui.view='note'; ui.noteId=d.id; ui.refocus='editn'; break;
     case 'togglenote': ui.exp['note:'+d.id]=!isOpen('note:'+d.id,0); if(!ui.exp['note:'+d.id]&&ui.ntask&&ui.ntask.id===d.id)ui.ntask=null; break;
     case 'nfilter': ui.noteFilter=d.key; break;
     case 'ntaskopen': ui.ntask={id:d.id,title:ui.selText||''}; ui.selText=''; ui.exp['note:'+d.id]=true; ui.edit=null; ui.refocus='nttitle'; break;
     case 'ntaskcancel': ui.ntask=null; break;
     case 'ntaskgo': createNoteTask(d.to); return;
-    case 'opennote': ui.view='notes'; ui.noteFilter='all'; ui.noteQ=''; ui.exp['note:'+d.id]=true; ui.scrollTo='note-'+d.id; break;
+    case 'opennote': if(noteById(d.id)){ui.view='note'; ui.noteId=d.id; ui.edit=null; ui.ntask=null;} break;
     case 'gototask':
       var gt=byId(d.id); if(!gt)break;
       ui.view=gt.status==='done'?'done':(gt.status==='later'?'later':'today'); ui.fromNote=''; ui.todayFilter='all'; ui.doneFilter='all'; ui.scrollTo='task-'+gt.id; break;
     case 'notepin': var np=noteById(d.id); if(np){np.pinned=!np.pinned;save();} break;
-    case 'notedel': var nd=noteById(d.id); if(nd)delNote(nd); break;
+    case 'notedel': var nd=noteById(d.id); if(nd){delNote(nd); if(ui.view==='note'&&ui.noteId===nd.id)ui.view='notes';} break;
     case 'stepdone':
       var cf=F(), ft=cf&&byId(cf.id); if(!ft)break;
       var cs=curStep(ft);
@@ -1605,7 +2248,7 @@ function act(a,d){
       endFocus();toast('Dipindah ke Nanti. Tidak apa-apa.'); break;
     case 'enterbtn': var eb=document.getElementById(d.key); if(eb&&eb.value.trim()){triggerEnter(eb);return;} if(eb)eb.focus(); return;
     case 'export': doExport(); return;
-    case 'import': document.getElementById('importfile').click(); return;
+    case 'import': FS.holdUntil=Date.now()+120000; document.getElementById('importfile').click(); return;
   }
   render();
 }
@@ -1728,6 +2371,8 @@ document.addEventListener('change',function(e){
   var el=e.target; if(el&&el.getAttribute&&el.getAttribute('data-change')==='capproj')ui.capProject=el.value;
   else if(el&&el.getAttribute&&el.getAttribute('data-change')==='noteproj'){var nn=noteById(el.getAttribute('data-id'));if(nn){nn.projectId=el.value||null;nn.updatedAt=now();save();render();}}
   else if(el&&el.getAttribute&&el.getAttribute('data-change')==='noteprojf'){ui.noteProj=el.value;render();}
+  else if(el&&el.getAttribute&&el.getAttribute('data-change')==='syint'){PREF.syEvery=parseInt(el.value,10)||0;savePref();render();}
+  else if(el&&el.getAttribute&&el.getAttribute('data-change')==='nsort'){ui.noteSort=el.value;PREF.noteSort=el.value;savePref();render();}
   else if(el&&el.getAttribute&&el.getAttribute('data-change')==='fromnote'){ui.fromNote=el.value;render();}
   else if(el&&el.getAttribute&&el.getAttribute('data-change')==='taskproj'){var tt=byId(el.getAttribute('data-id'));if(tt){tt.projectId=el.value||null;touch(tt);save();render();}}
 });
@@ -1803,20 +2448,14 @@ document.addEventListener('submit',function(e){
   var el=document.activeElement; if(el&&el.getAttribute&&el.getAttribute('data-enter'))triggerEnter(el);
 });
 document.getElementById('importfile').addEventListener('change',function(ev){
-  var f=ev.target.files&&ev.target.files[0]; if(!f)return;
+  var f=ev.target.files&&ev.target.files[0]; if(!f){FS.holdUntil=0;return;}
   var r=new FileReader();
-  var backedUp=false;
-  if(S.tasks.length||S.notes.length){try{backedUp=true;downloadJSON('langkah-sebelum-impor-'+new Date().toISOString().slice(0,10)+'.json');}catch(x){}}
   r.onload=function(){
+    FS.holdUntil=0;
     try{
       var j=JSON.parse(r.result);
       if(!j||!Array.isArray(j.tasks))throw new Error('format');
-      var oldIds={}; COLS.forEach(function(c){S[c].forEach(function(x){oldIds[x.id]=1;});});
-      var tomb=(j.tomb&&typeof j.tomb==='object')?j.tomb:{};
-      var newIds={}; [j.tasks,j.areas||[],j.projects||[],j.notes||[]].forEach(function(a){a.forEach(function(x){newIds[x.id]=1;});});
-      if(SY.cfg){var tn2=now();Object.keys(oldIds).forEach(function(id){if(!newIds[id])tomb[id]=tn2;});}
-      localStorage.setItem(KEY,JSON.stringify({tasks:j.tasks,areas:j.areas||[],projects:j.projects||[],notes:j.notes||[],tomb:tomb,sess:{}}));
-      S=load();snapHashes();save();ui.view='today';toast('Data dipulihkan.'+(backedUp?' Data lama sudah diunduh sebagai cadangan.':''));render();
+      restoreFrom(j,'File '+f.name,'file'); render();
     }catch(err){toast('File itu bukan cadangan Langkah.');render();}
   };
   r.readAsText(f);ev.target.value='';
@@ -1878,12 +2517,24 @@ if(purge(new Date(Date.now()-30*864e5).toISOString()))MIG=true;
 if(MIG)save();
 autoSweep();
 fsInit();
-document.addEventListener('visibilitychange',function(){if(!document.hidden)syncNow('focus');});
-window.addEventListener('focus',function(){syncNow('focus');});
-window.addEventListener('online',function(){syncNow('online');});
-setInterval(function(){if(!document.hidden)syncNow('timer');},120000);
+document.addEventListener('visibilitychange',function(){
+  if(!document.hidden){syncNow('focus');return;}
+  if(SY.timer){clearTimeout(SY.timer);SY.timer=null;syncNow('change');}
+});
+window.addEventListener('focus',function(){syncNow('focus');fsLoad();fbFlush();if(ui.view==='notif')render();});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)fsLoad();});
+setInterval(function(){if(!document.hidden)fsLoad();},30000);
+window.addEventListener('online',function(){syncNow('online');fbFlush();});
+setInterval(function(){
+  if(document.hidden||!SY.cfg)return; var m=syEvery(); if(!m)return;
+  var last=Math.max(SY.lastTs||0,SY.lastTry||0); if(Date.now()-last>=m*60000)syncNow('timer');
+},15000);
+if(PREF.noteSort==='new'||PREF.noteSort==='old'||PREF.noteSort==='upd')ui.noteSort=PREF.noteSort;
+if(!PREF.firstUse){PREF.firstUse=now();savePref();}
 restoreView();
 render();
+tryPersist();
+setTimeout(fbFlush,1500);
 (function(){
   try{
     var q=new URLSearchParams(location.search), a=q.get('aksi'), id=q.get('id');

@@ -1,0 +1,34 @@
+name: Saran fitur
+description: Usulkan fitur baru atau perbaikan cara kerja Langkah.
+title: "[Saran] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Terima kasih sudah mau berbagi ide. Tidak perlu bisa coding, cukup ceritakan dengan bahasamu sendiri.
+  - type: textarea
+    id: masalah
+    attributes:
+      label: Apa yang ingin kamu lakukan?
+      description: Ceritakan situasinya. Misalnya, "Saya ingin tugas berulang setiap Senin karena ..."
+    validations:
+      required: true
+  - type: textarea
+    id: usulan
+    attributes:
+      label: Seperti apa bayanganmu?
+      description: Bagaimana fitur ini sebaiknya bekerja? Gambar atau sketsa juga boleh.
+  - type: dropdown
+    id: perangkat
+    attributes:
+      label: Biasanya kamu memakai Langkah di mana?
+      multiple: true
+      options:
+        - HP Android
+        - iPhone
+        - Laptop atau komputer
+  - type: textarea
+    id: lainnya
+    attributes:
+      label: Hal lain yang perlu diketahui
