@@ -48,12 +48,12 @@ Tampilannya sengaja dibuat tenang dan tidak menuntut. Itu membantu semua orang, 
 ## Fitur
 
 ### 1. Tangkap dan pilah
-Ketik apa saja di kolom **Tangkap pikiran**. `Enter` menyimpannya sebagai tugas, `Ctrl+Enter` sebagai catatan, dan di HP ada tombol **Tambah**. Tangkapan baru muncul satu per satu untuk dipilah: **Hari ini**, **Nanti**, atau **Buang**. Kalau bingung mulai dari mana, **Pilihkan satu** akan memilihkan satu tugas dari Hari Ini (lihat gambar di atas).
+Ketik apa saja di kolom **Tangkap pikiran**. `Enter` menyimpannya sebagai tugas, `Ctrl+Enter` sebagai catatan, dan di HP ada tombol **Tambah**. Kolom ketik ikut membesar mengikuti isi, jadi tulisan panjang terbungkus ke bawah, bukan bergeser ke samping. Pilih **Catatan** dan kolomnya menjadi area tulis berbaris banyak. Di HP, tombol **+** yang selalu ada membuka lembar tangkap cepat dari halaman mana pun. Tangkapan baru muncul satu per satu untuk dipilah: **Hari ini**, **Nanti**, **Jadwalkan**, atau **Buang**. Kalau bingung mulai dari mana, **Pilihkan satu** akan memilihkan satu tugas dari Hari Ini (lihat gambar di atas).
 
 Tangkapan yang belum dipilah sampai besok pagi otomatis pindah ke Nanti. Tugas Hari Ini yang belum selesai tetap di Hari Ini dengan penanda "dari hari sebelumnya", tanpa label terlambat.
 
 ### 2. Tugas dipecah jadi langkah kecil
-Setiap tugas bisa punya daftar langkah yang bisa dicentang, diurutkan, dan ditambah kapan saja. Tugas otomatis selesai begitu semua langkahnya tercentang. Tugas juga bisa dimasukkan ke projek dan difilter menurut kerjaan.
+Setiap tugas bisa punya daftar langkah yang bisa dicentang, diurutkan (lewat **Atur urutan**, atau diseret di komputer), dan ditambah kapan saja. Barisnya dibuat ramping supaya daftar panjang tidak terasa berat. Tugas otomatis selesai begitu semua langkahnya tercentang. Tugas juga bisa dimasukkan ke projek dan difilter menurut kerjaan.
 
 <p align="center"><img src="docs/screenshots/langkah.png" alt="Tugas dengan langkah-langkah kecil" width="820"></p>
 
@@ -101,7 +101,7 @@ Tempat aman untuk semua yang belum perlu dipikirkan hari ini. Pilih filter kerja
 <p align="center"><img src="docs/screenshots/nanti.png" alt="Halaman Nanti" width="820"></p>
 
 ### 7. Catatan
-Catatan punya **judul dan isi** yang boleh panjang, cocok untuk notulen rapat, ide, atau rencana. Daftar catatan bisa **difilter** (Catatan saja, Berjalan, Tuntas, per projek), **dicari**, **disematkan**, dan **diurutkan** menurut waktu: terakhir diubah, terbaru dibuat, atau terlama dibuat.
+Catatan punya **judul dan isi** yang boleh panjang, cocok untuk notulen rapat, ide, atau rencana. Mengetik `- ` atau `1. ` lalu Enter melanjutkan **daftar poin atau bernomor**, `- [ ] ` membuat **kotak centang** yang bisa diketuk, dan Tab menggeser tingkat. Tombol bantu di atas kolom tulis memudahkan di HP. Semuanya tetap teks biasa, jadi pencarian, sinkron, dan cadangan tidak berubah. Daftar catatan bisa **difilter** (Catatan saja, Berjalan, Tuntas, per projek), **dicari**, **disematkan**, dan **diurutkan** menurut waktu: terakhir diubah, terbaru dibuat, atau terlama dibuat.
 
 <p align="center"><img src="docs/screenshots/catatan.png" alt="Daftar catatan dengan filter dan urutan" width="820"></p>
 
@@ -118,10 +118,19 @@ Klik catatan untuk membuka **halaman detailnya**: isi lengkap, kapan dibuat dan 
   </tr>
 </table>
 
-### 8. Kerjaan, projek, dan Dasbor
-Susunan dua tingkat: **Kerjaan** (misalnya Kantor, Konten, Pribadi) berisi **Projek**. Dasbor menampilkan progres setiap projek, dengan filter **Berjalan** (bawaan), **Selesai**, dan **Semua**. Kerjaan dan projek bisa diubah namanya atau dihapus, dan bisa dipulihkan dari Sampah.
+### 8. Kerjaan dan projek
+Susunan dua tingkat: **Kerjaan** (misalnya Kantor, Konten, Pribadi) berisi **Projek**. Projek bersifat pengelompokan dan arsip, tidak wajib: tugas boleh berdiri sendiri. Halaman **Projek** (dulu Dasbor) menampilkan progres setiap projek, dengan filter **Berjalan** (bawaan), **Selesai**, dan **Semua**. Kerjaan dan projek bisa diubah namanya atau dihapus, dan bisa dipulihkan dari Sampah.
 
-<p align="center"><img src="docs/screenshots/dasbor.png" alt="Dasbor projek" width="820"></p>
+<p align="center"><img src="docs/screenshots/dasbor.png" alt="Halaman Projek" width="820"></p>
+
+### 8b. Jadwal, tenggat, dan Minggu
+Dua tanggal **opsional** untuk menata, tanpa pengingat:
+- **Jadwal**: "munculkan tugas ini di Hari Ini pada tanggal itu". Sebelum tanggalnya, tugas menunggu tenang di Nanti. Pada harinya ia pindah sendiri ke Hari Ini.
+- **Tenggat**: penanda batas akhir. Tenggat dekat diberi warna hangat (bukan merah), dan tugas bertenggat tampil lebih dulu di daftar.
+
+Atur dari tombol **Jadwalkan** (di Nanti dan saat memilah) atau dari panel tugas (ketuk **+ langkah**). Halaman **Minggu** menampilkan tujuh hari ke depan: di komputer seret tugas ke hari yang pas, di HP ketuk tugas lalu pilih tanggal. Hari yang terlalu padat diberi catatan lembut, supaya beban bisa diratakan sebelum menumpuk di hari terakhir.
+
+Kartu **Perlu dilihat hari ini** di Hari Ini mengumpulkan tugas bertenggat dekat yang masih di Nanti, dan tugas yang sudah 14 hari diam di Nanti, supaya aman tidak berarti terlupakan. Kartu ini bisa ditutup untuk hari itu.
 
 ### 9. Selesai
 Riwayat yang sudah beres, dikelompokkan menjadi hari ini, kemarin, 7 hari terakhir, dan lebih lama, dengan filter yang sama. Tugas bisa dibuka lagi kalau ternyata belum beres.

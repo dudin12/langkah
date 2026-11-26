@@ -1,5 +1,5 @@
 /* Langkah service worker: cache untuk buka cepat/offline + klik notifikasi. */
-var CACHE = 'langkah-shell-v3';
+var CACHE = 'langkah-shell-v4';
 var STATE_CACHE = 'langkah-state', STATE_URL = './__langkah_state';
 var SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
