@@ -508,6 +508,29 @@ button.dchip{cursor:pointer}
 .dchip.ok{background:var(--tint);color:var(--accent-d)}
 .h-layerbar{max-width:1280px;margin:0 auto 12px}
 #sidestat:empty{display:none}
+.h-acc{display:flex}
+.h-tuang>.h-acc{display:none}
+.h-dec>.h-h{display:none}
+.h-dec:not(.open)>*:not(.h-acc){display:none}
+.h-dec.open>.h-acc .chev{transform:rotate(180deg)}
+.cb{position:relative;display:inline-block;max-width:100%}
+.cb.wide{display:block}
+.h-filter .cb{flex:1 1 240px;max-width:460px}
+.h-mrow .cb{flex:1 1 280px}
+.cb-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;width:100%;cursor:pointer}
+.cb-btn>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cb-p{position:absolute;left:0;top:calc(100% + 6px);width:max(100%,360px);max-width:92vw;max-height:380px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:6px;z-index:25}
+.cb-p.flow{position:static;width:100%;max-width:none;max-height:300px;box-shadow:none;background:var(--bg)}
+.cb-q{width:100%;height:40px;border:1.5px solid var(--ctl);border-radius:10px;padding:0 12px;font:inherit;font-size:14px;margin-bottom:4px;background:var(--surface);color:inherit}
+.cb-o{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;padding:9px 10px;border:0;background:transparent;border-radius:9px;font-size:14px;color:inherit;align-items:baseline}
+.cb-o:hover,.cb-o.hi{background:var(--tint)}
+.cb-o.cur{font-weight:600}
+.cb-o small{color:var(--warm-t);font-size:12px;font-weight:600;white-space:nowrap}
+.cb-g{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:8px 10px 2px}
+.h-addbtn{display:none;margin-top:8px}
+.h-addwrap:focus-within .h-addbtn,.h-addwrap.always .h-addbtn{display:flex}
+.h-sect{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:16px 0 2px}
+.h-mod{display:block;font-style:normal;font-size:11.5px;color:var(--muted);margin-top:2px}
 .h-back{position:fixed;inset:0;background:rgba(10,12,11,.62);z-index:30;display:flex;align-items:center;justify-content:center;padding:24px}
 .h-modal{background:var(--surface);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 24px rgba(0,0,0,.3);max-height:100%;overflow:auto}
 .h-modal.big{width:85vw;height:85vh}
@@ -523,9 +546,7 @@ button.dchip{cursor:pointer}
   .h-cols{display:flex;flex-direction:column;gap:14px;align-items:stretch}
   .h-left,.h-right{display:contents}
   .h-dec{order:1}.h-tuang{order:2}.h-filter{order:3}.h-list{order:4}.h-pins{display:none}
-  .h-acc{display:flex}.h-dec>.h-h{display:none}
-  .h-dec:not(.open)>*:not(.h-acc){display:none}
-  .h-dec.open>.h-acc .chev{transform:rotate(180deg)}
+  .h-tuang>.h-acc{display:flex}
   .h-tuang:not(.open)>*:not(.h-acc){display:none}
   .h-tuang.open>.h-acc{display:none}
   .h-tuang .h-acc{font-weight:400;color:var(--muted);border:1.5px solid var(--ctl);border-radius:12px;padding:12px 14px;font-size:16px}
@@ -1559,13 +1580,6 @@ function projOptionsFlat(sel){
   projTreeList().forEach(function(p){h+='<option value="'+esc(p.id)+'"'+(p.id===sel?' selected':'')+'>'+esc(projPathText(p))+'</option>';});
   return h;
 }
-function projChip(t){
-  if(!S.projects.some(function(p){return !p.archived;}))return '';
-  var lab=projLabel(t)||'+ projek';
-  var w=Math.min(Math.max(lab.length+4,10),38);
-  return '<select class="tsel'+(t.projectId&&projLabel(t)?'':' none')+'" data-change="taskproj" data-id="'+t.id+'" aria-label="Projek untuk: '+esc(t.title)+'" style="width:'+w+'ch">'+projOptionsFlat(projLabel(t)?t.projectId:null)+'</select>';
-}
-
 function stepsPane(t,mode){
   var n=t.steps.length, dn=n-pendingSteps(t);
   var key=mode==='focus'?'f:'+t.id:t.id, def=mode==='focus'?1:0;
@@ -2058,7 +2072,7 @@ function render(){
   growAll(); paintQuick(); paintModal();
   document.title=sessList().some(function(x){return clockInfo(x).over;})?'\u23f0 Waktu habis \u00b7 Langkah':'Langkah';
   saveView();
-  if(ui.refocus){var el=document.getElementById(ui.refocus);if(el){el.focus();if(el.id==='nsearch'||el.id==='newnote'||el.id==='gsearch'||el.id==='capture'){var L=el.value.length;try{el.setSelectionRange(L,L);}catch(x){}}else if(el.select&&(el.tagName==='INPUT'||el.hasAttribute('data-grow'))&&el.value)el.select();}ui.refocus=null;}
+  if(ui.refocus){var el=document.getElementById(ui.refocus);if(el){el.focus();if(el.id==='nsearch'||el.id==='newnote'||el.id==='gsearch'||el.id==='capture'||el.id==='combo-q'){var L=el.value.length;try{el.setSelectionRange(L,L);}catch(x){}}else if(el.select&&(el.tagName==='INPUT'||el.hasAttribute('data-grow'))&&el.value)el.select();}ui.refocus=null;}
   if(ui.scrollTo){var se2=document.getElementById(ui.scrollTo);if(se2){try{se2.scrollIntoView({block:'center'});}catch(x){}se2.classList.add('flash');}ui.scrollTo='';}
 }
 var toastTimer=null;
@@ -2260,6 +2274,12 @@ function val(id){var e=document.getElementById(id);return e?e.value.trim():'';}
 function act(a,d){
   var t=d.id?byId(d.id):null;
   switch(a){
+    case 'comboopen':
+      if(ui.combo&&ui.combo.id===d.key)comboClose();
+      else{var cm=/^m/.test(d.key); if(cm)modalKeep(); ui.combo={id:d.key,q:'',i:0,m:cm}; ui.refocus='combo-q'; if(cm&&ui.modal)ui.modal.nonce=Date.now();}
+      break;
+    case 'combopick': comboPick(d.key); break;
+    case 'grpaddbtn': var gta=document.getElementById('ga-'+d.key); if(gta)onEnter('grpadd',gta,{id:d.key}); return;
     case 'back': if(ui.stack.length){try{history.back();return;}catch(x){}} ui.view='today'; ui.stack=[]; ui.edit=null; break;
     case 'acc': PREF['acc_'+d.key]=!accOpen(d.key); savePref(); if(d.key==='tuang'&&accOpen('tuang'))ui.refocus='capture'; break;
     case 'decall': ui.decAll=!ui.decAll; break;
@@ -2867,7 +2887,7 @@ function projTreeList(){
 }
 function isNarrow(){try{return window.matchMedia('(max-width:1000px)').matches;}catch(e){return false;}}
 function isCoarse(){try{return window.matchMedia('(pointer:coarse)').matches;}catch(e){return false;}}
-function accOpen(k){return !!PREF['acc_'+k];}
+function accOpen(k){var v=PREF['acc_'+k]; if(v===undefined)return k==='dec'?!isNarrow():false; return !!v;}
 function clockHTML(){
   var d=new Date(), p=function(n){return (n<10?'0':'')+n;};
   var t=d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'});
@@ -2915,18 +2935,16 @@ function decActs(x){
   return b('totoday','','Hari ini')+dateBtn(x.t,'sched','Jadwalkan')+b('triage',' data-to="trash"','Buang');
 }
 function decisionCard(){
-  if(PREF.pagiOff===ymd())return '';
   var all=decItems(); if(!all.length)return '';
   var shown=ui.decAll?all:all.slice(0,5), open=accOpen('dec');
   var warn=all.some(function(x){return x.c==='warm';});
   var h='<section class="h-card h-dec'+(open?' open':'')+'" aria-label="Perlu dilihat hari ini">'+
-    '<button type="button" class="h-acc" data-act="acc" data-key="dec"><span>Perlu dilihat hari ini</span><span class="h-acc-r"><span class="h-badge'+(warn?' warm':'')+'">'+all.length+'</span><span class="chev">'+DOWN+'</span></span></button>'+
-    '<b class="h-h">Perlu dilihat hari ini</b>';
+    '<button type="button" class="h-acc" data-act="acc" data-key="dec" aria-expanded="'+(open?'true':'false')+'"><span>Perlu dilihat hari ini</span><span class="h-acc-r"><span class="h-badge'+(warn?' warm':'')+'">'+all.length+'</span><span class="chev">'+DOWN+'</span></span></button>';
   h+=shown.map(function(x){
     return '<div class="h-it"><div class="ct"><span class="h-reason '+x.c+'">'+esc(x.r)+'</span><br>'+esc(x.t.title)+'</div><div class="btns">'+decActs(x)+'</div></div>';
   }).join('');
   if(all.length>5)h+='<button type="button" class="lnk" data-act="decall">'+(ui.decAll?'Tampilkan lebih sedikit':'+ '+(all.length-5)+' lainnya')+'</button>';
-  return h+'<div class="btns"><button class="btn-o" type="button" data-act="pagiclose">Nanti saja</button></div></section>';
+  return h+'</section>';
 }
 
 /* ---- catatan disematkan (hanya di layar lebar) ---- */
@@ -2940,6 +2958,80 @@ function pinsCard(){
   return h+'<button type="button" class="btn-o" style="width:100%;margin-top:8px" data-act="notenew">+ Tambah catatan</button></section>';
 }
 
+/* ---- pilihan projek dengan pencarian (induk teratas dicetak tebal) ---- */
+var COMBO_VALS=[];
+function pathLabel(it){
+  if(it.path&&it.path.length)return '<b>'+esc(it.path[0])+'</b>'+(it.path.length>1?' \u203a '+esc(it.path.slice(1).join(' \u203a ')):'');
+  return esc(it.t||'');
+}
+function assignItems(){
+  var a=[{v:'',t:'Tanpa projek'}];
+  projTreeList().forEach(function(p){a.push({v:p.id,path:projPath(p)});});
+  return a;
+}
+function insideItems(){
+  var a=[{v:'',t:'Tingkat atas (kerjaan baru)'}];
+  S.areas.filter(function(x){return !x.archived;}).forEach(function(ar){
+    a.push({v:'a:'+ar.id,path:[ar.name]});
+    projTreeList().filter(function(p){return p.areaId===ar.id;}).forEach(function(p){a.push({v:'p:'+p.id,path:projPath(p)});});
+  });
+  return a;
+}
+function filterItems(){
+  var st=projStats(), tree=projTreeList();
+  var withDue=tree.filter(function(p){return st[p.id]&&st[p.id].due;}).sort(function(a,b){return st[a.id].due<st[b.id].due?-1:1;});
+  var rest=tree.filter(function(p){return !(st[p.id]&&st[p.id].due);});
+  var a=[{v:'today',t:'Hari ini'},{v:'all',t:'Semua'}];
+  if(withDue.length){a.push({g:'Projek bertenggat'});withDue.forEach(function(p){var d=dayDiff(st[p.id].due);a.push({v:p.id,path:projPath(p),x:d<0?'lewat':d+' hari'});});}
+  a.push({v:'none',t:'Belum ada projek'});
+  if(rest.length){a.push({g:'Projek tanpa tenggat'});rest.forEach(function(p){a.push({v:p.id,path:projPath(p)});});}
+  return a;
+}
+function labelOf(items,v,dflt){
+  for(var i=0;i<items.length;i++){if(!items[i].g&&items[i].v===v)return pathLabel(items[i]);}
+  return dflt||'';
+}
+function comboTrig(id,cls,inner){
+  var open=ui.combo&&ui.combo.id===id;
+  return '<button type="button" class="'+cls+' cb-t" data-act="comboopen" data-key="'+esc(id)+'" aria-haspopup="listbox" aria-expanded="'+(open?'true':'false')+'">'+inner+'</button>';
+}
+function comboPanel(id,items,cur,flow){
+  if(!(ui.combo&&ui.combo.id===id))return '';
+  var q=(ui.combo.q||'').toLowerCase().trim(), vis=[], out='', pend='';
+  items.forEach(function(it){
+    if(it.g){pend=it.g;return;}
+    var txt=((it.path?it.path.join(' '):it.t)||'').toLowerCase();
+    if(q&&txt.indexOf(q)<0)return;
+    if(pend){out+='<div class="cb-g">'+esc(pend)+'</div>';pend='';}
+    var hi=vis.length===(ui.combo.i||0);
+    vis.push(it.v);
+    out+='<button type="button" role="option" class="cb-o'+(it.v===cur?' cur':'')+(hi?' hi':'')+'" data-act="combopick" data-key="'+esc(it.v)+'"><span>'+pathLabel(it)+'</span>'+(it.x?'<small>'+esc(it.x)+'</small>':'')+'</button>';
+  });
+  COMBO_VALS=vis;
+  return '<div class="cb-p'+(flow?' flow':'')+'" role="listbox"><input id="combo-q" class="cb-q" type="search" autocomplete="off" placeholder="Cari projek\u2026" value="'+esc(ui.combo.q||'')+'" data-input="comboq" aria-label="Cari projek">'+(out||'<div class="cb-g">Tidak ada hasil</div>')+'</div>';
+}
+function comboRefresh(){
+  if(ui.combo&&ui.combo.m&&ui.modal){modalKeep();ui.modal.nonce=Date.now();}
+  ui.refocus='combo-q'; render();
+}
+function comboClose(){
+  var m=ui.combo&&ui.combo.m; ui.combo=null;
+  if(m&&ui.modal){modalKeep();ui.modal.nonce=Date.now();}
+}
+function comboPick(v){
+  var c=ui.combo; if(!c)return; var id=c.id; ui.combo=null;
+  if(id==='filter')ui.filter=v;
+  else if(id==='cap')ui.cap.proj=v;
+  else if(id.indexOf('tk:')===0){var t=byId(id.slice(3)); if(t){t.projectId=v||null;touch(t);save();}}
+  else if(id==='mnproj'){modalKeep(); if(ui.modal){ui.modal.draft=ui.modal.draft||{};ui.modal.draft.proj=v;ui.modal.nonce=Date.now();}}
+  else if(id==='mpin'){modalKeep(); if(ui.modal){ui.modal.sel=v;ui.modal.nonce=Date.now();}}
+}
+function projChip(t){
+  if(!S.projects.some(function(p){return !p.archived;}))return '';
+  var lab=projLabel(t), id='tk:'+t.id;
+  return '<div class="cb">'+comboTrig(id,'tsel'+(lab?'':' none'),esc(lab||'+ projek'))+comboPanel(id,assignItems(),t.projectId||'',false)+'</div>';
+}
+
 /* ---- kotak tuang + chip ---- */
 function effProj(fp){return ui.cap.proj||(fp?fp.id:'');}
 function tuangCard(fp){
@@ -2950,11 +3042,11 @@ function tuangCard(fp){
     '<label class="h-l" for="capture">Tuang pikiran</label>'+
     '<textarea id="capture" rows="3" data-grow data-input="capdraft"'+(coarse?'':' data-enter="capture2"')+' autocomplete="off" placeholder="Tulis apa saja yang terlintas. Pilah nanti.">'+esc(ui.capDraft||'')+'</textarea>'+
     '<div class="h-chips">'+
-      '<label class="h-ch'+(pp?' on':'')+'">'+ico('<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>',14)+'<span>'+(pp?esc(projPathText(pp)):'Projek')+'</span>'+ico('<path d="M6 9l6 6 6-6"/>',12)+'<select data-change="capproj2" aria-label="Projek">'+projOptions(pid)+'</select></label>'+
+      comboTrig('cap','h-ch'+(pp?' on':''),ico('<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>',14)+'<span>'+(pp?esc(projPathText(pp)):'Projek')+'</span>'+ico('<path d="M6 9l6 6 6-6"/>',12))+
       '<button type="button" class="h-ch'+(c.sched?' on':'')+'" data-act="capjad">'+ico('<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',14)+'<span>'+(c.sched?esc(c.sched===ymd()?'Hari ini':fmtYmd(c.sched)):'Jadwal')+'</span></button>'+
       '<span class="dwrap"><button type="button" class="h-ch'+(c.due?' on':'')+'" data-act="datepick">'+ico('<path d="M6 21V4M6 5h11l-2 4 2 4H6"/>',14)+'<span>'+(c.due?esc('Tenggat '+fmtYmd(c.due)):'Tenggat')+'</span></button>'+
         '<input type="date" class="dhid" tabindex="-1" aria-hidden="true" value="'+esc(c.due||'')+'" data-change="capdate" data-key="due"></span>'+
-    '</div>';
+    '</div>'+comboPanel('cap',assignItems(),pid,true);
   if(ui.capPop==='jad')h+='<div class="h-pop"><b>Jadwal</b><div class="btns">'+
     '<button class="btn-o nmini" type="button" data-act="capsched" data-key="0">Hari ini</button><button class="btn-o nmini" type="button" data-act="capsched" data-key="1">Besok</button><button class="btn-o nmini" type="button" data-act="capsched" data-key="7">Minggu depan</button>'+
     '<span class="dwrap"><button type="button" class="btn-o nmini" data-act="datepick">Pilih tanggal…</button><input type="date" class="dhid" tabindex="-1" aria-hidden="true" min="'+ymd()+'" value="'+esc(c.sched||'')+'" data-change="capdate" data-key="sched"></span>'+
@@ -2988,16 +3080,9 @@ function projStats(){
   return m;
 }
 function filterBar(f){
-  var st=projStats(), tree=projTreeList(), withDue=tree.filter(function(p){return st[p.id]&&st[p.id].due;}).sort(function(a,b){return st[a.id].due<st[b.id].due?-1:1;});
-  var rest=tree.filter(function(p){return !(st[p.id]&&st[p.id].due);});
-  function opt(v,l){return '<option value="'+esc(v)+'"'+(v===f?' selected':'')+'>'+esc(l)+'</option>';}
-  var h='<div class="h-filter"><label class="sr" for="hfilter">Filter projek</label><select id="hfilter" class="h-sel" data-change="hfilter">'+opt('today','Hari ini')+opt('all','Semua');
-  if(withDue.length)h+='<optgroup label="Projek bertenggat">'+withDue.map(function(p){var d=dayDiff(st[p.id].due);return opt(p.id,projPathText(p)+' · '+(d<0?'lewat':d+' hari'));}).join('')+'</optgroup>';
-  h+=opt('none','Belum ada projek');
-  if(rest.length)h+='<optgroup label="Projek tanpa tenggat">'+rest.map(function(p){return opt(p.id,projPathText(p));}).join('')+'</optgroup>';
-  return h+'</select><button type="button" class="btn-o" data-act="projnew">+ Projek baru</button></div>';
+  var items=filterItems();
+  return '<div class="h-filter"><div class="cb wide">'+comboTrig('filter','h-sel cb-btn','<span>'+labelOf(items,f,'Hari ini')+'</span>'+ico('<path d="M6 9l6 6 6-6"/>',14))+comboPanel('filter',items,f,false)+'</div><button type="button" class="btn-o" data-act="projnew">+ Projek baru</button></div>';
 }
-
 /* ---- daftar tugas per projek ---- */
 function crumbHTML(p){
   if(!p)return '<b>Belum ada projek</b>';
@@ -3047,25 +3132,29 @@ function tkRow(t,n){
   }
   return h+'</div>';
 }
-function groupCard(g){
-  var n=0, key=g.p?g.p.id:'none', k=esc(key);
+function noteRowHTML(n){
+  var pv=noteBody(n).replace(/\s+/g,' ').slice(0,140);
+  return '<button type="button" class="h-pin" data-act="notemodal" data-id="'+esc(n.id)+'"><b>'+esc(noteTitle(n))+'</b>'+(pv?'<span>'+esc(pv)+'</span>':'')+'<em class="h-mod">Diubah '+esc(fmtDT(n.updatedAt))+'</em></button>';
+}
+function groupCard(g,notes){
+  var n=0, key=g.p?g.p.id:'none', k=esc(key), empty=!g.tasks.length&&!!g.p;
   var rows=g.tasks.map(function(t){return tkRow(t,t.status==='done'?0:++n);}).join('');
-  if(!g.tasks.length)rows='<div class="h-empty"><span>Belum ada tugas di projek ini.</span><div class="btns"><button class="btn" type="button" data-act="focusadd" data-key="ga-'+k+'">+ Tambahkan tugas di projek ini</button></div></div>';
-  return '<section class="h-grp"><div class="h-gh"><div class="h-crumb">'+crumbHTML(g.p)+'</div><span class="h-cnt">'+g.tasks.length+' tugas</span></div>'+rows+
-    '<div class="sin h-addt"><label class="sr" for="ga-'+k+'">Tambah tugas</label><textarea id="ga-'+k+'" rows="1" data-grow data-enter="grpadd" data-id="'+k+'" placeholder="'+(g.p?'Tambah tugas di projek ini…':'Tambah tugas…')+'"></textarea></div></section>';
+  if(empty)rows='<div class="h-empty"><span>Belum ada tugas di projek ini.</span></div>';
+  var add='<div class="h-addwrap'+(empty?' always':'')+'"><div class="sin h-addt"><label class="sr" for="ga-'+k+'">Tambah tugas</label><textarea id="ga-'+k+'" rows="1" data-grow data-enter="grpadd" data-id="'+k+'" placeholder="'+(g.p?'Tambah tugas di projek ini\u2026':'Tambah tugas\u2026')+'"></textarea></div>'+
+    '<button type="button" class="btn h-btnfull h-addbtn" data-act="grpaddbtn" data-key="'+k+'">+ '+(empty?'Tambahkan tugas di projek ini':'Tambah tugas')+'</button></div>';
+  var nh='';
+  if(notes)nh='<div class="h-sect">Catatan \u00b7 '+notes.length+'</div>'+notes.map(noteRowHTML).join('')+'<button type="button" class="btn-o h-btnfull" style="margin-top:8px" data-act="notenew" data-key="'+k+'">+ Tambah catatan di projek ini</button>';
+  return '<section class="h-grp"><div class="h-gh"><div class="h-crumb">'+crumbHTML(g.p)+'</div><span class="h-cnt">'+g.tasks.length+' tugas</span></div>'+rows+add+nh+'</section>';
 }
 function hubProjectView(p){
   var td=new Date().toDateString(), h='';
   [p].concat(projDesc(p.id)).forEach(function(q,i){
     var ts=S.tasks.filter(function(t){return t.projectId===q.id&&(t.status==='today'||t.status==='later'||(t.status==='done'&&t.doneAt&&dayOf(t.doneAt)===td));})
       .sort(function(a,b){var da=a.status==='done',db=b.status==='done'; if(da!==db)return da?1:-1; return byDueThenCreated(a,b);});
-    if(i>0&&!ts.length)return;
-    h+=groupCard({key:q.id,p:q,tasks:ts});
+    var ns=S.notes.filter(function(n){return !n.deleted&&n.projectId===q.id;}).sort(function(a,b){return a.updatedAt<b.updatedAt?1:-1;});
+    if(i>0&&!ts.length&&!ns.length)return;
+    h+=groupCard({key:q.id,p:q,tasks:ts},ns);
   });
-  var ns=S.notes.filter(function(n){return !n.deleted&&n.projectId===p.id;}).sort(function(a,b){return a.updatedAt<b.updatedAt?1:-1;});
-  h+='<section class="h-grp"><div class="h-gh"><div class="h-crumb"><b>Catatan</b></div><span class="h-cnt">'+ns.length+' catatan</span></div>'+
-    ns.map(function(n){var pv=noteBody(n).replace(/\s+/g,' ').slice(0,140);return '<button type="button" class="h-pin" data-act="notemodal" data-id="'+esc(n.id)+'"><b>'+esc(noteTitle(n))+'</b>'+(pv?'<span>'+esc(pv)+'</span>':'')+'</button>';}).join('')+
-    '<button type="button" class="btn-o" style="width:100%;margin-top:8px" data-act="notenew" data-key="'+esc(p.id)+'">+ Tambah catatan di projek ini</button></section>';
   return h+'<div style="text-align:right"><button type="button" class="btn-o nmini" data-act="projarch" data-id="'+esc(p.id)+'">Arsipkan projek</button></div>';
 }
 function listBody(f,fp){
@@ -3092,15 +3181,17 @@ function viewToday(){
 function noteModalHTML(m){
   var n=m.id?noteById(m.id):null, d=m.draft||{};
   var title=d.title!==undefined?d.title:(n?(n.title||''):''), text=d.text!==undefined?d.text:(n?n.text:''), pj=d.proj!==undefined?d.proj:(n?(n.projectId||''):(m.proj||''));
+  var items=assignItems();
   return '<div class="h-back" data-act="modalclose"><div class="h-modal big" role="dialog" aria-modal="true" aria-label="Catatan" data-act="noop">'+
-    '<div class="h-mh"><span class="small">'+(n?'Dibuat '+esc(fmtDT(n.createdAt||n.updatedAt))+' · Diubah '+esc(fmtDT(n.updatedAt)):'Catatan baru')+'</span><div class="btns">'+
+    '<div class="h-mh"><span class="small">'+(n?'Dibuat '+esc(fmtDT(n.createdAt||n.updatedAt))+' \u00b7 Diubah '+esc(fmtDT(n.updatedAt)):'Catatan baru')+'</span><div class="btns">'+
     (n?'<button type="button" class="btn-o nmini" data-act="modalpin">'+(n.pinned?'Lepas sematan':'Sematkan')+'</button><button type="button" class="btn-o nmini" data-act="modaldel">Hapus</button>':'')+
     '<button type="button" class="ibtn" data-act="modalclose" aria-label="Tutup">'+XI+'</button></div></div>'+
     '<label class="sr" for="mn-title">Judul catatan</label><input id="mn-title" class="h-ti" type="text" autocomplete="off" placeholder="Judul (boleh dikosongkan)" value="'+esc(title)+'">'+
-    '<div class="h-mrow"><label class="small" for="mn-proj">Projek</label><select id="mn-proj" class="h-sel">'+projOptions(pj)+'</select></div>'+
+    '<div class="h-mrow"><span class="small">Projek</span><div class="cb">'+comboTrig('mnproj','h-sel cb-btn','<span>'+labelOf(items,pj,'Tanpa projek')+'</span>'+ico('<path d="M6 9l6 6 6-6"/>',14))+'</div></div>'+comboPanel('mnproj',items,pj,true)+
+    '<input type="hidden" id="mn-proj" value="'+esc(pj)+'">'+
     listTool('mn-text')+
     '<textarea id="mn-text" class="h-ta" data-list data-ctrl="note-modal" aria-label="Isi catatan" placeholder="Tulis di sini. Boleh panjang.">'+esc(text)+'</textarea>'+
-    '<div class="h-mf">'+(n?'<button type="button" class="btn-o nmini" data-act="opennote" data-id="'+esc(n.id)+'">Tugas dari catatan ini…</button>':'<span class="small">Tersimpan otomatis saat ditutup.</span>')+'<button type="button" class="btn" data-act="modalclose">Selesai</button></div></div></div>';
+    '<div class="h-mf">'+(n?'<button type="button" class="btn-o nmini" data-act="opennote" data-id="'+esc(n.id)+'">Tugas dari catatan ini\u2026</button>':'<span class="small">Tersimpan otomatis saat ditutup.</span>')+'<button type="button" class="btn" data-act="modalclose">Selesai</button></div></div></div>';
 }
 function projInOptions(sel){
   var h='<option value="">Tingkat atas (kerjaan baru)</option>';
@@ -3111,10 +3202,12 @@ function projInOptions(sel){
   return h;
 }
 function projModalHTML(m){
+  var items=insideItems(), sel=m.sel||'';
   return '<div class="h-back" data-act="modalclose"><div class="h-modal small" role="dialog" aria-modal="true" aria-label="Projek baru" data-act="noop">'+
     '<div class="h-mh"><b style="font-size:18px">Projek baru</b><button type="button" class="ibtn" data-act="modalclose" aria-label="Tutup">'+XI+'</button></div>'+
-    '<label class="h-fld">Nama projek<input id="mp-name" class="h-in" type="text" autocomplete="off" placeholder="mis. Video review stroller" data-enter="projcreate"></label>'+
-    '<label class="h-fld">Di dalam<select id="mp-in" class="h-in">'+projInOptions(m.sel||'')+'</select></label>'+
+    '<label class="h-fld">Nama projek<input id="mp-name" class="h-in" type="text" autocomplete="off" placeholder="mis. Video review stroller" value="'+esc(m.name||'')+'" data-enter="projcreate"></label>'+
+    '<div class="h-fld">Di dalam<div class="cb wide">'+comboTrig('mpin','h-in cb-btn','<span>'+labelOf(items,sel,'Tingkat atas (kerjaan baru)')+'</span>'+ico('<path d="M6 9l6 6 6-6"/>',14))+'</div></div>'+comboPanel('mpin',items,sel,true)+
+    '<input type="hidden" id="mp-in" value="'+esc(sel)+'">'+
     '<div class="small" style="line-height:1.5">Projek adalah folder untuk tugas dan catatan. Boleh kosong, isinya bisa ditambahkan nanti.</div>'+
     '<div class="btns"><button type="button" class="btn" data-act="projcreate">Buat projek</button><button type="button" class="btn-o" data-act="modalclose">Batal</button></div></div></div>';
 }
@@ -3125,10 +3218,13 @@ function paintModal(){
   PM=key;
   if(!m){s.innerHTML='';return;}
   s.innerHTML=m.type==='note'?noteModalHTML(m):projModalHTML(m);
+  var cq=document.getElementById('combo-q'); if(cq&&ui.combo&&ui.combo.m){cq.focus();var L=cq.value.length;try{cq.setSelectionRange(L,L);}catch(x){}return;}
   var f=document.getElementById(m.type==='note'?(m.id?'mn-text':'mn-title'):'mp-name'); if(f)f.focus();
 }
 function modalKeep(){
-  var m=ui.modal; if(!m||m.type!=='note')return;
+  var m=ui.modal; if(!m)return;
+  if(m.type==='proj'){m.name=val('mp-name');return;}
+  if(m.type!=='note')return;
   var t=document.getElementById('mn-text'); if(t)m.draft={title:val('mn-title'),text:t.value,proj:(document.getElementById('mn-proj')||{}).value||''};
 }
 function modalClose(){
@@ -3143,7 +3239,7 @@ function modalClose(){
       }else if(text.trim()||title){addNote(text,pid,title);save();toast('Catatan tersimpan.');}
     }
   }
-  ui.modal=null; PM='';
+  ui.modal=null; PM=''; ui.combo=null;
 }
 function projCreate(){
   var name=val('mp-name');
@@ -3160,6 +3256,7 @@ setInterval(function(){var e=document.getElementById('hclock'); if(e)e.innerHTML
 
 /* ---------- Event ---------- */
 document.addEventListener('click',function(e){
+  if(ui.combo&&!(e.target.closest&&e.target.closest('.cb,.cb-p,.cb-t'))){comboClose();render();}
   var el=e.target.closest('[data-act]'); if(!el)return;
   var g=function(n){return el.getAttribute(n);};
   if(g('data-act')==='datepick'){
@@ -3224,6 +3321,7 @@ document.addEventListener('input',function(e){
   else if(k==='newnotetitle')ui.noteDraftTitle=el.value;
   else if(k==='nttitle'){if(ui.ntask)ui.ntask.title=el.value;}
   else if(k==='capdraft')ui.capDraft=el.value;
+  else if(k==='comboq'){if(ui.combo){ui.combo.q=el.value;ui.combo.i=0;comboRefresh();}}
   else if(k==='quicktext')ui.quickText=el.value;
   else if(k==='nsearch'){ui.noteQ=el.value;ui.refocus='nsearch';render();}
   else if(k==='gsearch'){ui.gq=el.value;ui.refocus='gsearch';render();}
@@ -3257,6 +3355,11 @@ document.addEventListener('keydown',function(e){
   if(e.key==='Tab'&&!e.ctrlKey&&!e.altKey&&!e.metaKey&&e.target&&e.target.tagName==='TEXTAREA'&&e.target.hasAttribute('data-list')){
     if(listShift(e.target,e.shiftKey?-1:1)){e.preventDefault();return;}
   }
+  if(ui.combo&&e.target&&e.target.id==='combo-q'){
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();var cn=COMBO_VALS.length;ui.combo.i=cn?((ui.combo.i||0)+(e.key==='ArrowDown'?1:cn-1))%cn:0;comboRefresh();return;}
+    if(e.key==='Enter'){e.preventDefault();if(COMBO_VALS.length)comboPick(COMBO_VALS[ui.combo.i||0]);render();return;}
+  }
+  if(e.key==='Escape'&&ui.combo){comboClose();render();return;}
   if(e.key==='Escape'&&ui.modal){modalClose();render();return;}
   if(e.key==='Escape'&&ui.quickOpen){ui.quickOpen=false;render();return;}
   if(e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!isField(e.target)){e.preventDefault();quickCapture();return;}
