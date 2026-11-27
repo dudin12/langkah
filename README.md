@@ -47,6 +47,17 @@ Tampilannya sengaja dibuat tenang dan tidak menuntut. Itu membantu semua orang, 
 
 ## Fitur
 
+> **Catatan tampilan (versi 2026.11.27):** Langkah kini punya satu halaman utama, **Hari Ini**, tanpa menu samping. Tangkapan layar di bawah masih memakai tata letak sebelumnya, jadi tampilannya bisa berbeda, tetapi cara kerjanya sama.
+
+### 0. Rumah baru: Hari Ini
+- **Satu halaman utama.** Judul, tanggal, dan jam yang berjalan di atas, lalu lima tombol ikon: **Catatan**, **Nanti** (dengan jumlahnya), **Minggu**, **Cari**, dan **Lainnya** (Projek, Selesai, Sampah, Panduan, Pengaturan). Tombol-tombol itu membuka lapisan dengan tombol **Kembali**, dan tombol Kembali di browser atau HP juga menutup lapisan.
+- **Kotak tuang** dengan chip **Projek**, **Jadwal**, dan **Tenggat**. Tanpa chip, tulisanmu masuk **Baru ditangkap** untuk dipilah nanti. Dengan chip, tugas langsung ditempatkan. Beberapa baris menjadi beberapa tugas (Shift+Enter untuk baris baru di komputer, Ctrl+Enter untuk menyimpan sebagai catatan).
+- **Perlu dilihat hari ini**: satu kartu keputusan yang mengumpulkan tugas baru ditangkap, tugas dari hari sebelumnya, tenggat dekat atau lewat, dan tugas yang sudah 14 hari diam di Nanti.
+- **Tugas dikelompokkan per projek**, dengan jejak projek (`Pribadi › Konten › Stroller`). Projek boleh **bertingkat** tanpa batas yang kaku, dan projek adalah folder untuk tugas **dan catatan**. Filter: **Hari ini** (bawaan), **Semua**, projek bertenggat (tenggat terdekat dulu), **Belum ada projek**, lalu projek tanpa tenggat.
+- **Catatan disematkan** tampil di kolom kiri (layar lebar) dan dibuka sebagai pop-up berukuran 85% layar, lengkap dengan pilihan projek dan toolbar daftar.
+- Di HP, **Perlu dilihat** dan **Tuang** berupa baris yang bisa dibuka-tutup.
+
+
 ### 1. Tangkap dan pilah
 Ketik apa saja di kolom **Tangkap pikiran**. `Enter` menyimpannya sebagai tugas, `Ctrl+Enter` sebagai catatan, dan di HP ada tombol **Tambah**. Kolom ketik ikut membesar mengikuti isi, jadi tulisan panjang terbungkus ke bawah, bukan bergeser ke samping. Pilih **Catatan** dan kolomnya menjadi area tulis berbaris banyak. Di HP, tombol **+** yang selalu ada membuka lembar tangkap cepat dari halaman mana pun. Tangkapan baru muncul satu per satu untuk dipilah: **Hari ini**, **Nanti**, **Jadwalkan**, atau **Buang**. Kalau bingung mulai dari mana, **Pilihkan satu** akan memilihkan satu tugas dari Hari Ini (lihat gambar di atas).
 
