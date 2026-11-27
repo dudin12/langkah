@@ -498,7 +498,7 @@ button.dchip{cursor:pointer}
 .h-task.done .h-tt{color:var(--muted);font-weight:500;text-decoration:line-through}
 .h-exp{width:32px;height:32px;border:0;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;border-radius:8px;flex:0 0 32px}
 .h-edit{flex:1 1 200px}
-.h-open{margin:4px 0 8px 58px;display:flex;flex-direction:column;gap:8px}
+.h-open{margin:4px 0 8px 80px;display:flex;flex-direction:column;gap:8px}
 .h-open .rowpane .pane{background:transparent}
 .h-act{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .h-addt{margin-top:6px;border-style:dashed;background:transparent}
@@ -508,6 +508,15 @@ button.dchip{cursor:pointer}
 .dchip.ok{background:var(--tint);color:var(--accent-d)}
 .h-layerbar{max-width:1280px;margin:0 auto 12px}
 #sidestat:empty{display:none}
+.h-grip{flex:0 0 22px;width:22px;height:32px;border:0;background:transparent;color:var(--ctl);opacity:.5;cursor:grab;touch-action:none;padding:0;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.h-task:hover .h-grip,.h-grip:focus-visible{opacity:1}
+.h-grip:focus-visible{outline:2px solid var(--accent)}
+.h-gripsp{flex:0 0 22px}
+.h-task.h-dragging{opacity:.35}
+.h-ghost{position:fixed;z-index:60;pointer-events:none;background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.25);padding:4px 8px;opacity:.96}
+.h-drop-b{box-shadow:inset 0 3px 0 var(--accent)}
+.h-drop-a{box-shadow:inset 0 -3px 0 var(--accent)}
+.h-grp.h-drop-g{outline:2px dashed var(--accent);outline-offset:2px}
 .h-acc{display:flex}
 .h-tuang>.h-acc{display:none}
 .h-dec>.h-h{display:none}
@@ -2967,6 +2976,7 @@ function pathLabel(it){
 }
 function optLabel(it,flat){
   if(!flat&&it.root)return '<b>'+esc(it.path[0])+'</b>';
+  if(!flat&&it.rel)return esc(it.rel);
   if(!flat&&it.depth>=1&&it.path)return esc(it.path[it.path.length-1]);
   return pathLabel(it);
 }
@@ -2993,18 +3003,28 @@ function insideItems(){
 function filterItems(){
   var st=projStats(), tree=projTreeList(), areas=S.areas.filter(function(a){return !a.archived;});
   function dd(d){var n=dayDiff(d);return n<0?'lewat':n+' hari';}
-  function aDue(a){var m=null;tree.forEach(function(p){var r=st[p.id];if(p.areaId===a.id&&r&&r.due&&(!m||r.due<m))m=r.due;});return m;}
-  function block(a,d){
-    var o=[{v:'a:'+a.id,path:[a.name],depth:0,root:true,x:d?dd(d):''}];
-    tree.filter(function(p){return p.areaId===a.id;}).forEach(function(p){var r=st[p.id],pa=projPath(p);o.push({v:p.id,path:pa,depth:pa.length-1,x:(r&&r.due)?dd(r.due):''});});
-    return o;
-  }
-  var info=areas.map(function(a){return {a:a,d:aDue(a)};});
-  var withDue=info.filter(function(x){return x.d;}).sort(function(x,y){return x.d<y.d?-1:1;}), rest=info.filter(function(x){return !x.d;});
+  function rel(pa){return pa.slice(1).join(' \u203a ');}
+  var top=[], bot=[];
+  areas.forEach(function(a){
+    var kids=tree.filter(function(p){return p.areaId===a.id;}), due=[], none=[];
+    kids.forEach(function(p){(st[p.id]&&st[p.id].due?due:none).push(p);});
+    if(due.length){
+      due.sort(function(x,y){return st[x.id].due<st[y.id].due?-1:1;});
+      var it=[{v:'a:'+a.id,path:[a.name],depth:0,root:true,x:dd(st[due[0].id].due)}];
+      due.forEach(function(p){var pa=projPath(p);it.push({v:p.id,path:pa,depth:1,rel:rel(pa),x:dd(st[p.id].due)});});
+      top.push({d:st[due[0].id].due,items:it});
+    }
+    if(none.length||!kids.length){
+      var i2=[{v:'a:'+a.id,path:[a.name],depth:0,root:true}];
+      none.forEach(function(p){var pa=projPath(p);i2.push({v:p.id,path:pa,depth:1,rel:rel(pa)});});
+      bot.push(i2);
+    }
+  });
+  top.sort(function(x,y){return x.d<y.d?-1:1;});
   var a=[{v:'today',t:'Hari ini'},{v:'all',t:'Semua'}];
-  if(withDue.length){a.push({g:'Projek bertenggat'});withDue.forEach(function(x){a=a.concat(block(x.a,x.d));});}
+  if(top.length){a.push({g:'Projek bertenggat'});top.forEach(function(x){a=a.concat(x.items);});}
   a.push({v:'none',t:'Belum ada projek'});
-  if(rest.length){a.push({g:'Projek tanpa tenggat'});rest.forEach(function(x){a=a.concat(block(x.a,null));});}
+  if(bot.length){a.push({g:'Projek tanpa tenggat'});bot.forEach(function(x){a=a.concat(x);});}
   return a;
 }
 function labelOf(items,v,dflt){
@@ -3111,6 +3131,12 @@ function crumbHTML(p){
   if(a.length>3)a=[a[0],'…'].concat(a.slice(-2));
   return a.map(esc).join(' <i>›</i> ')+(a.length?' <i>›</i> ':'')+'<b>'+esc(last)+'</b>';
 }
+/* urutan tugas dalam satu grup: prioritas manual (pri) dulu, lalu tenggat, lalu waktu dibuat; yang selesai di dasar */
+function taskOrder(a,b){
+  var da=a.status==='done',db=b.status==='done'; if(da!==db)return da?1:-1;
+  var pa=a.pri==null?1e9:a.pri, pb=b.pri==null?1e9:b.pri; if(pa!==pb)return pa-pb;
+  return byDueThenCreated(a,b);
+}
 function hubGroups(mode){
   var td=new Date().toDateString(), map={}, order=[];
   S.tasks.forEach(function(t){
@@ -3123,7 +3149,7 @@ function hubGroups(mode){
   var tree={}; projTreeList().forEach(function(p,i){tree[p.id]=i;});
   var gs=order.map(function(k){
     var g=map[k];
-    g.tasks.sort(function(a,b){var da=a.status==='done',db=b.status==='done'; if(da!==db)return da?1:-1; return byDueThenCreated(a,b);});
+    g.tasks.sort(taskOrder);
     g.due=null; g.tasks.forEach(function(t){if(t.status!=='done'&&t.due&&(!g.due||t.due<g.due))g.due=t.due;});
     return g;
   });
@@ -3140,7 +3166,9 @@ function tkRow(t,n){
   var done=t.status==='done', id=esc(t.id), open=isOpen(t.id,0), editing=ui.edit&&ui.edit.type==='task'&&ui.edit.id===t.id;
   var dn=t.steps.length-pendingSteps(t);
   var chips=dueChip(t)+schedChip(t)+(t.steps.length?'<button type="button" class="dchip ok" data-act="togglesteps" data-key="'+id+'" data-def="0">'+dn+' dari '+t.steps.length+' langkah</button>':'')+(isLive(t.id)?'<span class="dchip ok">Sedang dikerjakan</span>':'');
-  var h='<div class="h-task'+(done?' done':'')+'" id="task-'+id+'"><div class="h-trow"><span class="h-num">'+(done?'':n)+'</span>'+
+  var h='<div class="h-task'+(done?' done':'')+'" id="task-'+id+'" data-tid="'+id+'"><div class="h-trow">'+
+    (done?'<span class="h-gripsp"></span>':'<button type="button" class="h-grip" id="gr-'+id+'" data-gid="'+id+'" aria-label="Pindahkan: '+esc(t.title)+' (seret, atau tombol panah atas dan bawah)"><svg width="14" height="22" viewBox="0 0 14 24" aria-hidden="true"><g fill="currentColor"><circle cx="4" cy="6" r="1.6"/><circle cx="10" cy="6" r="1.6"/><circle cx="4" cy="12" r="1.6"/><circle cx="10" cy="12" r="1.6"/><circle cx="4" cy="18" r="1.6"/><circle cx="10" cy="18" r="1.6"/></g></svg></button>')+
+    '<span class="h-num">'+(done?'':n)+'</span>'+
     '<button type="button" class="h-bul'+(done?' on':'')+'" data-act="toggle" data-id="'+id+'" aria-label="'+(done?'Batalkan selesai: ':'Tandai selesai: ')+esc(t.title)+'">'+CHECK_S+'</button>';
   if(editing)h+='<div class="sin h-edit"><label class="sr" for="editt">Nama tugas</label><textarea id="editt" rows="1" data-grow data-enter="savetask" data-id="'+id+'">'+esc(t.title)+'</textarea></div>';
   else h+='<button type="button" class="h-tt" data-act="edittask" data-id="'+id+'" title="Klik untuk mengubah nama">'+esc(t.title)+'</button>';
@@ -3165,13 +3193,13 @@ function groupCard(g,notes){
     '<button type="button" class="btn h-btnfull h-addbtn" data-act="grpaddbtn" data-key="'+k+'">+ '+(empty?'Tambahkan tugas di projek ini':'Tambah tugas')+'</button></div>';
   var nh='';
   if(notes)nh='<div class="h-sect">Catatan \u00b7 '+notes.length+'</div>'+notes.map(noteRowHTML).join('')+'<button type="button" class="btn-o h-btnfull" style="margin-top:8px" data-act="notenew" data-key="'+k+'">+ Tambah catatan di projek ini</button>';
-  return '<section class="h-grp"><div class="h-gh"><div class="h-crumb">'+crumbHTML(g.p)+'</div><span class="h-cnt">'+g.tasks.length+' tugas</span></div>'+rows+add+nh+'</section>';
+  return '<section class="h-grp" data-gkey="'+k+'"><div class="h-gh"><div class="h-crumb">'+crumbHTML(g.p)+'</div><span class="h-cnt">'+g.tasks.length+' tugas</span></div>'+rows+add+nh+'</section>';
 }
 function projNode(q){
   var td=new Date().toDateString();
   return {
     ts:S.tasks.filter(function(t){return t.projectId===q.id&&(t.status==='today'||t.status==='later'||(t.status==='done'&&t.doneAt&&dayOf(t.doneAt)===td));})
-      .sort(function(a,b){var da=a.status==='done',db=b.status==='done'; if(da!==db)return da?1:-1; return byDueThenCreated(a,b);}),
+      .sort(taskOrder),
     ns:S.notes.filter(function(n){return !n.deleted&&n.projectId===q.id;}).sort(function(a,b){return a.updatedAt<b.updatedAt?1:-1;})
   };
 }
@@ -3293,6 +3321,81 @@ function projCreate(){
 window.addEventListener('popstate',function(){ui.view=ui.stack.pop()||'today';ui.edit=null;ui.ntask=null;ui.modal=null;render();});
 setInterval(function(){var e=document.getElementById('hclock'); if(e)e.innerHTML=clockHTML();},15000);
 
+/* ---- seret untuk mengubah prioritas dan memindah projek (mouse dan sentuhan) ---- */
+function groupTasksNow(key){
+  var f=ui.filter||'today';
+  if(f==='today'||f==='all'||f==='none'){var g=hubGroups(f).filter(function(x){return x.key===key;})[0]; return g?g.tasks:[];}
+  if(key==='none')return [];
+  var q=projById(key); return q?projNode(q).ts:[];
+}
+function snapPri(list){return list.map(function(x){return {id:x.id,p:x.projectId||null,pri:x.pri};});}
+function restorePri(snap){snap.forEach(function(r){var t=byId(r.id); if(!t)return; t.projectId=r.p; if(r.pri===undefined)delete t.pri; else t.pri=r.pri; touch(t);});}
+function moveTask(id,key,beforeId,quiet){
+  var t=byId(id); if(!t)return false;
+  var from=(t.projectId&&projById(t.projectId)&&projActive(projById(t.projectId)))?t.projectId:'none', pid=key==='none'?null:key;
+  var list=groupTasksNow(key).filter(function(x){return x.id!==id&&x.status!=='done';});
+  var snap=snapPri(list.concat([t]));
+  var idx=beforeId?list.map(function(x){return x.id;}).indexOf(beforeId):-1; if(idx<0)idx=list.length;
+  list.splice(idx,0,t); t.projectId=pid;
+  list.forEach(function(x,i){var np=(i+1)*10; if(x.pri!==np||x===t){x.pri=np;touch(x);}});
+  save();
+  if(!quiet){var p=pid?projById(pid):null; toast(from===key?'Urutan diubah.':'Dipindah ke '+(p?projPathText(p):'Belum ada projek')+'.',function(){restorePri(snap);});}
+  return true;
+}
+function nudgeTask(id,dir){
+  var t=byId(id); if(!t)return;
+  var pp=t.projectId?projById(t.projectId):null, key=(pp&&projActive(pp))?t.projectId:'none';
+  var list=groupTasksNow(key).filter(function(x){return x.status!=='done';}), ids=list.map(function(x){return x.id;}), i=ids.indexOf(id);
+  var j=i+dir; if(i<0||j<0||j>=list.length)return;
+  moveTask(id,key,dir<0?ids[j]:(ids[j+1]||null),true); ui.refocus='gr-'+id; render();
+}
+var DRAG=null;
+function dragClear(){Array.prototype.forEach.call(document.querySelectorAll('.h-drop-b,.h-drop-a,.h-drop-g'),function(n){n.classList.remove('h-drop-b','h-drop-a','h-drop-g');});}
+function dragTarget(x,y,d){
+  var el=document.elementFromPoint(x,y); if(!el||!el.closest)return null;
+  var grp=el.closest('.h-grp'); if(!grp)return null;
+  var key=grp.getAttribute('data-gkey'), row=el.closest('.h-task');
+  if(row&&row.getAttribute('data-tid')!==d.id&&row.closest('.h-grp')===grp){
+    var r=row.getBoundingClientRect(), before=y<r.top+r.height/2, bid=row.getAttribute('data-tid');
+    if(!before){
+      var nx=row.nextElementSibling;
+      while(nx&&(!nx.classList.contains('h-task')||nx.getAttribute('data-tid')===d.id))nx=nx.nextElementSibling;
+      bid=nx?nx.getAttribute('data-tid'):null;
+    }
+    return {key:key,before:bid,el:row,cls:before?'h-drop-b':'h-drop-a'};
+  }
+  return {key:key,before:null,el:grp,cls:'h-drop-g'};
+}
+function dragEnd(apply){
+  var d=DRAG; DRAG=null; if(!d)return;
+  document.removeEventListener('pointermove',dragMove); document.removeEventListener('pointerup',dragUp); document.removeEventListener('pointercancel',dragCancel);
+  if(d.ghost&&d.ghost.parentNode)d.ghost.parentNode.removeChild(d.ghost);
+  dragClear(); var r=document.getElementById('task-'+d.id); if(r)r.classList.remove('h-dragging');
+  if(apply&&d.on&&d.tgt){moveTask(d.id,d.tgt.key,d.tgt.before);render();}
+}
+function dragMove(e){
+  var d=DRAG; if(!d)return;
+  if(!d.on){
+    if(Math.abs(e.clientX-d.sx)+Math.abs(e.clientY-d.sy)<6)return;
+    d.on=true; var rr=d.row.getBoundingClientRect(); d.h=rr.height;
+    var g=d.row.cloneNode(true); g.removeAttribute('id'); g.className='h-ghost'; g.style.width=rr.width+'px'; g.style.left=rr.left+'px';
+    document.body.appendChild(g); d.ghost=g; d.row.classList.add('h-dragging');
+  }
+  d.ghost.style.top=(e.clientY-d.h/2)+'px';
+  if(e.clientY<70)window.scrollBy(0,-14); else if(e.clientY>window.innerHeight-70)window.scrollBy(0,14);
+  dragClear(); d.tgt=dragTarget(e.clientX,e.clientY,d);
+  if(d.tgt)d.tgt.el.classList.add(d.tgt.cls);
+}
+function dragUp(){dragEnd(true);}
+function dragCancel(){dragEnd(false);}
+document.addEventListener('pointerdown',function(e){
+  var g=e.target.closest&&e.target.closest('.h-grip'); if(!g||(e.button>0&&e.pointerType==='mouse'))return;
+  var row=g.closest('.h-task'); if(!row)return;
+  e.preventDefault();
+  DRAG={id:g.getAttribute('data-gid'),row:row,sx:e.clientX,sy:e.clientY,on:false,ghost:null,tgt:null};
+  document.addEventListener('pointermove',dragMove); document.addEventListener('pointerup',dragUp); document.addEventListener('pointercancel',dragCancel);
+});
+
 /* ---------- Event ---------- */
 document.addEventListener('click',function(e){
   if(ui.combo&&!(e.target.closest&&e.target.closest('.cb,.cb-p,.cb-t'))){comboClose();render();}
@@ -3391,6 +3494,8 @@ document.addEventListener('beforeinput',function(e){
 document.addEventListener('mousedown',function(e){if(e.target.closest&&e.target.closest('.ltool'))e.preventDefault();});
 document.addEventListener('keydown',function(e){
   LASTSHIFT=!!e.shiftKey;
+  if(e.key==='Escape'&&DRAG){dragEnd(false);return;}
+  if((e.key==='ArrowUp'||e.key==='ArrowDown')&&e.target&&e.target.classList&&e.target.classList.contains('h-grip')){e.preventDefault();nudgeTask(e.target.getAttribute('data-gid'),e.key==='ArrowUp'?-1:1);return;}
   if(e.key==='Tab'&&!e.ctrlKey&&!e.altKey&&!e.metaKey&&e.target&&e.target.tagName==='TEXTAREA'&&e.target.hasAttribute('data-list')){
     if(listShift(e.target,e.shiftKey?-1:1)){e.preventDefault();return;}
   }
