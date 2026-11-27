@@ -526,6 +526,7 @@ button.dchip{cursor:pointer}
 .cb-o:hover,.cb-o.hi{background:var(--tint)}
 .cb-o.cur{font-weight:600}
 .cb-o small{color:var(--warm-t);font-size:12px;font-weight:600;white-space:nowrap}
+.cb-g.cb-g.cb-gr{font-size:14px;font-weight:700;text-transform:none;letter-spacing:0;color:var(--text);padding:10px 10px 2px}
 .cb-g{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:8px 10px 2px}
 .h-addbtn{display:none;margin-top:8px}
 .h-addwrap:focus-within .h-addbtn,.h-addwrap.always .h-addbtn{display:flex}
@@ -2290,7 +2291,7 @@ function act(a,d){
     case 'focusadd': ui.refocus=d.key; break;
     case 'notemodal': ui.modal={type:'note',id:d.id,nonce:Date.now()}; break;
     case 'notenew': ui.modal={type:'note',id:null,proj:d.key||'',nonce:Date.now()}; break;
-    case 'projnew': ui.modal={type:'proj',nonce:Date.now(),sel:(ui.filter&&ui.filter!=='today'&&ui.filter!=='all'&&ui.filter!=='none'&&projById(ui.filter))?'p:'+ui.filter:''}; break;
+    case 'projnew': var pf=ui.filter||''; ui.modal={type:'proj',nonce:Date.now(),sel:(pf.indexOf('a:')===0&&areaById(pf.slice(2)))?pf:((pf&&pf!=='today'&&pf!=='all'&&pf!=='none'&&projById(pf))?'p:'+pf:'')}; break;
     case 'modalclose': modalClose(); break;
     case 'modalpin': var mn=ui.modal&&noteById(ui.modal.id); if(mn){modalKeep();mn.pinned=!mn.pinned;mn.updatedAt=now();save();ui.modal.nonce=Date.now();} break;
     case 'modaldel': var md=ui.modal&&noteById(ui.modal.id); if(md){ui.modal=null;PM='';delNote(md);} break;
@@ -2964,27 +2965,46 @@ function pathLabel(it){
   if(it.path&&it.path.length)return '<b>'+esc(it.path[0])+'</b>'+(it.path.length>1?' \u203a '+esc(it.path.slice(1).join(' \u203a ')):'');
   return esc(it.t||'');
 }
-function assignItems(){
-  var a=[{v:'',t:'Tanpa projek'}];
-  projTreeList().forEach(function(p){a.push({v:p.id,path:projPath(p)});});
-  return a;
+function optLabel(it,flat){
+  if(!flat&&it.root)return '<b>'+esc(it.path[0])+'</b>';
+  if(!flat&&it.depth>=1&&it.path)return esc(it.path[it.path.length-1]);
+  return pathLabel(it);
 }
-function insideItems(){
-  var a=[{v:'',t:'Tingkat atas (kerjaan baru)'}];
+/* untuk menaruh tugas/catatan: induk teratas jadi judul tebal (tidak bisa dipilih), projek di bawahnya menjorok */
+function assignItems(){
+  var a=[{v:'',t:'Tanpa projek'}], tree=projTreeList();
   S.areas.filter(function(x){return !x.archived;}).forEach(function(ar){
-    a.push({v:'a:'+ar.id,path:[ar.name]});
-    projTreeList().filter(function(p){return p.areaId===ar.id;}).forEach(function(p){a.push({v:'p:'+p.id,path:projPath(p)});});
+    var kids=tree.filter(function(p){return p.areaId===ar.id;}); if(!kids.length)return;
+    a.push({g:ar.name,bold:true});
+    kids.forEach(function(p){var pa=projPath(p);a.push({v:p.id,path:pa,depth:pa.length-1});});
   });
   return a;
 }
+/* untuk memilih induk baru: induk teratas bisa dipilih */
+function insideItems(){
+  var a=[{v:'',t:'Tingkat atas (kerjaan baru)'}], tree=projTreeList();
+  S.areas.filter(function(x){return !x.archived;}).forEach(function(ar){
+    a.push({v:'a:'+ar.id,path:[ar.name],depth:0,root:true});
+    tree.filter(function(p){return p.areaId===ar.id;}).forEach(function(p){var pa=projPath(p);a.push({v:'p:'+p.id,path:pa,depth:pa.length-1});});
+  });
+  return a;
+}
+/* filter: induk teratas berdiri sendiri (tebal); memilihnya memuat semua projek di bawahnya */
 function filterItems(){
-  var st=projStats(), tree=projTreeList();
-  var withDue=tree.filter(function(p){return st[p.id]&&st[p.id].due;}).sort(function(a,b){return st[a.id].due<st[b.id].due?-1:1;});
-  var rest=tree.filter(function(p){return !(st[p.id]&&st[p.id].due);});
+  var st=projStats(), tree=projTreeList(), areas=S.areas.filter(function(a){return !a.archived;});
+  function dd(d){var n=dayDiff(d);return n<0?'lewat':n+' hari';}
+  function aDue(a){var m=null;tree.forEach(function(p){var r=st[p.id];if(p.areaId===a.id&&r&&r.due&&(!m||r.due<m))m=r.due;});return m;}
+  function block(a,d){
+    var o=[{v:'a:'+a.id,path:[a.name],depth:0,root:true,x:d?dd(d):''}];
+    tree.filter(function(p){return p.areaId===a.id;}).forEach(function(p){var r=st[p.id],pa=projPath(p);o.push({v:p.id,path:pa,depth:pa.length-1,x:(r&&r.due)?dd(r.due):''});});
+    return o;
+  }
+  var info=areas.map(function(a){return {a:a,d:aDue(a)};});
+  var withDue=info.filter(function(x){return x.d;}).sort(function(x,y){return x.d<y.d?-1:1;}), rest=info.filter(function(x){return !x.d;});
   var a=[{v:'today',t:'Hari ini'},{v:'all',t:'Semua'}];
-  if(withDue.length){a.push({g:'Projek bertenggat'});withDue.forEach(function(p){var d=dayDiff(st[p.id].due);a.push({v:p.id,path:projPath(p),x:d<0?'lewat':d+' hari'});});}
+  if(withDue.length){a.push({g:'Projek bertenggat'});withDue.forEach(function(x){a=a.concat(block(x.a,x.d));});}
   a.push({v:'none',t:'Belum ada projek'});
-  if(rest.length){a.push({g:'Projek tanpa tenggat'});rest.forEach(function(p){a.push({v:p.id,path:projPath(p)});});}
+  if(rest.length){a.push({g:'Projek tanpa tenggat'});rest.forEach(function(x){a=a.concat(block(x.a,null));});}
   return a;
 }
 function labelOf(items,v,dflt){
@@ -2997,15 +3017,16 @@ function comboTrig(id,cls,inner){
 }
 function comboPanel(id,items,cur,flow){
   if(!(ui.combo&&ui.combo.id===id))return '';
-  var q=(ui.combo.q||'').toLowerCase().trim(), vis=[], out='', pend='';
+  var q=(ui.combo.q||'').toLowerCase().trim(), vis=[], out='', pend=null;
   items.forEach(function(it){
-    if(it.g){pend=it.g;return;}
+    if(it.g!==undefined){pend=q?null:it;return;}
     var txt=((it.path?it.path.join(' '):it.t)||'').toLowerCase();
     if(q&&txt.indexOf(q)<0)return;
-    if(pend){out+='<div class="cb-g">'+esc(pend)+'</div>';pend='';}
+    if(pend){out+='<div class="cb-g'+(pend.bold?' cb-gr':'')+'">'+esc(pend.g)+'</div>';pend=null;}
     var hi=vis.length===(ui.combo.i||0);
     vis.push(it.v);
-    out+='<button type="button" role="option" class="cb-o'+(it.v===cur?' cur':'')+(hi?' hi':'')+'" data-act="combopick" data-key="'+esc(it.v)+'"><span>'+pathLabel(it)+'</span>'+(it.x?'<small>'+esc(it.x)+'</small>':'')+'</button>';
+    var ind=(!q&&it.depth>=1)?' style="padding-left:'+(10+it.depth*14)+'px"':'';
+    out+='<button type="button" role="option" class="cb-o'+(it.v===cur?' cur':'')+(hi?' hi':'')+'"'+ind+' data-act="combopick" data-key="'+esc(it.v)+'"><span>'+optLabel(it,!!q)+'</span>'+(it.x?'<small>'+esc(it.x)+'</small>':'')+'</button>';
   });
   COMBO_VALS=vis;
   return '<div class="cb-p'+(flow?' flow':'')+'" role="listbox"><input id="combo-q" class="cb-q" type="search" autocomplete="off" placeholder="Cari projek\u2026" value="'+esc(ui.combo.q||'')+'" data-input="comboq" aria-label="Cari projek">'+(out||'<div class="cb-g">Tidak ada hasil</div>')+'</div>';
@@ -3146,18 +3167,33 @@ function groupCard(g,notes){
   if(notes)nh='<div class="h-sect">Catatan \u00b7 '+notes.length+'</div>'+notes.map(noteRowHTML).join('')+'<button type="button" class="btn-o h-btnfull" style="margin-top:8px" data-act="notenew" data-key="'+k+'">+ Tambah catatan di projek ini</button>';
   return '<section class="h-grp"><div class="h-gh"><div class="h-crumb">'+crumbHTML(g.p)+'</div><span class="h-cnt">'+g.tasks.length+' tugas</span></div>'+rows+add+nh+'</section>';
 }
+function projNode(q){
+  var td=new Date().toDateString();
+  return {
+    ts:S.tasks.filter(function(t){return t.projectId===q.id&&(t.status==='today'||t.status==='later'||(t.status==='done'&&t.doneAt&&dayOf(t.doneAt)===td));})
+      .sort(function(a,b){var da=a.status==='done',db=b.status==='done'; if(da!==db)return da?1:-1; return byDueThenCreated(a,b);}),
+    ns:S.notes.filter(function(n){return !n.deleted&&n.projectId===q.id;}).sort(function(a,b){return a.updatedAt<b.updatedAt?1:-1;})
+  };
+}
 function hubProjectView(p){
-  var td=new Date().toDateString(), h='';
+  var h='';
   [p].concat(projDesc(p.id)).forEach(function(q,i){
-    var ts=S.tasks.filter(function(t){return t.projectId===q.id&&(t.status==='today'||t.status==='later'||(t.status==='done'&&t.doneAt&&dayOf(t.doneAt)===td));})
-      .sort(function(a,b){var da=a.status==='done',db=b.status==='done'; if(da!==db)return da?1:-1; return byDueThenCreated(a,b);});
-    var ns=S.notes.filter(function(n){return !n.deleted&&n.projectId===q.id;}).sort(function(a,b){return a.updatedAt<b.updatedAt?1:-1;});
-    if(i>0&&!ts.length&&!ns.length)return;
-    h+=groupCard({key:q.id,p:q,tasks:ts},ns);
+    var d=projNode(q);
+    if(i>0&&!d.ts.length&&!d.ns.length)return;
+    h+=groupCard({key:q.id,p:q,tasks:d.ts},d.ns);
   });
   return h+'<div style="text-align:right"><button type="button" class="btn-o nmini" data-act="projarch" data-id="'+esc(p.id)+'">Arsipkan projek</button></div>';
 }
-function listBody(f,fp){
+function hubAreaView(a){
+  var h='';
+  projTreeList().filter(function(p){return p.areaId===a.id;}).forEach(function(q){
+    var d=projNode(q); if(!d.ts.length&&!d.ns.length)return;
+    h+=groupCard({key:q.id,p:q,tasks:d.ts},d.ns);
+  });
+  return h||'<div class="empty">Belum ada tugas atau catatan di <b>'+esc(a.name)+'</b>.<br>Tambahkan projek lewat <b>+ Projek baru</b>.</div>';
+}
+function listBody(f,fp,fa){
+  if(fa)return hubAreaView(fa);
   if(fp)return hubProjectView(fp);
   var gs=hubGroups(f);
   if(!gs.length)return '<div class="empty">'+(f==='today'?'Belum ada tugas di Hari Ini.<br>Tuang sesuatu di atas, atau pilih dari <b>Nanti</b>.':'Tidak ada tugas di sini.')+'</div>';
@@ -3169,12 +3205,15 @@ function listBody(f,fp){
   return h;
 }
 function viewToday(){
-  var f=ui.filter||'today', fp=null;
-  if(f!=='today'&&f!=='all'&&f!=='none'){fp=projById(f); if(!fp||!projActive(fp)){f=ui.filter='today';fp=null;}}
+  var f=ui.filter||'today', fp=null, fa=null;
+  if(f!=='today'&&f!=='all'&&f!=='none'){
+    if(f.indexOf('a:')===0){fa=areaById(f.slice(2)); if(!fa||fa.archived){f=ui.filter='today';fa=null;}}
+    else{fp=projById(f); if(!fp||!projActive(fp)){f=ui.filter='today';fp=null;}}
+  }
   var s=statusInfo();
   return '<div class="h-page"><div class="h-top"><div><h1>Hari Ini</h1><div class="h-clock" id="hclock">'+clockHTML()+'</div></div><div class="h-dock" role="toolbar" aria-label="Menu">'+dockHTML()+'</div></div>'+
     (s[0]==='warn'?sideStatus():'<div id="sidestat"></div>')+welcomeBox()+bkCard()+rateCard()+
-    '<div class="h-cols"><div class="h-left">'+decisionCard()+pinsCard()+'</div><div class="h-right">'+tuangCard(fp)+filterBar(f)+'<div class="h-list">'+listBody(f,fp)+'</div></div></div></div>';
+    '<div class="h-cols"><div class="h-left">'+decisionCard()+pinsCard()+'</div><div class="h-right">'+tuangCard(fp)+filterBar(f)+'<div class="h-list">'+listBody(f,fp,fa)+'</div></div></div></div>';
 }
 
 /* ---- pop-up: catatan dan projek baru ---- */
